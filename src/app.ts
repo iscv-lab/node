@@ -1,26 +1,19 @@
+import { expressMiddleware } from "@apollo/server/express4";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
 import * as fs from "fs";
-import mongoose from "mongoose";
+import bodyParser from "body-parser";
 import morgan from "morgan";
 import { AddressInfo } from "net";
-//middleware
-import bodyParser from "body-parser";
-// import fs from "fs";
-
-//socket.io
-
+import { ethers } from "ethers";
 import { createServer } from "http";
-
 import * as path from "path";
 import * as util from "util";
 import routers from "./routes/index";
-import { ethers } from "ethers";
-// import {
-//   SpeedGooseDebuggerOperations,
-//   applySpeedGooseCacheLayer,
-// } from "speedgoose";
+import { createContext } from "~graphql/index";
+import { mongoServer } from "./configs";
+import { apolloServer } from "./graphql";
 
 dotenv.config();
 
@@ -50,25 +43,6 @@ app.use(bodyParser.json()); //cho phep json
 app.use(bodyParser.urlencoded({ extended: true })); //Cho phep form
 app.set("view engine", "ejs");
 
-mongoose.set("strictQuery", true);
-mongoose.connect(process.env.APT_ENDPOINT_MONGODB, () => {
-  console.log("connect to mongodb");
-});
-// applySpeedGooseCacheLayer(mongoose, {
-//   redisUri: process.env.REDIS_URI,
-//   defaultTtl: 18000,
-//   debugConfig: {
-//     enabled: true,
-//     /** Optional: An array of mongoose models to debug, if not set then the debugger will log operations for all of the models */
-//     debugModels: ["iscv"],
-//     /** Optional: An array of operations to debug, if not set then the debugger will log all operations */
-//     debugOperations: [
-//       SpeedGooseDebuggerOperations.CACHE_QUERY,
-//       SpeedGooseDebuggerOperations.CACHE_CLEAR,
-//     ],
-//   },
-// });
-
 //session
 app.set("trust proxy", 1); // trust first proxy
 // app.use(
@@ -81,17 +55,31 @@ app.set("trust proxy", 1); // trust first proxy
 // );
 
 //static folder
-// app.use("/public", express.static("./public"));
-app.set(
-  "provider",
-  new ethers.providers.WebSocketProvider("wss://ganache.ftisu.vn/")
+app.use("/public", express.static("./public"));
+
+// ethers provider
+const provider = new ethers.providers.WebSocketProvider(
+  "wss://ganache.ftisu.vn/"
 );
+app.set("provider", provider);
+
+// mongo
+mongoServer();
 
 app.use(routers);
 
 export const server = createServer(app);
+//  graphQL
+const apollo = await apolloServer(server, provider);
+app.use(
+  expressMiddleware(apollo, {
+    context: () => {
+      return createContext(provider);
+    },
+  })
+);
 
-server.listen(process.env.PORT, () => {
+server.listen({ port: process.env.PORT || 4000 }, () => {
   const { address, port } = server.address() as AddressInfo;
   console.log(`Example app listening at http://${address}:${port}`);
 });

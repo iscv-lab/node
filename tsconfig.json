@@ -11,14 +11,14 @@
 
     "target": "ESNext",
     "outDir": "dist",
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "allowJs": false,
     "alwaysStrict": false,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "module": "ESNext",
     "lib": [
       "dom",
@@ -32,13 +32,16 @@
       "ES2022"
     ],
     "paths": {
-      "~controllers/*": ["./src/controllers/*"],
-      "~models/*": ["./src/models/*"],
-      "~middlewares/*": ["./src/middlewares/*"],
-      "~utils/*": ["./src/utils/*"],
-      "~routes/*": ["./src/routes/*"],
-      "~contracts/*": ["./src/contracts/*"],
-      "~typechain/*": ["./src/typechain/*"]
+      "~controllers/*": ["./controllers/*"],
+      "~models/*": ["./models/*"],
+      "~middlewares/*": ["./middlewares/*"],
+      "~utils/*": ["./utils/*"],
+      "~routes/*": ["./routes/*"],
+      "~helpers/*": ["./helpers/*"],
+      "~contracts/*": ["./contracts/*"],
+      "~configs/*": ["./configs/*"],
+      "~graphql/*": ["./graphql/*"],
+      "~typechain/*": ["./typechain/*"]
     }
   },
   "exclude": ["node_modules", "dist"],

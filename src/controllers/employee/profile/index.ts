@@ -3,103 +3,56 @@ import { Request, Response } from "express";
 import { Agent } from "http";
 import { create, urlSource } from "ipfs-http-client";
 import { useEmployee } from "~contracts/index";
+import { resize } from "~helpers/imageHandler";
 
 export const postAvatar = async (req: Request, res: Response) => {
   try {
-    const auth =
-      "Basic " +
-      Buffer.from(
-        "2Jxa8k8BoXm3qcU10oAYOuJkRQG" + ":" + "e2b46edcfcc46e20fd89c54b8f80d9f1"
-      ).toString("base64");
+    const id = req.params.id;
+    const buffer = req.file.buffer;
+    let sharp = resize(buffer, 1000, 1000);
+    const client = create({
+      host: process.env.IPFS_HOST,
+      port: Number(process.env.IPFS_PORT),
+      protocol: process.env.IPFS_PROTOCOL,
+    });
+    // const auth =
+    //   "Basic " +
+    //   Buffer.from(
+    //     "2Jxa8k8BoXm3qcU10oAYOuJkRQG" + ":" + "e2b46edcfcc46e20fd89c54b8f80d9f1"
+    //   ).toString("base64");
+
+    // const client = create({
+    //   host: "ipfs.infura.io",
+    //   port: 5001,
+    //   protocol: "https",
+    //   headers: {
+    //     authorization: auth,
+    //   },
+    // });
+    const { cid } = await client.add(buffer);
+    res.status(200).json(cid.toString());
+    console.log(cid);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(error);
+  }
+  res.end();
+};
+
+export const getAvatar = async (req: Request, res: Response) => {
+  try {
+    const cid = req.params.cid;
 
     const client = create({
-      host: "ipfs.infura.io",
-      port: 5001,
-      protocol: "https",
-      headers: {
-        authorization: auth,
-      },
+      host: process.env.IPFS_HOST,
+      port: Number(process.env.IPFS_PORT),
+      protocol: process.env.IPFS_PROTOCOL,
     });
-    const { cid } = await client.add("aaa");
 
+    const data = client.get(cid);
+    console.log(data);
+    res.status(200).json(data);
     console.log(cid);
-    res.status(200).json(cid.toString());
-    const id = req.params.id;
-    const buffer = req.file?.buffer;
-  } catch (error) {
-    console.error(error);
-    res.status(500).json(error);
-  }
-  res.end();
-};
-
-export const all = async (req: Request, res: Response) => {
-  try {
-    const provider: ethers.providers.WebSocketProvider =
-      req.app.get("provider");
-    const employeeContract = useEmployee(provider);
-    await employeeContract
-      .getAllProfile({})
-      .then((success) => {
-        return success.map((value, index) => ({
-          ...value,
-          category: value.category.toNumber(),
-          id: value.id.toNumber(),
-        }));
-      })
-      .then((success) => res.status(200).json(success));
-  } catch (error) {
-    console.error(error);
-    res.status(500).json(error);
-  }
-  res.end();
-};
-
-export const at = async (req: Request, res: Response) => {
-  try {
-    const id = req.params.id;
-    const provider: ethers.providers.WebSocketProvider =
-      req.app.get("provider");
-    const employeeContract = useEmployee(provider);
-    await employeeContract.getAllProfile({}).then((success) => {
-      const data = success.find((value, index) => value.id.eq(id));
-      if (!data) {
-        res.status(404);
-        return;
-      }
-      res.status(200).json({
-        ...data,
-        category: data.category.toNumber(),
-        id: data.id.toNumber(),
-      });
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json(error);
-  }
-  res.end();
-};
-
-export const address = async (req: Request, res: Response) => {
-  try {
-    const address = req.params.address;
-    const provider: ethers.providers.WebSocketProvider =
-      req.app.get("provider");
-    const employeeContract = useEmployee(provider);
-    await employeeContract.getAllProfile({}).then((success) => {
-      const data = success.find(
-        (value, index) => value.user.toString() == address
-      );
-      if (!data) {
-        res.status(404);
-        return;
-      }
-      res.status(200).json({
-        ...data,
-        category: data.category.toNumber(),
-        id: data.id.toNumber(),
-      });
-    });
   } catch (error) {
     console.error(error);
     res.status(500).json(error);

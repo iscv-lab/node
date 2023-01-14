@@ -100,10 +100,6 @@ declare module "hardhat/types/runtime" {
       name: "ListEmployeeSkill",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ListEmployeeSkill__factory>;
-    getContractFactory(
-      name: "Lock",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Lock__factory>;
 
     getContractAt(
       name: "Ownable",
@@ -215,11 +211,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ListEmployeeSkill>;
-    getContractAt(
-      name: "Lock",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.Lock>;
 
     // default types
     getContractFactory(

@@ -18,6 +18,12 @@ export const typeDefs = `#graphql
     sourceImage:  String
   }
 
+  type Skill {
+    id:           ID
+    employeeId:    ID
+    title: String
+    level: Int
+  }
 
   type Query {
     books: [Book]
@@ -25,5 +31,6 @@ export const typeDefs = `#graphql
     employees: [Employee]
     employee(id: ID!): Employee
     employeeByUser(user: String): Employee
+    skillsByEmployee(employeeId: ID!): [Skill]
   }
 `;

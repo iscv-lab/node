@@ -51,7 +51,6 @@ export const resolvers = {
     },
     employeeByUser: async (parent, args, contextValue: Context, info) => {
       const user: string = args.user;
-
       if (!user) return;
       info.cacheControl.setCacheHint({ maxAge: 600, scope: "PRIVATE" });
       const provider = contextValue.provider;
@@ -73,7 +72,28 @@ export const resolvers = {
           console.log(error);
         });
     },
+    skillsByEmployee: async (parent, args, contextValue: Context, info) => {
+      try {
+        const employeeId = args.employeeId;
+        if (!employeeId) return;
+        const provider = contextValue.provider;
+        const employeeContract = useEmployee(provider);
+        return await employeeContract.getAllSkill().then((success) => {
+          return success
+            .filter((value) => value.employeeId == employeeId)
+            .map((value) => ({ ...value }));
+        });
+      } catch (error) {
+        console.log(error);
+        return error;
+      }
+    },
   },
+  // Mutation: {
+  //   uploadAvatar: async (parent, args, contextValue: Context) => {
+  //     // console.log(args);
+  //   },
+  // },
 };
 
 const books = [

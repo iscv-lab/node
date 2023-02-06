@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 
 export const useEmployee = (provider: ethers.providers.WebSocketProvider) => {
   return EmployeeController__factory.connect(
-    "0x2406C50dDD9C85E17DF6D31B2dF4F77759cf6E87",
+    "0x7b43cAb6B30ca97B3C767d3fd550F233A39CA633",
     provider
   );
 };

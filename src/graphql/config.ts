@@ -7,8 +7,7 @@ import { resolvers } from "./resolver";
 import { typeDefs } from "./schema";
 
 export const apolloServer = async (
-  server: Server<typeof IncomingMessage, typeof ServerResponse>,
-  provider: ethers.providers.WebSocketProvider
+  server: Server<typeof IncomingMessage, typeof ServerResponse>
 ) => {
   const apollo = new ApolloServer<Context>({
     typeDefs,

@@ -7,7 +7,6 @@ import { resize } from "~helpers/imageHandler";
 
 export const postAvatar = async (req: Request, res: Response) => {
   try {
-    const id = req.params.id;
     const buffer = req.file.buffer;
     let sharp = resize(buffer, 1000, 1000);
     const client = create({
@@ -29,7 +28,7 @@ export const postAvatar = async (req: Request, res: Response) => {
     //     authorization: auth,
     //   },
     // });
-    const { cid } = await client.add(buffer);
+    const { cid } = await client.add(sharp);
     res.status(200).json(cid.toString());
     console.log(cid);
   } catch (error) {

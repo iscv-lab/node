@@ -48,6 +48,7 @@ export interface ListEmployeeSkillInterface extends utils.Interface {
     "at(uint256)": FunctionFragment;
     "destroy()": FunctionFragment;
     "findIdByEmployeeIdAndTitle(uint256,string)": FunctionFragment;
+    "getAll()": FunctionFragment;
     "list(uint256)": FunctionFragment;
     "owner()": FunctionFragment;
     "retrive(address)": FunctionFragment;
@@ -66,6 +67,7 @@ export interface ListEmployeeSkillInterface extends utils.Interface {
       | "at"
       | "destroy"
       | "findIdByEmployeeIdAndTitle"
+      | "getAll"
       | "list"
       | "owner"
       | "retrive"
@@ -94,6 +96,7 @@ export interface ListEmployeeSkillInterface extends utils.Interface {
     functionFragment: "findIdByEmployeeIdAndTitle",
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
+  encodeFunctionData(functionFragment: "getAll", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "list",
     values: [PromiseOrValue<BigNumberish>]
@@ -141,6 +144,7 @@ export interface ListEmployeeSkillInterface extends utils.Interface {
     functionFragment: "findIdByEmployeeIdAndTitle",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "getAll", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "list", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "retrive", data: BytesLike): Result;
@@ -252,6 +256,8 @@ export interface ListEmployeeSkill extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    getAll(overrides?: CallOverrides): Promise<[EmployeeSkillStructOutput[]]>;
+
     list(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -334,6 +340,8 @@ export interface ListEmployeeSkill extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  getAll(overrides?: CallOverrides): Promise<EmployeeSkillStructOutput[]>;
+
   list(
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -410,6 +418,8 @@ export interface ListEmployeeSkill extends BaseContract {
       title: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    getAll(overrides?: CallOverrides): Promise<EmployeeSkillStructOutput[]>;
 
     list(
       arg0: PromiseOrValue<BigNumberish>,
@@ -511,6 +521,8 @@ export interface ListEmployeeSkill extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    getAll(overrides?: CallOverrides): Promise<BigNumber>;
+
     list(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -586,6 +598,8 @@ export interface ListEmployeeSkill extends BaseContract {
       title: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
+
+    getAll(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     list(
       arg0: PromiseOrValue<BigNumberish>,

@@ -70,7 +70,7 @@ app.use(routers);
 
 export const server = createServer(app);
 //  graphQL
-const apollo = await apolloServer(server, provider);
+const apollo = await apolloServer(server);
 app.use(
   expressMiddleware(apollo, {
     context: () => {

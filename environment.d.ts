@@ -4,6 +4,7 @@ declare global {
       GITHUB_AUTH_TOKEN: string;
       APT_ENDPOINT_MONGODB: string;
       NODE_ENV: "development" | "production";
+      PYTHON3: string;
       DATABASE: string;
       IPFS_HOST: string;
       IPFS_PORT: string;

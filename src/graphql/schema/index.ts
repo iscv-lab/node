@@ -1,13 +1,13 @@
 export const typeDefs = `#graphql
   type Book {
-    id: ID
+    id: Int
     title: String
     author: String
   }
 
   type Employee {
     category:     Int
-    id:           ID
+    id:           Int
     user:         String
     name:         String
     phone:        String
@@ -19,8 +19,8 @@ export const typeDefs = `#graphql
   }
 
   type Skill {
-    id:           ID
-    employeeId:    ID
+    id:           Int
+    employeeId:   Int
     title: String
     level: Int
   }
@@ -28,13 +28,13 @@ export const typeDefs = `#graphql
   type CV {
     id: Int
     employeeId: Int 
-    time: Float
+    time: String
     source: String
   }
 
   type DefaultCV {
     category: Int
-    id: ID
+    id: Int
     user: String
     name: String
     phone: String
@@ -46,6 +46,20 @@ export const typeDefs = `#graphql
     skills: [Skill]
   }
 
+type Post  {
+    id: Int
+    businessId: Int
+    businessName: String
+    businessUser: String
+    businessSourceImage: String
+    hashTag: String
+    time: String
+    content: String
+    imageSource: String
+    job: String
+    status: Int
+}
+
   type Query {
     books: [Book]
     book(id: ID!): Book
@@ -56,5 +70,7 @@ export const typeDefs = `#graphql
     cvs: [CV]
     cv: CV
     defaultCV(employeeId: ID!): DefaultCV
+    prediction(id: ID!): [Post]
+    post(id: ID!): Post
   }
 `;

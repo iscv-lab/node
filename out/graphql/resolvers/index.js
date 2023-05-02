@@ -1,5 +1,6 @@
 import { useEmployee } from '../../contracts/useEmployee.js';
 import { employee } from './employee/index.js';
+import { business } from './business/index.js';
 
 const resolvers = {
     Query: {
@@ -59,9 +60,16 @@ const resolvers = {
                 if (!data)
                     return;
                 return {
-                    ...data,
                     category: data.category.toNumber(),
                     id: data.id.toNumber(),
+                    user: data.user,
+                    name: data.name,
+                    phone: data.phone,
+                    professional: data.professional,
+                    email: data.email,
+                    github: data.github,
+                    linkedin: data.linkedin,
+                    sourceImage: data.sourceImage,
                 };
             })
                 .catch((error) => {
@@ -69,6 +77,7 @@ const resolvers = {
             });
         },
         ...employee,
+        ...business,
     },
     // Mutation: {
     //   uploadAvatar: async (parent, args, contextValue: Context) => {

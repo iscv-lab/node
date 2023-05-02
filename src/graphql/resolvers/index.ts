@@ -1,6 +1,7 @@
 import { useEmployee } from "~contracts/index";
 import { Context } from "../context";
 import { employee } from "./employee";
+import { business } from "./business";
 
 export const resolvers = {
   Query: {
@@ -65,9 +66,16 @@ export const resolvers = {
           });
           if (!data) return;
           return {
-            ...data,
             category: data.category.toNumber(),
             id: data.id.toNumber(),
+            user: data.user,
+            name: data.name,
+            phone: data.phone,
+            professional: data.professional,
+            email: data.email,
+            github: data.github,
+            linkedin: data.linkedin,
+            sourceImage: data.sourceImage,
           };
         })
         .catch((error) => {
@@ -75,6 +83,7 @@ export const resolvers = {
         });
     },
     ...employee,
+    ...business,
   },
   // Mutation: {
   //   uploadAvatar: async (parent, args, contextValue: Context) => {

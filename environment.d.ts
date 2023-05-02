@@ -4,6 +4,11 @@ declare global {
       GITHUB_AUTH_TOKEN: string;
       APT_ENDPOINT_MONGODB: string;
       NODE_ENV: "development" | "production";
+      DATABASE: string;
+      IPFS_HOST: string;
+      IPFS_PORT: string;
+      IPFS_PROTOCOL: string;
+      ETHEREUM_ENDPOINT: string;
       PORT?: string;
       PWD: string;
     }

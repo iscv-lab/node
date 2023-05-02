@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { CVController } from "./CVController";
+export type { EmployeeCVController } from "./EmployeeCVController";

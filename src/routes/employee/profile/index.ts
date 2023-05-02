@@ -1,10 +1,18 @@
-import express from "express";
-import { getAvatar, postAvatar } from "~controllers/employee/profile/index";
-import uploadImageMiddleware from "~middlewares/image/uploadImageMiddleware";
+import { FastifyInstance, FastifyPluginOptions } from "fastify";
+import { postAvatar } from "~controllers/employee/profile";
+import {
+  imageMiddleware,
+  removeTemp,
+} from "~middlewares/image/uploadImageMiddleware";
 
-const routers = express.Router();
-
-routers.post("/avatar", uploadImageMiddleware.single("image"), postAvatar);
-routers.get("/avatar/:cid", getAvatar);
-
-export default routers;
+export default async (
+  server: FastifyInstance,
+  options: FastifyPluginOptions
+) => {
+  server.post(
+    "/avatar",
+    { preHandler: imageMiddleware, onResponse: removeTemp },
+    postAvatar
+  );
+  // server.get("/avatar/:cid", getAvatar);
+};

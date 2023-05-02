@@ -20,6 +20,8 @@ export type { IIGController } from "./controller/business/iig/IIGController";
 export { IIGController__factory } from "./factories/controller/business/iig/IIGController__factory";
 export type { CVController } from "./controller/employee/cv/CVController";
 export { CVController__factory } from "./factories/controller/employee/cv/CVController__factory";
+export type { EmployeeCVController } from "./controller/employee/cv/EmployeeCVController";
+export { EmployeeCVController__factory } from "./factories/controller/employee/cv/EmployeeCVController__factory";
 export type { EmployeeController } from "./controller/employee/EmployeeController";
 export { EmployeeController__factory } from "./factories/controller/employee/EmployeeController__factory";
 export type { ListBusinessApplyCursor } from "./cursor/business/apply/ListBusinessApplyCursor";

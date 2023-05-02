@@ -1,8 +1,21 @@
-import express from "express";
-import employee from "./employee/index.js";
+import { FastifyInstance, FastifyPluginOptions } from "fastify";
+import test from "./test";
+import employee from "./employee";
+import business from "./business";
+import common from "./common";
+import shared from "./shared";
 
-const routers = express.Router();
+export default async (
+  server: FastifyInstance,
+  options: FastifyPluginOptions
+) => {
+  server.get("/", {}, async (request, reply) => {
+    return reply.code(200).send({ message: "hello" });
+  });
 
-routers.use("/employee", employee);
-
-export default routers;
+  server.register(test, { prefix: "test" });
+  server.register(employee, { prefix: "employee" });
+  server.register(business, { prefix: "business" });
+  server.register(common, { prefix: "common" });
+  server.register(shared, { prefix: "shared" });
+};

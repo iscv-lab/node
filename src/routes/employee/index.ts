@@ -1,8 +1,9 @@
-import express from "express";
-import profile from "./profile/index.js";
+import { FastifyInstance, FastifyPluginOptions } from "fastify";
+import profile from "./profile";
 
-const routers = express.Router();
-
-routers.use("/profile", profile);
-
-export default routers;
+export default async (
+  server: FastifyInstance,
+  options: FastifyPluginOptions
+) => {
+  server.register(profile, { prefix: "profile" });
+};

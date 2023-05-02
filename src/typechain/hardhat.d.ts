@@ -33,6 +33,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.CVController__factory>;
     getContractFactory(
+      name: "EmployeeCVController",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.EmployeeCVController__factory>;
+    getContractFactory(
       name: "EmployeeController",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.EmployeeController__factory>;
@@ -126,6 +130,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.CVController>;
+    getContractAt(
+      name: "EmployeeCVController",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.EmployeeCVController>;
     getContractAt(
       name: "EmployeeController",
       address: string,

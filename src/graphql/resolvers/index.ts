@@ -1,5 +1,7 @@
 import { useEmployee } from "~contracts/index";
-import { Context } from "./context";
+import { Context } from "../context";
+import { employee } from "./employee";
+
 export const resolvers = {
   Query: {
     books: async (parent, args, contextValue: Context) => {
@@ -41,8 +43,8 @@ export const resolvers = {
 
           return {
             ...data,
-            category: data.category.toNumber(),
-            id: data.id.toNumber(),
+            category: data!.category.toNumber(),
+            id: data!.id.toNumber(),
           };
         })
         .catch((error) => {
@@ -72,22 +74,7 @@ export const resolvers = {
           console.log(error);
         });
     },
-    skillsByEmployee: async (parent, args, contextValue: Context, info) => {
-      try {
-        const employeeId = args.employeeId;
-        if (!employeeId) return;
-        const provider = contextValue.provider;
-        const employeeContract = useEmployee(provider);
-        return await employeeContract.getAllSkill().then((success) => {
-          return success
-            .filter((value) => value.employeeId == employeeId)
-            .map((value) => ({ ...value }));
-        });
-      } catch (error) {
-        console.log(error);
-        return error;
-      }
-    },
+    ...employee,
   },
   // Mutation: {
   //   uploadAvatar: async (parent, args, contextValue: Context) => {

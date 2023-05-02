@@ -25,6 +25,27 @@ export const typeDefs = `#graphql
     level: Int
   }
 
+  type CV {
+    id: Int
+    employeeId: Int 
+    time: Float
+    source: String
+  }
+
+  type DefaultCV {
+    category: Int
+    id: ID
+    user: String
+    name: String
+    phone: String
+    professional: String
+    email: String
+    github: String
+    linkedin: String
+    sourceImage: String
+    skills: [Skill]
+  }
+
   type Query {
     books: [Book]
     book(id: ID!): Book
@@ -32,5 +53,8 @@ export const typeDefs = `#graphql
     employee(id: ID!): Employee
     employeeByUser(user: String): Employee
     skillsByEmployee(employeeId: ID!): [Skill]
+    cvs: [CV]
+    cv: CV
+    defaultCV(employeeId: ID!): DefaultCV
   }
 `;

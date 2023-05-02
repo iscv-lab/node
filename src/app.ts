@@ -1,85 +1,98 @@
-import { expressMiddleware } from "@apollo/server/express4";
-import cors from "cors";
-import dotenv from "dotenv";
-import express from "express";
-import * as fs from "fs";
-import bodyParser from "body-parser";
-import morgan from "morgan";
-import { AddressInfo } from "net";
+import compress from "@fastify/compress";
+import cors from "@fastify/cors";
+import helmet from "@fastify/helmet";
+import middie from "@fastify/middie";
+import rateLimit from "@fastify/rate-limit";
+import fastify, { FastifyInstance } from "fastify";
+import { initDotENV } from "~configs/nodedotenv";
+import { initRuntime } from "~configs/runtime";
+import { apolloServer, mongoServer } from "~configs/index";
+import routes from "~routes/index";
+import fastifyApollo, { fastifyApolloHandler } from "@as-integrations/fastify";
+import { Context, createContext } from "~graphql/context";
 import { ethers } from "ethers";
-import { createServer } from "http";
-import * as path from "path";
-import * as util from "util";
-import routers from "./routes/index";
-import { createContext } from "~graphql/index";
-import { mongoServer } from "./configs";
-import { apolloServer } from "./graphql";
+import multipath from "@fastify/multipart";
+import { ipfsServer } from "~configs/ipfs";
 
-dotenv.config();
+initDotENV();
 
-const logFile = fs.createWriteStream(path.join("./debug.log"), { flags: "a" });
-const logStdout = process.stdout;
+initRuntime();
 
-console.log = function (d) {
-  logFile.write(
-    `${new Date().toISOString()} ${util.format.apply(null, arguments)} \n`
-  );
-  new this.Console(logStdout).log(d);
-};
-
-console.error = (d) => {
-  console.log(d);
-};
-
-const accessLogStream = fs.createWriteStream(path.join("access.log"), {
-  flags: "a",
+const app: FastifyInstance = fastify({
+  logger: {
+    level: "info",
+    file: "./logger.log", // Will use pino.destination()
+  },
 });
-var app = express();
 
-app.use(cors());
-
-app.use(morgan("combined", { stream: accessLogStream }));
-app.use(bodyParser.json()); //cho phep json
-app.use(bodyParser.urlencoded({ extended: true })); //Cho phep form
-app.set("view engine", "ejs");
-
-//session
-app.set("trust proxy", 1); // trust first proxy
-// app.use(
-//   session({
-//     secret: config.get("secret_key"),
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { secure: true },
-//   })
-// );
-
-//static folder
-app.use("/public", express.static("./public"));
-
-// ethers provider
-const provider = new ethers.providers.WebSocketProvider(
-  "wss://ganache.ftisu.vn/"
-);
-app.set("provider", provider);
-
-// mongo
-mongoServer();
-
-app.use(routers);
-
-export const server = createServer(app);
-//  graphQL
-const apollo = await apolloServer(server);
-app.use(
-  expressMiddleware(apollo, {
-    context: () => {
-      return createContext(provider);
-    },
-  })
-);
-
-server.listen({ port: process.env.PORT || 4000 }, () => {
-  const { address, port } = server.address() as AddressInfo;
-  console.log(`Example app listening at http://${address}:${port}`);
+app.setErrorHandler(async (error, request, reply) => {
+  console.error(error);
+  reply.status(500).send(error);
 });
+
+await app.register(cors, {
+  credentials: true,
+  origin: ["http://localhost:3000", "https://studio.apollographql.com"],
+});
+await app.register(rateLimit, {
+  max: 500,
+  timeWindow: "1 minute",
+});
+await app.register(helmet, {
+  // contentSecurityPolicy: false,
+  // crossOriginEmbedderPolicy: false,
+  // crossOriginOpenerPolicy: false,
+  // crossOriginResourcePolicy: false,
+  // dnsPrefetchControl: false,
+  // expectCt: false,
+  // frameguard: false,
+  // hidePoweredBy: false,
+  // hsts: false,
+  // ieNoOpen: false,
+  // noSniff: false,
+  // originAgentCluster: false,
+  // permittedCrossDomainPolicies: false,
+  // referrerPolicy: false,
+  // xssFilter: false,
+  // // crossOriginEmbedderPolicy: false,
+  // // crossOriginResourcePolicy: { policy: "cross-origin" },
+});
+await app.register(compress);
+
+await app.register(middie);
+
+const apollo = await apolloServer(app);
+await apollo.start();
+
+const provider = new ethers.providers.JsonRpcProvider(
+  process.env.ETHEREUM_ENDPOINT
+);
+const { ipfs } = ipfsServer();
+
+await app.register(fastifyApollo(apollo), {
+  context: createContext({ provider, ipfs }),
+});
+
+app.register(multipath, {
+  limits: {
+    fieldNameSize: 100, // Max field name size in bytes
+    fieldSize: 100, // Max field value size in bytes
+    fields: 10, // Max number of non-file fields
+    fileSize: 10 * 1024 * 1024, // 10 MB
+    files: 10, // Max number of file fields
+    headerPairs: 2000, // Max number of header key=>value pairs
+  },
+});
+
+await app.register(routes);
+
+await mongoServer();
+
+app.listen({ port: Number(process.env.PORT) || 4000 }, (err, address) => {
+  if (err) {
+    console.error(err);
+    process.exit(1);
+  }
+  console.log(`Server listening at ${address}`);
+});
+export { ipfs, provider };

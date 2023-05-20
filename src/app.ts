@@ -1,18 +1,23 @@
+import fastifyApollo from "@as-integrations/fastify";
 import compress from "@fastify/compress";
 import cors from "@fastify/cors";
 import helmet from "@fastify/helmet";
 import middie from "@fastify/middie";
+import multipath from "@fastify/multipart";
 import rateLimit from "@fastify/rate-limit";
+import { ethers } from "ethers";
 import fastify, { FastifyInstance } from "fastify";
+import socketio from "fastify-socket.io";
+import { RedisClientType } from "redis";
+import { apolloServer, mongoServer, redisServer } from "~configs/index";
+import { ipfsServer } from "~configs/ipfs";
 import { initDotENV } from "~configs/nodedotenv";
 import { initRuntime } from "~configs/runtime";
-import { apolloServer, mongoServer } from "~configs/index";
+import { createContext } from "~graphql/context";
 import routes from "~routes/index";
-import fastifyApollo, { fastifyApolloHandler } from "@as-integrations/fastify";
-import { Context, createContext } from "~graphql/context";
-import { ethers } from "ethers";
-import multipath from "@fastify/multipart";
-import { ipfsServer } from "~configs/ipfs";
+import { interview } from "./socket/interview";
+import fastifyStatic from "@fastify/static";
+import path from "path";
 
 initDotENV();
 
@@ -32,7 +37,27 @@ app.setErrorHandler(async (error, request, reply) => {
 
 await app.register(cors, {
   credentials: true,
-  origin: ["http://localhost:3000", "https://studio.apollographql.com"],
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "https://studio.apollographql.com",
+    "https://iscv.ftisu.vn",
+    "https://business.iscv.ftisu.vn",
+  ],
+});
+
+const { pubClient, subClient } = await redisServer();
+
+await app.register(socketio, {
+  cors: {
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "https://studio.apollographql.com",
+      "https://iscv.ftisu.vn",
+      "https://business.iscv.ftisu.vn",
+    ],
+  },
 });
 await app.register(rateLimit, {
   max: 500,
@@ -74,17 +99,24 @@ await app.register(fastifyApollo(apollo), {
 });
 
 app.register(multipath, {
+  // addToBody: true,
   limits: {
     fieldNameSize: 100, // Max field name size in bytes
     fieldSize: 100, // Max field value size in bytes
     fields: 10, // Max number of non-file fields
-    fileSize: 10 * 1024 * 1024, // 10 MB
+    fileSize: 299 * 1024 * 1024, // 10 MB
     files: 10, // Max number of file fields
     headerPairs: 2000, // Max number of header key=>value pairs
   },
 });
+await app.register(fastifyStatic, {
+  root: "/public",
+  prefix: "/public/", // optional: default '/'
+});
 
 await app.register(routes);
+
+interview(app, pubClient as RedisClientType, subClient as RedisClientType);
 
 await mongoServer();
 

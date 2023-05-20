@@ -2,16 +2,27 @@ import { useBusiness } from "~contracts/useBusiness";
 import { Context } from "~graphql/context";
 
 export const post = {
-  post: async (parent, args: { id: number }, contextValue: Context, info) => {
+  post: async (
+    parent,
+    args: { id: number; employeeId?: number },
+    contextValue: Context,
+    info
+  ) => {
     const businessContract = useBusiness(contextValue.provider);
-    const [posts, businesses] = await Promise.all([
+    const [posts, businesses, applies] = await Promise.all([
       businessContract.getAllPosts(),
       businessContract.getAllProfile(),
+      businessContract.getAllApplies(),
     ]);
     const post = posts.find((post) => post.businessId.eq(args.id));
     const business = businesses.find((x) => x.id.eq(post?.businessId!));
-
     if (!post || !business) return;
+    const apply = applies.find(
+      (x) =>
+        args.employeeId &&
+        x.postId.eq(post.id) &&
+        x.employeeId.eq(args.employeeId)
+    );
     const result = {
       id: post.id.toNumber(),
       businessName: business?.name,
@@ -24,6 +35,9 @@ export const post = {
       imageSource: post.imageSource,
       job: post.job,
       status: post.status,
+      applyId: apply?.id.toNumber(),
+      applyTime: apply?.time.toNumber(),
+      applyStatus: apply?.status.toNumber(),
     };
     return result;
   },

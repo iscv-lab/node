@@ -10,7 +10,7 @@ declare global {
       IPFS_PORT: string;
       IPFS_PROTOCOL: string;
       ETHEREUM_ENDPOINT: string;
-      PORT?: string;
+      PORT: string;
       PWD: string;
     }
   }

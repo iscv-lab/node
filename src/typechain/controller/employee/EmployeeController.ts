@@ -92,6 +92,7 @@ export interface EmployeeControllerInterface extends utils.Interface {
     "editSkill(uint256,uint256,uint256)": FunctionFragment;
     "getAllProfile()": FunctionFragment;
     "getAllSkill()": FunctionFragment;
+    "getProfile(uint256)": FunctionFragment;
     "owner()": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
@@ -110,6 +111,7 @@ export interface EmployeeControllerInterface extends utils.Interface {
       | "editSkill"
       | "getAllProfile"
       | "getAllSkill"
+      | "getProfile"
       | "owner"
       | "transferOwnership"
   ): FunctionFragment;
@@ -180,6 +182,10 @@ export interface EmployeeControllerInterface extends utils.Interface {
     functionFragment: "getAllSkill",
     values?: undefined
   ): string;
+  encodeFunctionData(
+    functionFragment: "getProfile",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
@@ -222,6 +228,7 @@ export interface EmployeeControllerInterface extends utils.Interface {
     functionFragment: "getAllSkill",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "getProfile", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
@@ -343,6 +350,11 @@ export interface EmployeeController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[EmployeeSkillStructOutput[]]>;
 
+    getProfile(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[ProfileStructOutput]>;
+
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
@@ -418,6 +430,11 @@ export interface EmployeeController extends BaseContract {
 
   getAllSkill(overrides?: CallOverrides): Promise<EmployeeSkillStructOutput[]>;
 
+  getProfile(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<ProfileStructOutput>;
+
   owner(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
@@ -492,6 +509,11 @@ export interface EmployeeController extends BaseContract {
     getAllSkill(
       overrides?: CallOverrides
     ): Promise<EmployeeSkillStructOutput[]>;
+
+    getProfile(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<ProfileStructOutput>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -580,6 +602,11 @@ export interface EmployeeController extends BaseContract {
 
     getAllSkill(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getProfile(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
@@ -657,6 +684,11 @@ export interface EmployeeController extends BaseContract {
     getAllProfile(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAllSkill(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getProfile(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

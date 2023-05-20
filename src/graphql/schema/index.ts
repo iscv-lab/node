@@ -58,6 +58,9 @@ type Post  {
     imageSource: String
     job: String
     status: Int
+    applyId: Int
+    applyTime: Int
+    applyStatus: Int
 }
 
   type Query {
@@ -71,6 +74,6 @@ type Post  {
     cv: CV
     defaultCV(employeeId: ID!): DefaultCV
     prediction(id: ID!): [Post]
-    post(id: ID!): Post
+    post(id: ID!, employeeId: ID): Post
   }
 `;

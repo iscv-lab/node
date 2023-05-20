@@ -1,20 +1,23 @@
+import fastifyApollo from '@as-integrations/fastify';
 import compress from '@fastify/compress';
 import cors from '@fastify/cors';
 import helmet from '@fastify/helmet';
 import middie from '@fastify/middie';
+import multipath from '@fastify/multipart';
 import rateLimit from '@fastify/rate-limit';
+import { ethers } from 'ethers';
 import fastify from 'fastify';
+import socketio from 'fastify-socket.io';
+import { mongoServer } from './configs/mongo.js';
+import { redisServer } from './configs/redis.js';
 import { initDotENV } from './configs/nodedotenv.js';
 import { initRuntime } from './configs/runtime.js';
-import { mongoServer } from './configs/mongo.js';
-import 'redis';
 import { apolloServer } from './configs/graphql.js';
-import routes from './routes/index.js';
-import fastifyApollo from '@as-integrations/fastify';
-import { createContext } from './graphql/context.js';
-import { ethers } from 'ethers';
-import multipath from '@fastify/multipart';
 import { ipfsServer } from './configs/ipfs.js';
+import { createContext } from './graphql/context.js';
+import routes from './routes/index.js';
+import { interview } from './socket/interview.js';
+import fastifyStatic from '@fastify/static';
 
 initDotENV();
 initRuntime();
@@ -30,7 +33,25 @@ app.setErrorHandler(async (error, request, reply) => {
 });
 await app.register(cors, {
     credentials: true,
-    origin: ["http://localhost:3000", "https://studio.apollographql.com"],
+    origin: [
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "https://studio.apollographql.com",
+        "https://iscv.ftisu.vn",
+        "https://business.iscv.ftisu.vn",
+    ],
+});
+const { pubClient, subClient } = await redisServer();
+await app.register(socketio, {
+    cors: {
+        origin: [
+            "http://localhost:3000",
+            "http://localhost:3001",
+            "https://studio.apollographql.com",
+            "https://iscv.ftisu.vn",
+            "https://business.iscv.ftisu.vn",
+        ],
+    },
 });
 await app.register(rateLimit, {
     max: 500,
@@ -65,16 +86,22 @@ await app.register(fastifyApollo(apollo), {
     context: createContext({ provider, ipfs }),
 });
 app.register(multipath, {
+    // addToBody: true,
     limits: {
         fieldNameSize: 100,
         fieldSize: 100,
         fields: 10,
-        fileSize: 10 * 1024 * 1024,
+        fileSize: 299 * 1024 * 1024,
         files: 10,
         headerPairs: 2000, // Max number of header key=>value pairs
     },
 });
+await app.register(fastifyStatic, {
+    root: "/public",
+    prefix: "/public/", // optional: default '/'
+});
 await app.register(routes);
+interview(app, pubClient, subClient);
 await mongoServer();
 app.listen({ port: Number(process.env.PORT) || 4000 }, (err, address) => {
     if (err) {

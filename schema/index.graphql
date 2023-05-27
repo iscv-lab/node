@@ -25,10 +25,40 @@ type Skill {
   level: Int
 }
 
+type Certificate {
+  iig: IIG
+}
+
+type LR {
+  id: Int
+  employeeId: Int
+  testDate: Date
+  shiftTest: Int
+  expireDate: Date
+  listeningScore: Int
+  readingScore: Int
+  time: Date
+}
+type SW {
+  id: Int
+  employeeId: Int
+  testDate: Date
+  shiftTest: Int
+  expireDate: Date
+  speakingScore: Int
+  writingScore: Int
+  time: Date
+}
+
+type IIG {
+  lr: LR
+  sw: SW
+}
+
 type CV {
   id: Int
   employeeId: Int
-  time: String
+  time: Int
   source: String
 }
 
@@ -44,6 +74,7 @@ type DefaultCV {
   linkedin: String
   sourceImage: String
   skills: [Skill]
+  certificate: Certificate
 }
 
 type Post {

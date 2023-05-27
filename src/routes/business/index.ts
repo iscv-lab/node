@@ -1,6 +1,7 @@
 import { FastifyInstance, FastifyPluginOptions } from "fastify";
 import profile from "./profile";
 import posts from "./posts";
+import iig from "./iig";
 
 export default async (
   server: FastifyInstance,
@@ -8,4 +9,5 @@ export default async (
 ) => {
   server.register(profile, { prefix: "profile" });
   server.register(posts, { prefix: "posts" });
+  server.register(iig, { prefix: "iig" });
 };

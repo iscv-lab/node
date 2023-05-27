@@ -12,6 +12,7 @@ export type IUser = {
   videos?: string[];
   content: string;
   hashtag: string;
+  job?: string;
   status: PostStatus;
   createdAt: Date;
   updatedAt: Date;
@@ -34,6 +35,9 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: true,
     },
+    job: {
+      type: String,
+    },
     hashtag: {
       type: String,
       required: true,
@@ -52,4 +56,7 @@ userSchema.plugin(softDeletePlugin, {
   overrideMethods: true,
 });
 
-export const Post = model<IUser, SoftDeletableModel<IUser>>("business_post", userSchema);
+export const Post = model<IUser, SoftDeletableModel<IUser>>(
+  "business_post",
+  userSchema
+);

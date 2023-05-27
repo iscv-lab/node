@@ -1,10 +1,9 @@
 import image from './image.js';
+import ipfs from './ipfs.js';
 
 var common = async (server, options) => {
-    server.get("/", {}, async (request, reply) => {
-        return reply.code(200).send({ message: "hello" });
-    });
     server.register(image, { prefix: "image" });
+    server.register(ipfs, { prefix: "ipfs" });
 };
 
 export { common as default };

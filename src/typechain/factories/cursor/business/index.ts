@@ -2,6 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as apply from "./apply";
-export * as iig from "./iig";
-export * as post from "./post";
 export { ListBusinessCursor__factory } from "./ListBusinessCursor__factory";

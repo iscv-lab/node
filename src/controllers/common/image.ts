@@ -6,15 +6,12 @@ export const postImage = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  if (!request.image?.at(0)) {
+  const image = request.form?.image as Buffer | undefined;
+  if (!image) {
     reply.code(400).send("required image");
     return;
   }
 
-  const image = await fs.promises.readFile(request.image.at(0)!);
-  if (!image) {
-    reply.code(400).send("not found image");
-  }
   const { cid } = await ipfs.add(image);
 
   reply.code(200).send(cid.toString());

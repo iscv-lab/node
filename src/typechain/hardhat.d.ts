@@ -41,17 +41,9 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ListBusinessApplyCursor__factory>;
     getContractFactory(
-      name: "ListIIGRequestCursor",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ListIIGRequestCursor__factory>;
-    getContractFactory(
       name: "ListBusinessCursor",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ListBusinessCursor__factory>;
-    getContractFactory(
-      name: "ListBusinessPostCursor",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ListBusinessPostCursor__factory>;
     getContractFactory(
       name: "ListEmployeeCursor",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -65,17 +57,13 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ListBusinessApply__factory>;
     getContractFactory(
-      name: "ListBusinessAppointment",
+      name: "IIGData",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ListBusinessAppointment__factory>;
+    ): Promise<Contracts.IIGData__factory>;
     getContractFactory(
       name: "ListIIGLRResult",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ListIIGLRResult__factory>;
-    getContractFactory(
-      name: "ListIIGRequest",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ListIIGRequest__factory>;
     getContractFactory(
       name: "ListIIGSWResult",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -84,10 +72,6 @@ declare module "hardhat/types/runtime" {
       name: "ListBusiness",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ListBusiness__factory>;
-    getContractFactory(
-      name: "ListBusinessPost",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ListBusinessPost__factory>;
     getContractFactory(
       name: "ListEmployeeCV",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -137,20 +121,10 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ListBusinessApplyCursor>;
     getContractAt(
-      name: "ListIIGRequestCursor",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ListIIGRequestCursor>;
-    getContractAt(
       name: "ListBusinessCursor",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ListBusinessCursor>;
-    getContractAt(
-      name: "ListBusinessPostCursor",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ListBusinessPostCursor>;
     getContractAt(
       name: "ListEmployeeCursor",
       address: string,
@@ -167,20 +141,15 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ListBusinessApply>;
     getContractAt(
-      name: "ListBusinessAppointment",
+      name: "IIGData",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ListBusinessAppointment>;
+    ): Promise<Contracts.IIGData>;
     getContractAt(
       name: "ListIIGLRResult",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ListIIGLRResult>;
-    getContractAt(
-      name: "ListIIGRequest",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ListIIGRequest>;
     getContractAt(
       name: "ListIIGSWResult",
       address: string,
@@ -191,11 +160,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.ListBusiness>;
-    getContractAt(
-      name: "ListBusinessPost",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ListBusinessPost>;
     getContractAt(
       name: "ListEmployeeCV",
       address: string,

@@ -12,7 +12,6 @@ const getBusiness = async (request, reply) => {
     if (!business)
         return;
     reply.code(200).send({
-        category: business.category.toNumber(),
         id: business.id.toNumber(),
         user: business.user,
         name: business.name,
@@ -38,7 +37,6 @@ const getBusinessByUser = async (request, reply) => {
         return;
     }
     reply.code(200).send({
-        category: business.category.toNumber(),
         id: business.id.toNumber(),
         user: business.user,
         name: business.name,

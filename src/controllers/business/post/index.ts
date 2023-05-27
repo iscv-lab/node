@@ -9,20 +9,8 @@ export const getMyPosts = async (
   request: FastifyRequest<{ Params: { userid: number } }>,
   reply: FastifyReply
 ) => {
-  const businessContract = useBusiness(provider);
-  const posts = await businessContract.getAllPosts();
-  const result = posts
-    .filter((post) => post.businessId.eq(request.params.userid))
-    .map((post) => ({
-      id: post.id.toNumber(),
-      businessId: post.businessId.toNumber(),
-      hashTag: post.hashTag,
-      time: new Date(post.time.toNumber() * 1000),
-      content: post.content,
-      imageSource: post.imageSource,
-      job: post.job,
-      status: post.status,
-    }));
+  const userid = request.params.userid;
+  const result = await Post.find({ businessId: userid });
   reply.code(200).send(result);
 };
 
@@ -35,6 +23,7 @@ export const newPost = async (
   const businessId = request.form!.businessId as number;
   const content = request.form!.content as string;
   const hashtag = request.form!.hashtag as string;
+  const job = request.form!.job as string;
   const status = request.form!.status as number as PostStatus;
 
   const newPost = new Post();
@@ -42,10 +31,11 @@ export const newPost = async (
   newPost.content = content;
   newPost.hashtag = hashtag;
   newPost.status = status;
+  newPost.job = job;
   const newPostData = await newPost.save();
 
   await fs.promises.mkdir(`./public/business/post/${newPostData._id}`);
-  
+
   const imagePipeline = (() => {
     if (!images) return;
     if (Array.isArray(images))

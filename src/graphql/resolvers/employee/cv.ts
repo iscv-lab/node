@@ -4,7 +4,6 @@ import { Context } from "~graphql/context";
 
 export const cv = {
   cv: async (parent, args, contextValue: Context, info) => {
-    console.log("first");
     const id = args.id;
     if (!id) return;
     const provider = contextValue.provider;
@@ -43,7 +42,6 @@ export const cv = {
     if (!employee) return;
 
     const result = {
-      category: employee.category.toNumber(),
       id: employee.id.toNumber(),
       user: employee.user,
       name: employee.name,

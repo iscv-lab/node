@@ -18,6 +18,10 @@ import routes from "~routes/index";
 import { interview } from "./socket/interview";
 import fastifyStatic from "@fastify/static";
 import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 initDotENV();
 
@@ -80,7 +84,7 @@ await app.register(helmet, {
   // referrerPolicy: false,
   // xssFilter: false,
   // // crossOriginEmbedderPolicy: false,
-  // // crossOriginResourcePolicy: { policy: "cross-origin" },
+  crossOriginResourcePolicy: { policy: "cross-origin" },
 });
 await app.register(compress);
 
@@ -109,8 +113,9 @@ app.register(multipath, {
     headerPairs: 2000, // Max number of header key=>value pairs
   },
 });
+
 await app.register(fastifyStatic, {
-  root: "/public",
+  root: path.join(__dirname, "..", 'public'),
   prefix: "/public/", // optional: default '/'
 });
 

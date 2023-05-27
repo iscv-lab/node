@@ -3,7 +3,6 @@ import { useEmployeeCV } from '../../../contracts/useEmployeeCV.js';
 
 const cv = {
     cv: async (parent, args, contextValue, info) => {
-        console.log("first");
         const id = args.id;
         if (!id)
             return;
@@ -36,7 +35,6 @@ const cv = {
         if (!employee)
             return;
         const result = {
-            category: employee.category.toNumber(),
             id: employee.id.toNumber(),
             user: employee.user,
             name: employee.name,

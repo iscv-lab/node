@@ -1,0 +1,76 @@
+scalar Date
+
+type Book {
+  id: Int
+  title: String
+  author: String
+}
+
+type Employee {
+  id: Int
+  user: String
+  name: String
+  phone: String
+  professional: String
+  email: String
+  github: String
+  linkedin: String
+  sourceImage: String
+}
+
+type Skill {
+  id: Int
+  employeeId: Int
+  title: String
+  level: Int
+}
+
+type CV {
+  id: Int
+  employeeId: Int
+  time: String
+  source: String
+}
+
+type DefaultCV {
+  category: Int
+  id: Int
+  user: String
+  name: String
+  phone: String
+  professional: String
+  email: String
+  github: String
+  linkedin: String
+  sourceImage: String
+  skills: [Skill]
+}
+
+type Post {
+  _id: String
+  businessId: Int
+  images: [String]
+  videos: [String]
+  content: String
+  hashtag: String
+  status: Int
+  job: String
+  applied: Boolean
+  businessImage: String
+  createdAt: Date
+  updatedAt: Date
+}
+
+type Query {
+  books: [Book]
+  book(id: Int!): Book
+  employees: [Employee]
+  employee(id: Int!): Employee
+  employeeByUser(user: String): Employee
+  skillsByEmployee(employeeId: Int!): [Skill]
+  cvs: [CV]
+  cv: CV
+  defaultCV(employeeId: Int!): DefaultCV
+  prediction(id: Int!): [Post]
+  post(id: String!, employeeId: Int): Post
+}

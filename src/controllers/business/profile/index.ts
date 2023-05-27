@@ -7,9 +7,9 @@ export const postAvatar = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  if (!request.image?.at(0)) return;
+  if (!request.form?.image) return;
 
-  const image = await fs.promises.readFile(request.image.at(0)!);
+  const image = await fs.promises.readFile(request.form?.image as Buffer);
   if (!image) return;
   const { cid } = await ipfs.add(image);
 
@@ -27,7 +27,6 @@ export const getBusiness = async (
   const business = businesses.find((x) => x.id.eq(id));
   if (!business) return;
   reply.code(200).send({
-    category: business.category.toNumber(),
     id: business.id.toNumber(),
     user: business.user,
     name: business.name,
@@ -62,7 +61,6 @@ export const getBusinessByUser = async (
     return;
   }
   reply.code(200).send({
-    category: business.category.toNumber(),
     id: business.id.toNumber(),
     user: business.user,
     name: business.name,

@@ -31,7 +31,7 @@ export type BusinessApplyStruct = {
   id: PromiseOrValue<BigNumberish>;
   employeeId: PromiseOrValue<BigNumberish>;
   businessId: PromiseOrValue<BigNumberish>;
-  postId: PromiseOrValue<BigNumberish>;
+  postId: PromiseOrValue<string>;
   time: PromiseOrValue<BigNumberish>;
   status: PromiseOrValue<BigNumberish>;
 };
@@ -40,76 +40,19 @@ export type BusinessApplyStructOutput = [
   BigNumber,
   BigNumber,
   BigNumber,
-  BigNumber,
+  string,
   BigNumber,
   BigNumber
 ] & {
   id: BigNumber;
   employeeId: BigNumber;
   businessId: BigNumber;
-  postId: BigNumber;
+  postId: string;
   time: BigNumber;
   status: BigNumber;
-};
-
-export type BusinessAppointmentStruct = {
-  id: PromiseOrValue<BigNumberish>;
-  businessApplyId: PromiseOrValue<BigNumberish>;
-  employeeId: PromiseOrValue<BigNumberish>;
-  businessId: PromiseOrValue<BigNumberish>;
-  time: PromiseOrValue<BigNumberish>;
-  status: PromiseOrValue<BigNumberish>;
-};
-
-export type BusinessAppointmentStructOutput = [
-  BigNumber,
-  BigNumber,
-  BigNumber,
-  BigNumber,
-  BigNumber,
-  BigNumber
-] & {
-  id: BigNumber;
-  businessApplyId: BigNumber;
-  employeeId: BigNumber;
-  businessId: BigNumber;
-  time: BigNumber;
-  status: BigNumber;
-};
-
-export type BusinessPostStruct = {
-  id: PromiseOrValue<BigNumberish>;
-  businessId: PromiseOrValue<BigNumberish>;
-  hashTag: PromiseOrValue<string>;
-  time: PromiseOrValue<BigNumberish>;
-  content: PromiseOrValue<string>;
-  imageSource: PromiseOrValue<string>;
-  job: PromiseOrValue<string>;
-  status: PromiseOrValue<BigNumberish>;
-};
-
-export type BusinessPostStructOutput = [
-  BigNumber,
-  BigNumber,
-  string,
-  BigNumber,
-  string,
-  string,
-  string,
-  number
-] & {
-  id: BigNumber;
-  businessId: BigNumber;
-  hashTag: string;
-  time: BigNumber;
-  content: string;
-  imageSource: string;
-  job: string;
-  status: number;
 };
 
 export type ProfileStruct = {
-  category: PromiseOrValue<BigNumberish>;
   id: PromiseOrValue<BigNumberish>;
   user: PromiseOrValue<string>;
   name: PromiseOrValue<string>;
@@ -123,7 +66,6 @@ export type ProfileStruct = {
 
 export type ProfileStructOutput = [
   BigNumber,
-  BigNumber,
   string,
   string,
   string,
@@ -133,7 +75,6 @@ export type ProfileStructOutput = [
   string,
   string
 ] & {
-  category: BigNumber;
   id: BigNumber;
   user: string;
   name: string;
@@ -148,20 +89,15 @@ export type ProfileStructOutput = [
 export interface BusinessControllerInterface extends utils.Interface {
   functions: {
     "_checkApplyIdBelongsToEmployeeId(uint256,uint256)": FunctionFragment;
-    "_checkExistApply(uint256,uint256)": FunctionFragment;
+    "_checkExistApply(uint256,string)": FunctionFragment;
     "_checkExistBusinessAccount()": FunctionFragment;
-    "_checkIdBelongsToPostId(uint256,uint256)": FunctionFragment;
-    "_checkPostIdBelongstoBusinessId(uint256,uint256)": FunctionFragment;
-    "addAppointment(uint256,uint256,uint256,uint256,uint256)": FunctionFragment;
-    "addBusiness(uint256,string,string,string,string,string,string,string)": FunctionFragment;
-    "addPost(uint256,string,string,string,string,uint8)": FunctionFragment;
+    "_checkIdBelongsToPostId(uint256,string)": FunctionFragment;
+    "addBusiness(string,string,string,string,string,string,string)": FunctionFragment;
     "destroy()": FunctionFragment;
     "getAllApplies()": FunctionFragment;
-    "getAllAppointments()": FunctionFragment;
-    "getAllPosts()": FunctionFragment;
     "getAllProfile()": FunctionFragment;
+    "getProfile(uint256)": FunctionFragment;
     "owner()": FunctionFragment;
-    "setStatusPost(uint256,uint256,uint8)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
 
@@ -171,17 +107,12 @@ export interface BusinessControllerInterface extends utils.Interface {
       | "_checkExistApply"
       | "_checkExistBusinessAccount"
       | "_checkIdBelongsToPostId"
-      | "_checkPostIdBelongstoBusinessId"
-      | "addAppointment"
       | "addBusiness"
-      | "addPost"
       | "destroy"
       | "getAllApplies"
-      | "getAllAppointments"
-      | "getAllPosts"
       | "getAllProfile"
+      | "getProfile"
       | "owner"
-      | "setStatusPost"
       | "transferOwnership"
   ): FunctionFragment;
 
@@ -191,7 +122,7 @@ export interface BusinessControllerInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "_checkExistApply",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "_checkExistBusinessAccount",
@@ -199,26 +130,11 @@ export interface BusinessControllerInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "_checkIdBelongsToPostId",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "_checkPostIdBelongstoBusinessId",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addAppointment",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "addBusiness",
     values: [
-      PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
@@ -228,43 +144,20 @@ export interface BusinessControllerInterface extends utils.Interface {
       PromiseOrValue<string>
     ]
   ): string;
-  encodeFunctionData(
-    functionFragment: "addPost",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
-  ): string;
   encodeFunctionData(functionFragment: "destroy", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "getAllApplies",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "getAllAppointments",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getAllPosts",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
     functionFragment: "getAllProfile",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "setStatusPost",
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    functionFragment: "getProfile",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [PromiseOrValue<string>]
@@ -287,40 +180,20 @@ export interface BusinessControllerInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "_checkPostIdBelongstoBusinessId",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "addAppointment",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "addBusiness",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "addPost", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "destroy", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getAllApplies",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "getAllAppointments",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAllPosts",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "getAllProfile",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "getProfile", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setStatusPost",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike
@@ -328,11 +201,9 @@ export interface BusinessControllerInterface extends utils.Interface {
 
   events: {
     "OwnershipTransferred(address,address)": EventFragment;
-    "eventAddPost(uint256,string,string,string,string,uint8)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "eventAddPost"): EventFragment;
 }
 
 export interface OwnershipTransferredEventObject {
@@ -346,21 +217,6 @@ export type OwnershipTransferredEvent = TypedEvent<
 
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
-
-export interface eventAddPostEventObject {
-  id: BigNumber;
-  hashTag: string;
-  job: string;
-  content: string;
-  imageSource: string;
-  status: number;
-}
-export type eventAddPostEvent = TypedEvent<
-  [BigNumber, string, string, string, string, number],
-  eventAddPostEventObject
->;
-
-export type eventAddPostEventFilter = TypedEventFilter<eventAddPostEvent>;
 
 export interface BusinessController extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -397,7 +253,7 @@ export interface BusinessController extends BaseContract {
 
     _checkExistApply(
       employeeId: PromiseOrValue<BigNumberish>,
-      postId: PromiseOrValue<BigNumberish>,
+      postId: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
@@ -405,27 +261,11 @@ export interface BusinessController extends BaseContract {
 
     _checkIdBelongsToPostId(
       id: PromiseOrValue<BigNumberish>,
-      postId: PromiseOrValue<BigNumberish>,
+      postId: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
-
-    _checkPostIdBelongstoBusinessId(
-      id: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    addAppointment(
-      businessPostId: PromiseOrValue<BigNumberish>,
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      businessApplyId: PromiseOrValue<BigNumberish>,
-      time: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
 
     addBusiness(
-      category: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
       phone: PromiseOrValue<string>,
       professional: PromiseOrValue<string>,
@@ -433,16 +273,6 @@ export interface BusinessController extends BaseContract {
       github: PromiseOrValue<string>,
       linkedin: PromiseOrValue<string>,
       sourceImage: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    addPost(
-      businessId: PromiseOrValue<BigNumberish>,
-      hashTag: PromiseOrValue<string>,
-      job: PromiseOrValue<string>,
-      content: PromiseOrValue<string>,
-      imageSource: PromiseOrValue<string>,
-      status: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -454,24 +284,14 @@ export interface BusinessController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BusinessApplyStructOutput[]]>;
 
-    getAllAppointments(
-      overrides?: CallOverrides
-    ): Promise<[BusinessAppointmentStructOutput[]]>;
-
-    getAllPosts(
-      overrides?: CallOverrides
-    ): Promise<[BusinessPostStructOutput[]]>;
-
     getAllProfile(overrides?: CallOverrides): Promise<[ProfileStructOutput[]]>;
 
-    owner(overrides?: CallOverrides): Promise<[string]>;
+    getProfile(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[ProfileStructOutput]>;
 
-    setStatusPost(
-      postId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      status: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    owner(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
@@ -487,7 +307,7 @@ export interface BusinessController extends BaseContract {
 
   _checkExistApply(
     employeeId: PromiseOrValue<BigNumberish>,
-    postId: PromiseOrValue<BigNumberish>,
+    postId: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
@@ -495,27 +315,11 @@ export interface BusinessController extends BaseContract {
 
   _checkIdBelongsToPostId(
     id: PromiseOrValue<BigNumberish>,
-    postId: PromiseOrValue<BigNumberish>,
+    postId: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
-
-  _checkPostIdBelongstoBusinessId(
-    id: PromiseOrValue<BigNumberish>,
-    businessId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  addAppointment(
-    businessPostId: PromiseOrValue<BigNumberish>,
-    employeeId: PromiseOrValue<BigNumberish>,
-    businessId: PromiseOrValue<BigNumberish>,
-    businessApplyId: PromiseOrValue<BigNumberish>,
-    time: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
 
   addBusiness(
-    category: PromiseOrValue<BigNumberish>,
     name: PromiseOrValue<string>,
     phone: PromiseOrValue<string>,
     professional: PromiseOrValue<string>,
@@ -523,16 +327,6 @@ export interface BusinessController extends BaseContract {
     github: PromiseOrValue<string>,
     linkedin: PromiseOrValue<string>,
     sourceImage: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  addPost(
-    businessId: PromiseOrValue<BigNumberish>,
-    hashTag: PromiseOrValue<string>,
-    job: PromiseOrValue<string>,
-    content: PromiseOrValue<string>,
-    imageSource: PromiseOrValue<string>,
-    status: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -544,22 +338,14 @@ export interface BusinessController extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BusinessApplyStructOutput[]>;
 
-  getAllAppointments(
-    overrides?: CallOverrides
-  ): Promise<BusinessAppointmentStructOutput[]>;
-
-  getAllPosts(overrides?: CallOverrides): Promise<BusinessPostStructOutput[]>;
-
   getAllProfile(overrides?: CallOverrides): Promise<ProfileStructOutput[]>;
 
-  owner(overrides?: CallOverrides): Promise<string>;
+  getProfile(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<ProfileStructOutput>;
 
-  setStatusPost(
-    postId: PromiseOrValue<BigNumberish>,
-    businessId: PromiseOrValue<BigNumberish>,
-    status: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  owner(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
@@ -575,7 +361,7 @@ export interface BusinessController extends BaseContract {
 
     _checkExistApply(
       employeeId: PromiseOrValue<BigNumberish>,
-      postId: PromiseOrValue<BigNumberish>,
+      postId: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
@@ -583,27 +369,11 @@ export interface BusinessController extends BaseContract {
 
     _checkIdBelongsToPostId(
       id: PromiseOrValue<BigNumberish>,
-      postId: PromiseOrValue<BigNumberish>,
+      postId: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
-
-    _checkPostIdBelongstoBusinessId(
-      id: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    addAppointment(
-      businessPostId: PromiseOrValue<BigNumberish>,
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      businessApplyId: PromiseOrValue<BigNumberish>,
-      time: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     addBusiness(
-      category: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
       phone: PromiseOrValue<string>,
       professional: PromiseOrValue<string>,
@@ -614,38 +384,20 @@ export interface BusinessController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    addPost(
-      businessId: PromiseOrValue<BigNumberish>,
-      hashTag: PromiseOrValue<string>,
-      job: PromiseOrValue<string>,
-      content: PromiseOrValue<string>,
-      imageSource: PromiseOrValue<string>,
-      status: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     destroy(overrides?: CallOverrides): Promise<void>;
 
     getAllApplies(
       overrides?: CallOverrides
     ): Promise<BusinessApplyStructOutput[]>;
 
-    getAllAppointments(
-      overrides?: CallOverrides
-    ): Promise<BusinessAppointmentStructOutput[]>;
-
-    getAllPosts(overrides?: CallOverrides): Promise<BusinessPostStructOutput[]>;
-
     getAllProfile(overrides?: CallOverrides): Promise<ProfileStructOutput[]>;
 
-    owner(overrides?: CallOverrides): Promise<string>;
-
-    setStatusPost(
-      postId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      status: PromiseOrValue<BigNumberish>,
+    getProfile(
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<ProfileStructOutput>;
+
+    owner(overrides?: CallOverrides): Promise<string>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
@@ -662,23 +414,6 @@ export interface BusinessController extends BaseContract {
       previousOwner?: PromiseOrValue<string> | null,
       newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
-
-    "eventAddPost(uint256,string,string,string,string,uint8)"(
-      id?: null,
-      hashTag?: null,
-      job?: null,
-      content?: null,
-      imageSource?: null,
-      status?: null
-    ): eventAddPostEventFilter;
-    eventAddPost(
-      id?: null,
-      hashTag?: null,
-      job?: null,
-      content?: null,
-      imageSource?: null,
-      status?: null
-    ): eventAddPostEventFilter;
   };
 
   estimateGas: {
@@ -690,7 +425,7 @@ export interface BusinessController extends BaseContract {
 
     _checkExistApply(
       employeeId: PromiseOrValue<BigNumberish>,
-      postId: PromiseOrValue<BigNumberish>,
+      postId: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -698,27 +433,11 @@ export interface BusinessController extends BaseContract {
 
     _checkIdBelongsToPostId(
       id: PromiseOrValue<BigNumberish>,
-      postId: PromiseOrValue<BigNumberish>,
+      postId: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    _checkPostIdBelongstoBusinessId(
-      id: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    addAppointment(
-      businessPostId: PromiseOrValue<BigNumberish>,
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      businessApplyId: PromiseOrValue<BigNumberish>,
-      time: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     addBusiness(
-      category: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
       phone: PromiseOrValue<string>,
       professional: PromiseOrValue<string>,
@@ -729,36 +448,20 @@ export interface BusinessController extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    addPost(
-      businessId: PromiseOrValue<BigNumberish>,
-      hashTag: PromiseOrValue<string>,
-      job: PromiseOrValue<string>,
-      content: PromiseOrValue<string>,
-      imageSource: PromiseOrValue<string>,
-      status: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     destroy(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     getAllApplies(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAllAppointments(overrides?: CallOverrides): Promise<BigNumber>;
-
-    getAllPosts(overrides?: CallOverrides): Promise<BigNumber>;
-
     getAllProfile(overrides?: CallOverrides): Promise<BigNumber>;
 
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
-
-    setStatusPost(
-      postId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      status: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    getProfile(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
@@ -775,7 +478,7 @@ export interface BusinessController extends BaseContract {
 
     _checkExistApply(
       employeeId: PromiseOrValue<BigNumberish>,
-      postId: PromiseOrValue<BigNumberish>,
+      postId: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -785,27 +488,11 @@ export interface BusinessController extends BaseContract {
 
     _checkIdBelongsToPostId(
       id: PromiseOrValue<BigNumberish>,
-      postId: PromiseOrValue<BigNumberish>,
+      postId: PromiseOrValue<string>,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    _checkPostIdBelongstoBusinessId(
-      id: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    addAppointment(
-      businessPostId: PromiseOrValue<BigNumberish>,
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      businessApplyId: PromiseOrValue<BigNumberish>,
-      time: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     addBusiness(
-      category: PromiseOrValue<BigNumberish>,
       name: PromiseOrValue<string>,
       phone: PromiseOrValue<string>,
       professional: PromiseOrValue<string>,
@@ -816,38 +503,20 @@ export interface BusinessController extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    addPost(
-      businessId: PromiseOrValue<BigNumberish>,
-      hashTag: PromiseOrValue<string>,
-      job: PromiseOrValue<string>,
-      content: PromiseOrValue<string>,
-      imageSource: PromiseOrValue<string>,
-      status: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     destroy(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     getAllApplies(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAllAppointments(
+    getAllProfile(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getProfile(
+      id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    getAllPosts(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    getAllProfile(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    setStatusPost(
-      postId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      status: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,

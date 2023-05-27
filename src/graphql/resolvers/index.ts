@@ -23,7 +23,6 @@ export const resolvers = {
         .then((success) => {
           return success.map((value, index) => ({
             ...value,
-            category: value.category.toNumber(),
             id: value.id.toNumber(),
           }));
         })
@@ -34,23 +33,15 @@ export const resolvers = {
 
     employee: async (parent, args, contextValue: Context, info) => {
       const id = args.id;
-      if (!id) return;
+
+      if (id === undefined || id === null) return;
       const provider = contextValue.provider;
       const employeeContract = useEmployee(provider);
-      return await employeeContract
-        .getAllProfile({})
-        .then((success) => {
-          const data = success.find((value, index) => value.id.eq(id));
 
-          return {
-            ...data,
-            category: data!.category.toNumber(),
-            id: data!.id.toNumber(),
-          };
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      return await employeeContract.getProfile(id).then((data) => ({
+        ...data,
+        id: data!.id.toNumber(),
+      }));
     },
     employeeByUser: async (parent, args, contextValue: Context, info) => {
       const user: string = args.user;
@@ -66,7 +57,6 @@ export const resolvers = {
           });
           if (!data) return;
           return {
-            category: data.category.toNumber(),
             id: data.id.toNumber(),
             user: data.user,
             name: data.name,

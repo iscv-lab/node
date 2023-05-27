@@ -4,7 +4,6 @@
 import type {
   BaseContract,
   BigNumber,
-  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -27,46 +26,70 @@ import type {
   PromiseOrValue,
 } from "../../../common";
 
-export interface CVControllerInterface extends utils.Interface {
+export interface IIGDataInterface extends utils.Interface {
   functions: {
-    "_checkExistEmployeeAccount()": FunctionFragment;
-    "addCV(uint256,string)": FunctionFragment;
+    "approve(address)": FunctionFragment;
     "destroy()": FunctionFragment;
+    "getIIGAccount()": FunctionFragment;
+    "iigAccount()": FunctionFragment;
     "owner()": FunctionFragment;
+    "retrive(address)": FunctionFragment;
+    "setIIGAccount(address)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "_checkExistEmployeeAccount"
-      | "addCV"
+      | "approve"
       | "destroy"
+      | "getIIGAccount"
+      | "iigAccount"
       | "owner"
+      | "retrive"
+      | "setIIGAccount"
       | "transferOwnership"
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "_checkExistEmployeeAccount",
+    functionFragment: "approve",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: "destroy", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "getIIGAccount",
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "addCV",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    functionFragment: "iigAccount",
+    values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "destroy", values?: undefined): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "retrive",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setIIGAccount",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [PromiseOrValue<string>]
   ): string;
 
+  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "destroy", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "_checkExistEmployeeAccount",
+    functionFragment: "getIIGAccount",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "addCV", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "destroy", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "iigAccount", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "retrive", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setIIGAccount",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike
@@ -91,12 +114,12 @@ export type OwnershipTransferredEvent = TypedEvent<
 export type OwnershipTransferredEventFilter =
   TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface CVController extends BaseContract {
+export interface IIGData extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: CVControllerInterface;
+  interface: IIGDataInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -118,11 +141,8 @@ export interface CVController extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    _checkExistEmployeeAccount(overrides?: CallOverrides): Promise<[boolean]>;
-
-    addCV(
-      employeeId: PromiseOrValue<BigNumberish>,
-      source: PromiseOrValue<string>,
+    approve(
+      value: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -130,7 +150,21 @@ export interface CVController extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    getIIGAccount(overrides?: CallOverrides): Promise<[string]>;
+
+    iigAccount(overrides?: CallOverrides): Promise<[string]>;
+
     owner(overrides?: CallOverrides): Promise<[string]>;
+
+    retrive(
+      value: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    setIIGAccount(
+      iigAccountAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
@@ -138,11 +172,8 @@ export interface CVController extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  _checkExistEmployeeAccount(overrides?: CallOverrides): Promise<boolean>;
-
-  addCV(
-    employeeId: PromiseOrValue<BigNumberish>,
-    source: PromiseOrValue<string>,
+  approve(
+    value: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -150,7 +181,21 @@ export interface CVController extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  getIIGAccount(overrides?: CallOverrides): Promise<string>;
+
+  iigAccount(overrides?: CallOverrides): Promise<string>;
+
   owner(overrides?: CallOverrides): Promise<string>;
+
+  retrive(
+    value: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  setIIGAccount(
+    iigAccountAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
@@ -158,17 +203,28 @@ export interface CVController extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    _checkExistEmployeeAccount(overrides?: CallOverrides): Promise<boolean>;
-
-    addCV(
-      employeeId: PromiseOrValue<BigNumberish>,
-      source: PromiseOrValue<string>,
+    approve(
+      value: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     destroy(overrides?: CallOverrides): Promise<void>;
 
+    getIIGAccount(overrides?: CallOverrides): Promise<string>;
+
+    iigAccount(overrides?: CallOverrides): Promise<string>;
+
     owner(overrides?: CallOverrides): Promise<string>;
+
+    retrive(
+      value: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setIIGAccount(
+      iigAccountAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
@@ -188,11 +244,8 @@ export interface CVController extends BaseContract {
   };
 
   estimateGas: {
-    _checkExistEmployeeAccount(overrides?: CallOverrides): Promise<BigNumber>;
-
-    addCV(
-      employeeId: PromiseOrValue<BigNumberish>,
-      source: PromiseOrValue<string>,
+    approve(
+      value: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -200,7 +253,21 @@ export interface CVController extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    getIIGAccount(overrides?: CallOverrides): Promise<BigNumber>;
+
+    iigAccount(overrides?: CallOverrides): Promise<BigNumber>;
+
     owner(overrides?: CallOverrides): Promise<BigNumber>;
+
+    retrive(
+      value: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    setIIGAccount(
+      iigAccountAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
@@ -209,13 +276,8 @@ export interface CVController extends BaseContract {
   };
 
   populateTransaction: {
-    _checkExistEmployeeAccount(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    addCV(
-      employeeId: PromiseOrValue<BigNumberish>,
-      source: PromiseOrValue<string>,
+    approve(
+      value: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -223,7 +285,21 @@ export interface CVController extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
+    getIIGAccount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    iigAccount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    retrive(
+      value: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setIIGAccount(
+      iigAccountAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,

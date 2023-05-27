@@ -1,6 +1,6 @@
 {
   "verbose": true,
-  "watch": ["./out"],
+  "watch": ["./out", "./schema"],
   "ext": "ts,json,js",
   "ignore": [".git", ".gitignore", "access.log", "debug.log", "./public/**/*.spec.ts"],
   "exec": "node --inspect ./out/app.js",

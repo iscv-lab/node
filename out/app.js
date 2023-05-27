@@ -18,7 +18,11 @@ import { createContext } from './graphql/context.js';
 import routes from './routes/index.js';
 import { interview } from './socket/interview.js';
 import fastifyStatic from '@fastify/static';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 initDotENV();
 initRuntime();
 const app = fastify({
@@ -58,23 +62,23 @@ await app.register(rateLimit, {
     timeWindow: "1 minute",
 });
 await app.register(helmet, {
-// contentSecurityPolicy: false,
-// crossOriginEmbedderPolicy: false,
-// crossOriginOpenerPolicy: false,
-// crossOriginResourcePolicy: false,
-// dnsPrefetchControl: false,
-// expectCt: false,
-// frameguard: false,
-// hidePoweredBy: false,
-// hsts: false,
-// ieNoOpen: false,
-// noSniff: false,
-// originAgentCluster: false,
-// permittedCrossDomainPolicies: false,
-// referrerPolicy: false,
-// xssFilter: false,
-// // crossOriginEmbedderPolicy: false,
-// // crossOriginResourcePolicy: { policy: "cross-origin" },
+    // contentSecurityPolicy: false,
+    // crossOriginEmbedderPolicy: false,
+    // crossOriginOpenerPolicy: false,
+    // crossOriginResourcePolicy: false,
+    // dnsPrefetchControl: false,
+    // expectCt: false,
+    // frameguard: false,
+    // hidePoweredBy: false,
+    // hsts: false,
+    // ieNoOpen: false,
+    // noSniff: false,
+    // originAgentCluster: false,
+    // permittedCrossDomainPolicies: false,
+    // referrerPolicy: false,
+    // xssFilter: false,
+    // // crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: { policy: "cross-origin" },
 });
 await app.register(compress);
 await app.register(middie);
@@ -97,7 +101,7 @@ app.register(multipath, {
     },
 });
 await app.register(fastifyStatic, {
-    root: "/public",
+    root: path.join(__dirname, "..", 'public'),
     prefix: "/public/", // optional: default '/'
 });
 await app.register(routes);

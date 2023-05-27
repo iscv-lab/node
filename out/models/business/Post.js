@@ -17,6 +17,9 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    job: {
+        type: String,
+    },
     hashtag: {
         type: String,
         required: true,

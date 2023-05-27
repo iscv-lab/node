@@ -5,6 +5,7 @@ import { useBusiness } from "~contracts/useBusiness";
 import { useEmployee } from "~contracts/useEmployee";
 import { Context } from "~graphql/context";
 import { trim } from "~helpers/trimMultipleSpace";
+import { Post } from "~models/business/Post";
 
 export const social = {
   prediction: async (
@@ -15,16 +16,11 @@ export const social = {
   ) => {
     const id = args.id;
     const employeeContract = useEmployee(provider);
-    const businessContract = useBusiness(provider);
-    const [skills, businesses] = await Promise.all([
-      employeeContract.getAllSkill(),
-      businessContract.getAllProfile(),
-    ]);
+    const [skills] = await Promise.all([employeeContract.getAllSkill()]);
     //   const employee = employees.find(x=>x.id.eq(id))
     const myskills = skills.filter((skill) => skill.employeeId.eq(id));
     const listSkills = myskills.map((x) => x.title);
     if (listSkills.length == 0) {
-      console.log("first");
       return;
     }
 
@@ -40,10 +36,10 @@ export const social = {
       });
     });
 
-    const result = await businessContract
-      .getAllPosts()
+    const result = await Post.find()
       .then(async (success) => {
         return success.map((value, index) => {
+          if (!value.job) return undefined;
           let arrItem = value["job"].split(" ");
           for (let i = 0; i < arrItem.length; i++) {
             for (let j = 0; j < listPredict.length; j++) {
@@ -68,20 +64,20 @@ export const social = {
             .filter(Boolean)
         );
       })
-      .then((success) =>
-        success.map((post) => {
-          return {
-            id: post!.id.toNumber(),
-            businessId: post!.businessId.toNumber(),
-            hashTag: post!.hashTag,
-            time: new Date(post!.time.toNumber() * 1000),
-            content: post!.content,
-            imageSource: post!.imageSource,
-            job: post!.job,
-            status: post!.status,
-          };
-        })
-      )
+      // .then((success) =>
+      //   success.map((post) => {
+      //     return {
+      //       id: post!.id.toNumber(),
+      //       businessId: post!.businessId,
+      //       hashTag: post!.hashtag,
+      //       time: post?.createdAt,
+      //       content: post!.content,
+      //       imageSource: post?.images,
+      //       job: post!.job,
+      //       status: post!.status,
+      //     };
+      //   })
+      // )
       .catch((error) => {
         console.error(error);
       });

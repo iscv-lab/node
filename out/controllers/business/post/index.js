@@ -1,24 +1,10 @@
-import { provider } from '../../../app.js';
-import { useBusiness } from '../../../contracts/useBusiness.js';
 import fs from 'fs';
 import { Post } from '../../../models/business/Post.js';
 import { v4 } from 'uuid';
 
 const getMyPosts = async (request, reply) => {
-    const businessContract = useBusiness(provider);
-    const posts = await businessContract.getAllPosts();
-    const result = posts
-        .filter((post) => post.businessId.eq(request.params.userid))
-        .map((post) => ({
-        id: post.id.toNumber(),
-        businessId: post.businessId.toNumber(),
-        hashTag: post.hashTag,
-        time: new Date(post.time.toNumber() * 1000),
-        content: post.content,
-        imageSource: post.imageSource,
-        job: post.job,
-        status: post.status,
-    }));
+    const userid = request.params.userid;
+    const result = await Post.find({ businessId: userid });
     reply.code(200).send(result);
 };
 const newPost = async (request, reply) => {
@@ -27,12 +13,14 @@ const newPost = async (request, reply) => {
     const businessId = request.form.businessId;
     const content = request.form.content;
     const hashtag = request.form.hashtag;
+    const job = request.form.job;
     const status = request.form.status;
     const newPost = new Post();
     newPost.businessId = businessId;
     newPost.content = content;
     newPost.hashtag = hashtag;
     newPost.status = status;
+    newPost.job = job;
     const newPostData = await newPost.save();
     await fs.promises.mkdir(`./public/business/post/${newPostData._id}`);
     const imagePipeline = (() => {

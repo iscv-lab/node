@@ -12,7 +12,9 @@
     "start:production": "cross-env NODE_ENV=production node ./dist/app.js",
     "watch:rollup": "cross-env NODE_ENV=development rollup -w -c rollup.config.js",
     "watch:nodemon": "cross-env NODE_ENV=development nodemon",
-    "format": "prettier --config .prettierrc 'src/**/*.ts' --write"
+    "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "codegen": "graphql-codegen --config codegen.ts",
+    "codegen:watch": "graphql-codegen --config codegen.ts --watch schema/**/*.graphql"
   },
   "author": "bongdungyeuem27",
   "license": "MIT",
@@ -65,6 +67,9 @@
     "@ethersproject/providers": "^5.4.7",
     "@graphql-codegen/cli": "^3.3.1",
     "@graphql-codegen/client-preset": "^3.0.1",
+    "@graphql-codegen/typescript": "^3.0.4",
+    "@graphql-codegen/typescript-operations": "^3.0.4",
+    "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@nexus/schema": "^0.20.1",
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.0",
     "@nomicfoundation/hardhat-network-helpers": "^1.0.0",

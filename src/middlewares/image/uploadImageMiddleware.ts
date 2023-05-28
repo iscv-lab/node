@@ -33,7 +33,11 @@ export const imageMiddleware = async (
         file.on("end", async () => {
           listTask++;
           const buffer = Buffer.concat(chunks);
-          if (mimetype === "image/png") {
+          if (
+            mimetype === "image/png" ||
+            mimetype === "image/jpg" ||
+            mimetype === "image/jpeg"
+          ) {
             const resizedBuffer = await sharp(buffer)
               .resize({ height: 1000, width: 1000, fit: "contain" })
               .jpeg({ quality: 80 })

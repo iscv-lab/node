@@ -18,6 +18,19 @@ type Employee {
   sourceImage: String
 }
 
+type Business {
+  id: Int
+  user: String
+  name: String
+  phone: String
+  professional: String
+  email: String
+  github: String
+  linkedin: String
+  sourceImage: String
+  category: Int
+}
+
 type Skill {
   id: Int
   employeeId: Int
@@ -92,16 +105,24 @@ type Post {
   updatedAt: Date
 }
 
+type IIGStatus {
+  lr: Boolean
+  sw: Boolean
+}
+
 type Query {
   books: [Book]
   book(id: Int!): Book
   employees: [Employee]
   employee(id: Int!): Employee
   employeeByUser(user: String): Employee
+  businessByUser(user: String): Business
+  business(id: Int!): Business
   skillsByEmployee(employeeId: Int!): [Skill]
   cvs: [CV]
   cv: CV
   defaultCV(employeeId: Int!): DefaultCV
   prediction(id: Int!): [Post]
   post(id: String!, employeeId: Int): Post
+  requestStatus(employeeId: Int!): IIGStatus
 }

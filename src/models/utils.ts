@@ -1,7 +1,12 @@
 import mongoose, { Query, Schema } from 'mongoose';
+
 import { Model, Document } from 'mongoose';
 
-interface SoftDeletableModel<T extends Document> extends Model<T> {
+export type IMyDocument = {
+  createdAt: Date;
+  updatedAt: Date;
+} & Document;
+interface SoftDeletableModel<T extends IMyDocument> extends Model<T> {
   softDelete(): Promise<T | null>;
   softDelete(id: Schema.Types.ObjectId | string): Query<(this & T) | null, any>;
   restore(id: Schema.Types.ObjectId | string): Query<(this & T) | null, any>;

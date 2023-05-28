@@ -1,5 +1,6 @@
 import { provider } from '../../../app.js';
 import { useIIG } from '../../../contracts/iig/useIIG.js';
+import { IIGRequest } from '../../../models/business/iig/IIGRequest.js';
 
 const getListLR = async (request, reply) => {
     const iigContract = useIIG(provider);
@@ -17,5 +18,9 @@ const getListLR = async (request, reply) => {
     });
     await reply.code(200).send(listLR.reverse());
 };
+const getListRequest = async (request, reply) => {
+    const list = await IIGRequest.find({}, {}, { skip: 0, limit: 100 });
+    await reply.code(200).send(list);
+};
 
-export { getListLR };
+export { getListLR, getListRequest };

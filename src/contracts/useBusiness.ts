@@ -3,7 +3,7 @@ import { BusinessController__factory } from "~typechain/index";
 
 export const useBusiness = (provider: ethers.providers.JsonRpcProvider) => {
   return BusinessController__factory.connect(
-    "0xcba59fCe6fC90230f343E390b22aD95B759742B5",
+    "0x2345c54dA4a9b548D336D5C05210DDDE59857e42",
     provider 
   );
 };

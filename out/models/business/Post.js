@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 import { softDeletePlugin } from '../utils.js';
 import { PostStatus } from '../../types/post/index.js';
 
-const userSchema = new Schema({
+const postSchema = new Schema({
     businessId: {
         type: Number,
         required: true,
@@ -30,10 +30,10 @@ const userSchema = new Schema({
         enum: PostStatus,
     },
 }, { timestamps: true });
-userSchema.plugin(softDeletePlugin, {
+postSchema.plugin(softDeletePlugin, {
     deletedAtFieldName: "deletedAt",
     overrideMethods: true,
 });
-const Post = model("business_post", userSchema);
+const Post = model("business_post", postSchema);
 
 export { Post };

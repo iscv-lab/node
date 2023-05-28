@@ -1,12 +1,11 @@
 import { model, Schema } from "mongoose";
 
-import SoftDeletableModel, { softDeletePlugin } from "../utils";
+import SoftDeletableModel, { IMyDocument, softDeletePlugin } from "../utils";
 // import mongodb from 'mongodb';
 import { Document } from "mongoose";
 import { PostStatus } from "~types/post";
 
-export type IUser = {
-  _id: Schema.Types.ObjectId;
+export type IPost = {
   businessId: number;
   images?: string[];
   videos?: string[];
@@ -14,12 +13,9 @@ export type IUser = {
   hashtag: string;
   job?: string;
   status: PostStatus;
-  createdAt: Date;
-  updatedAt: Date;
-  __v?: number;
-} & Document;
+} & IMyDocument;
 
-const userSchema = new Schema<IUser>(
+const postSchema = new Schema<IPost>(
   {
     businessId: {
       type: Number,
@@ -51,12 +47,12 @@ const userSchema = new Schema<IUser>(
   { timestamps: true }
 );
 
-userSchema.plugin(softDeletePlugin, {
+postSchema.plugin(softDeletePlugin, {
   deletedAtFieldName: "deletedAt",
   overrideMethods: true,
 });
 
-export const Post = model<IUser, SoftDeletableModel<IUser>>(
+export const Post = model<IPost, SoftDeletableModel<IPost>>(
   "business_post",
-  userSchema
+  postSchema
 );

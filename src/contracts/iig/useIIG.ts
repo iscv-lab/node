@@ -3,7 +3,7 @@ import { IIGController__factory } from "../../typechain/factories/controller/bus
 
 export const useIIG = (provider: ethers.providers.JsonRpcProvider) => {
   return IIGController__factory.connect(
-    "0xdeAdC91Bc53E0613b1aC4820A70b4962a27EF323",
+    "0x31E8fbBA059Bb39683935FbddaeD8BDA34559CD3",
     provider
   );
 };

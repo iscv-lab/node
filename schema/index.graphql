@@ -90,6 +90,22 @@ type DefaultCV {
   certificate: Certificate
 }
 
+type Customcv {
+  category: Int
+  id: Int
+  user: String
+  name: String
+  phone: String
+  professional: String
+  email: String
+  github: String
+  linkedin: String
+  sourceImage: String
+  skills: [Skill]
+  certificate: Certificate
+  source: String
+}
+
 type Post {
   _id: String
   businessId: Int
@@ -122,6 +138,7 @@ type Query {
   cvs: [CV]
   cv: CV
   defaultCV(employeeId: Int!): DefaultCV
+  customCV(employeeId: Int!): Customcv
   prediction(id: Int!): [Post]
   post(id: String!, employeeId: Int): Post
   requestStatus(employeeId: Int!): IIGStatus

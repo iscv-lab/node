@@ -19,6 +19,9 @@ import { interview } from "./socket/interview";
 import fastifyStatic from "@fastify/static";
 import path from "path";
 import { fileURLToPath } from "url";
+import { messages } from "./socket/messages";
+import { initSocket } from "./socket";
+import socketblock from "~blocks/socketblock";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -115,15 +118,17 @@ app.register(multipath, {
 });
 
 await app.register(fastifyStatic, {
-  root: path.join(__dirname, "..", 'public'),
+  root: path.join(__dirname, "..", "public"),
   prefix: "/public/", // optional: default '/'
 });
 
 await app.register(routes);
 
-interview(app, pubClient as RedisClientType, subClient as RedisClientType);
+// interview(app, pubClient as RedisClientType, subClient as RedisClientType);
 
-await mongoServer();
+initSocket(pubClient as RedisClientType, subClient as RedisClientType);
+
+await Promise.all([mongoServer(), socketblock.init()]);
 
 app.listen({ port: Number(process.env.PORT) || 4000 }, (err, address) => {
   if (err) {
@@ -132,4 +137,4 @@ app.listen({ port: Number(process.env.PORT) || 4000 }, (err, address) => {
   }
   console.log(`Server listening at ${address}`);
 });
-export { ipfs, provider };
+export { ipfs, provider, app, pubClient };

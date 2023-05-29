@@ -12,6 +12,7 @@ declare global {
       ETHEREUM_ENDPOINT: string;
       PORT: string;
       PWD: string;
+      SOCKET_POOL: string;
     }
   }
 }

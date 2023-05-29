@@ -10,7 +10,7 @@ export const interview = (
 ) => {
   app.ready().then(() => {
     app.io.adapter(createAdapter(pubClient, subClient));
-    
+
     app.io.on("connection", (socket) => {
       console.log(`Client ${socket.id} connected.`);
       const tmpFilePath = "./uploads/interview/tempfile.webm";

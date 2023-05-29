@@ -16,10 +16,11 @@ import { apolloServer } from './configs/graphql.js';
 import { ipfsServer } from './configs/ipfs.js';
 import { createContext } from './graphql/context.js';
 import routes from './routes/index.js';
-import { interview } from './socket/interview.js';
 import fastifyStatic from '@fastify/static';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { initSocket } from './socket/index.js';
+import socketblock from './blocks/socketblock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -101,12 +102,13 @@ app.register(multipath, {
     },
 });
 await app.register(fastifyStatic, {
-    root: path.join(__dirname, "..", 'public'),
+    root: path.join(__dirname, "..", "public"),
     prefix: "/public/", // optional: default '/'
 });
 await app.register(routes);
-interview(app, pubClient, subClient);
-await mongoServer();
+// interview(app, pubClient as RedisClientType, subClient as RedisClientType);
+initSocket(pubClient, subClient);
+await Promise.all([mongoServer(), socketblock.init()]);
 app.listen({ port: Number(process.env.PORT) || 4000 }, (err, address) => {
     if (err) {
         console.error(err);
@@ -115,4 +117,4 @@ app.listen({ port: Number(process.env.PORT) || 4000 }, (err, address) => {
     console.log(`Server listening at ${address}`);
 });
 
-export { ipfs, provider };
+export { app, ipfs, provider, pubClient };

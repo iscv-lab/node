@@ -1,7 +1,7 @@
 var ERole;
 (function (ERole) {
-    ERole["EMPLOYEE"] = "1";
-    ERole["BUSINESS"] = "2";
+    ERole["EMPLOYEE"] = "employee";
+    ERole["BUSINESS"] = "business";
 })(ERole || (ERole = {}));
 
 export { ERole };

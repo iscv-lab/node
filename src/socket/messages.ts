@@ -3,6 +3,7 @@ import { Socket } from "socket.io";
 import socketblock from "~blocks/socketblock";
 import { Messages } from "~models/messages/Messages";
 import { ERole } from "~types/index";
+import { IMesssages } from "~types/messages";
 
 type WithTimeoutAck<
   isSender extends boolean,
@@ -16,7 +17,7 @@ interface ClientToServerEvents<isSender extends boolean = false> {
       employeeId?: string;
       content: string;
     },
-    callback: (...args: WithTimeoutAck<isSender, [string]>) => void
+    callback: (data: IMesssages) => void
   ) => void;
   hello: (
     arg: number,
@@ -54,8 +55,7 @@ export const messages = (
     SocketData
   >
 ) => {
-  socket.on("receive", async (args) => {
-
+  socket.on("receive", async (args, callback) => {
     const employeeId = Number.isInteger(Number(args.employeeId))
       ? Number(args.employeeId)
       : undefined;
@@ -83,6 +83,12 @@ export const messages = (
           businessId: result.businessId,
           content: result.content,
         });
+        callback({
+          _id: result._id,
+          role: ERole.EMPLOYEE,
+          content: content,
+          time: result.createdAt,
+        });
         break;
 
       case ERole.BUSINESS: {
@@ -99,7 +105,12 @@ export const messages = (
           employeeId: result.employeeId,
           content: result.content,
         });
-
+        callback({
+          _id: result._id,
+          role: ERole.BUSINESS,
+          content: content,
+          time: result.createdAt,
+        });
         break;
       }
     }

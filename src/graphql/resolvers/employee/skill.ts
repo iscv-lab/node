@@ -9,7 +9,7 @@ export const skill = {
     info
   ) => {
     const employeeId = args.employeeId;
-    if (employeeId === undefined) return;
+    if (employeeId === undefined  ) return;
     const { provider } = contextValue;
     const employeeContract = useEmployee(provider);
     const skills = await employeeContract.getAllSkill();

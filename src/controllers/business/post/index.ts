@@ -5,6 +5,8 @@ import fs from "fs";
 import { PostStatus } from "~types/post";
 import { Post } from "~models/business/Post";
 import { v4 as uuidv4 } from "uuid";
+import { IApply } from "~types/business/apply";
+import { useEmployee } from "~contracts/useEmployee";
 export const getMyPosts = async (
   request: FastifyRequest<{ Params: { userid: number } }>,
   reply: FastifyReply
@@ -93,5 +95,41 @@ export const newPost = async (
   newPostData.images = listImages;
   newPostData.videos = listVideos;
   const result = await newPostData.updateOne(newPostData);
+  await reply.code(200).send(result);
+};
+
+export const getAllApply = async (
+  request: FastifyRequest<{ Params: { businessId: number } }>,
+  reply: FastifyReply
+) => {
+  const businessId = request.params.businessId;
+
+  const businessContract = useBusiness(provider);
+  const employeeContract = useEmployee(provider);
+  const applies = await businessContract.getAllApplies();
+  const pipeline = applies
+    .filter((x) => x.businessId.eq(businessId))
+    .map(async (x) => {
+      const [employee, post] = await Promise.all([
+        employeeContract.getProfile(x.employeeId),
+        Post.findById(x.postId),
+      ]);
+
+      return {
+        id: x.id.toNumber(),
+        employeeId: x.employeeId.toNumber(),
+        employeeName: employee.name,
+        employeeSourceImage: employee.sourceImage,
+        businessId: x.businessId.toNumber(),
+        postId: x.postId,
+        postContent: post?.content,
+        postHashtag: post?.hashtag,
+        postJob: post?.job,
+        postStatus: post?.status,
+        time: x.time.toNumber(),
+        status: x.status.toNumber(),
+      };
+    });
+  const result = await Promise.all(pipeline);
   await reply.code(200).send(result);
 };

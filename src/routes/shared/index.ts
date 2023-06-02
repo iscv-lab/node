@@ -1,9 +1,3 @@
-import { FastifyInstance, FastifyPluginOptions } from "fastify";
-import post from "./post";
+import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 
-export default async (
-  server: FastifyInstance,
-  options: FastifyPluginOptions
-) => {
-  server.register(post, { prefix: "post" });
-};
+export default async (server: FastifyInstance, options: FastifyPluginOptions) => {};

@@ -1,6 +1,9 @@
+import { provider } from '../../../app.js';
+import { useBusiness } from '../../../contracts/useBusiness.js';
 import fs from 'fs';
 import { Post } from '../../../models/business/Post.js';
 import { v4 } from 'uuid';
+import { useEmployee } from '../../../contracts/useEmployee.js';
 
 const getMyPosts = async (request, reply) => {
     const userid = request.params.userid;
@@ -70,5 +73,35 @@ const newPost = async (request, reply) => {
     const result = await newPostData.updateOne(newPostData);
     await reply.code(200).send(result);
 };
+const getAllApply = async (request, reply) => {
+    const businessId = request.params.businessId;
+    const businessContract = useBusiness(provider);
+    const employeeContract = useEmployee(provider);
+    const applies = await businessContract.getAllApplies();
+    const pipeline = applies
+        .filter((x) => x.businessId.eq(businessId))
+        .map(async (x) => {
+        const [employee, post] = await Promise.all([
+            employeeContract.getProfile(x.employeeId),
+            Post.findById(x.postId),
+        ]);
+        return {
+            id: x.id.toNumber(),
+            employeeId: x.employeeId.toNumber(),
+            employeeName: employee.name,
+            employeeSourceImage: employee.sourceImage,
+            businessId: x.businessId.toNumber(),
+            postId: x.postId,
+            postContent: post?.content,
+            postHashtag: post?.hashtag,
+            postJob: post?.job,
+            postStatus: post?.status,
+            time: x.time.toNumber(),
+            status: x.status.toNumber(),
+        };
+    });
+    const result = await Promise.all(pipeline);
+    await reply.code(200).send(result);
+};
 
-export { getMyPosts, newPost };
+export { getAllApply, getMyPosts, newPost };

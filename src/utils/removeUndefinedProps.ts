@@ -1,5 +1,5 @@
-export function removeUndefinedProps(obj: Object) {
-  for (var prop in obj) {
+export function removeUndefinedProps(obj: object) {
+  for (const prop in obj) {
     if (obj.hasOwnProperty(prop) && obj[prop] === undefined) {
       delete obj[prop];
     }

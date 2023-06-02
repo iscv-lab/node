@@ -1,14 +1,14 @@
-import { ApolloServer } from "@apollo/server";
-import { ApolloServerErrorCode } from "@apollo/server/errors";
-import { fastifyApolloDrainPlugin } from "@as-integrations/fastify";
-import { FastifyInstance } from "fastify";
-import { readFileSync } from "fs";
-import { Context } from "../graphql/context";
-import { resolvers } from "../graphql/resolvers";
+import { ApolloServer } from '@apollo/server';
+import { ApolloServerErrorCode } from '@apollo/server/errors';
+import { fastifyApolloDrainPlugin } from '@as-integrations/fastify';
+import { FastifyInstance } from 'fastify';
+import { readFileSync } from 'fs';
+import { Context } from '../graphql/context';
+import { resolvers } from '../graphql/resolvers';
 
 export const apolloServer = async (app: FastifyInstance) => {
   const apollo = new ApolloServer<Context>({
-    typeDefs: readFileSync("./schema/index.graphql", "utf-8"),
+    typeDefs: readFileSync('./schema/index.graphql', 'utf-8'),
     resolvers,
     formatError: (error) => {
       console.error(error); // Log the error to the console
@@ -16,6 +16,7 @@ export const apolloServer = async (app: FastifyInstance) => {
       // Return the formatted error to the client
       return error;
     },
+    introspection: process.env.NODE_ENV !== 'production',
     plugins: [
       fastifyApolloDrainPlugin(app),
       // ApolloServerPluginUsageReporting({
@@ -54,6 +55,6 @@ export const apolloServer = async (app: FastifyInstance) => {
     // },
   });
 
-  console.log("connect to apollo");
+  console.log('connect to apollo');
   return apollo;
 };

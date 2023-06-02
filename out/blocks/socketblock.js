@@ -9,9 +9,22 @@ const init = async () => {
         return;
     await pubClient.set(record, JSON.stringify({}));
 };
-const find = async (key) => {
+const find = async (key, role) => {
     const data = await getter();
-    return data?.[key] || undefined;
+    return data?.[role + '_' + key] || undefined;
+};
+const findBySocket = async (socket) => {
+    const data = await getter();
+    let id = undefined;
+    for (const [key, value] of Object.entries(data)) {
+        if (value.socketIds.includes(socket)) {
+            id = key;
+            break;
+        }
+    }
+    if (id === undefined)
+        return undefined;
+    return (data?.[id] || undefined);
 };
 const getter = async () => {
     const raw = await pubClient.get(record);
@@ -20,23 +33,24 @@ const getter = async () => {
     const data = JSON.parse(raw);
     return data;
 };
-const get = async (key) => {
+const get = async (key, role) => {
     const raw = await pubClient.get(record);
     if (!raw)
         return;
     const data = JSON.parse(raw);
     if (!data)
         return;
-    return data[key];
+    return data[key + '_' + role];
 };
-const add = async (key, socket, role) => {
+const add = async (id, socket, role) => {
     const data = await getter();
+    const key = id + '_' + role;
     if (!data)
         return;
     if (!data[key])
         data[key] = {
             role,
-            socketIds: [socket]
+            socketIds: [socket],
         };
     const temp = data[key].socketIds;
     if (!temp.includes(socket)) {
@@ -46,7 +60,8 @@ const add = async (key, socket, role) => {
     const result = JSON.stringify(removeUndefinedProps(data));
     await pubClient.set(record, result);
 };
-const remove = async (key) => {
+const remove = async (id, role) => {
+    const key = id + '_' + role;
     const data = await getter();
     if (!data || !data?.[key])
         return;
@@ -54,7 +69,8 @@ const remove = async (key) => {
     const result = JSON.stringify(removeUndefinedProps(data));
     await pubClient.set(record, result);
 };
-const removeSocket = async (key) => {
+const removeSocket = async (id, role) => {
+    const key = id + '_' + role;
     const data = await getter();
     if (!data || !data?.[key])
         return;
@@ -70,6 +86,7 @@ var socketblock = {
     init,
     removeSocket,
     find,
+    findBySocket,
 };
 
 export { socketblock as default };

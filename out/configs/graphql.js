@@ -5,13 +5,14 @@ import { resolvers } from '../graphql/resolvers/index.js';
 
 const apolloServer = async (app) => {
     const apollo = new ApolloServer({
-        typeDefs: readFileSync("./schema/index.graphql", "utf-8"),
+        typeDefs: readFileSync('./schema/index.graphql', 'utf-8'),
         resolvers,
         formatError: (error) => {
             console.error(error); // Log the error to the console
             // Return the formatted error to the client
             return error;
         },
+        introspection: process.env.NODE_ENV !== 'production',
         plugins: [
             fastifyApolloDrainPlugin(app),
             // ApolloServerPluginUsageReporting({
@@ -48,7 +49,7 @@ const apolloServer = async (app) => {
         //   return formattedError;
         // },
     });
-    console.log("connect to apollo");
+    console.log('connect to apollo');
     return apollo;
 };
 

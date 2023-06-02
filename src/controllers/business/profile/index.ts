@@ -1,12 +1,10 @@
-import { FastifyReply, FastifyRequest } from "fastify";
-import { ipfs, provider } from "~/app";
-import fs from "fs";
-import { useBusiness } from "~contracts/useBusiness";
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { ipfs, provider } from '~/app';
+import fs from 'fs';
+import { useBusiness } from '~contracts/useBusiness';
+import { useEmployee } from '~contracts/useEmployee';
 
-export const postAvatar = async (
-  request: FastifyRequest,
-  reply: FastifyReply
-) => {
+export const postAvatar = async (request: FastifyRequest, reply: FastifyReply) => {
   if (!request.form?.image) return;
 
   const image = await fs.promises.readFile(request.form?.image as Buffer);
@@ -16,10 +14,7 @@ export const postAvatar = async (
   reply.code(200).send(cid.toString());
 };
 
-export const getBusiness = async (
-  request: FastifyRequest<{ Params: { id: number } }>,
-  reply: FastifyReply
-) => {
+export const getBusiness = async (request: FastifyRequest<{ Params: { id: number } }>, reply: FastifyReply) => {
   const id = request.params.id;
   if (!id) return;
   const businessContract = useBusiness(provider);
@@ -39,25 +34,20 @@ export const getBusiness = async (
   });
 };
 
-export const getBusinessByUser = async (
-  request: FastifyRequest<{ Params: { user: string } }>,
-  reply: FastifyReply
-) => {
+export const getBusinessByUser = async (request: FastifyRequest<{ Params: { user: string } }>, reply: FastifyReply) => {
   const user = request.params.user;
 
   if (!user) {
-    reply.code(400).send("required user");
+    reply.code(400).send('required user');
     return;
   }
   const businessContract = useBusiness(provider);
   const businesses = await businessContract.getAllProfile();
 
-  const business = businesses.find(
-    (x) => x.user.toString().toLowerCase() === user.toLowerCase()
-  );
+  const business = businesses.find((x) => x.user.toString().toLowerCase() === user.toLowerCase());
 
   if (!business) {
-    reply.code(404).send("not found");
+    reply.code(404).send('not found');
     return;
   }
   reply.code(200).send({

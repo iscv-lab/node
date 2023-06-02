@@ -48,5 +48,21 @@ const getBusinessByUser = async (request, reply) => {
         sourceImage: business.sourceImage,
     });
 };
+const searchBusinesses = async (request, reply) => {
+    const search = request.query.search;
+    const businessContract = useBusiness(provider);
+    const businesses = await businessContract.getAllProfile();
+    const filtered = businesses.filter((x) => x.name
+        .normalize('NFD')
+        .replace(/\p{Diacritic}/gu, '')
+        .includes(search.normalize('NFD').replace(/\p{Diacritic}/gu, '')));
+    const result = filtered.map((x) => ({
+        id: x.id.toNumber(),
+        user: x.user,
+        name: x.name,
+        sourceImage: x.sourceImage,
+    }));
+    await reply.code(200).send(result);
+};
 
-export { getBusiness, getBusinessByUser };
+export { getBusiness, getBusinessByUser, searchBusinesses };

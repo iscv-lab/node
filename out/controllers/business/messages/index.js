@@ -14,10 +14,13 @@ const getRecent = async (request, reply) => {
         { $sort: { updatedAt: -1 } },
         { $group: { _id: '$employeeId', newest: { $first: '$$ROOT' } } }, // group by name and get the newest document for each group
     ]).exec();
-    console.log(list);
     const emplopyeeContract = useEmployee(provider);
     const pipeline = list.map(async (messages) => {
-        const emplopyee = await emplopyeeContract.getProfile(messages.newest.employeeId);
+        const emplopyee = await emplopyeeContract
+            .getProfile(messages.newest.employeeId)
+            .catch((error) => console.log(error));
+        if (!emplopyee)
+            return;
         const data = {
             id: emplopyee.id.toNumber(),
             user: emplopyee.user,
@@ -32,7 +35,7 @@ const getRecent = async (request, reply) => {
         };
         return data;
     });
-    const rawRecent = await Promise.all(pipeline);
+    const rawRecent = (await Promise.all(pipeline)).filter((x) => Boolean(x));
     const result = quickSort(rawRecent, (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime());
     await reply.code(200).send(result);
 };

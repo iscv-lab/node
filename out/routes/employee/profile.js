@@ -1,4 +1,4 @@
-import { getEmployee } from '../../controllers/employee/profile/index.js';
+import { getEmployee, searchEmployees } from '../../controllers/employee/profile/index.js';
 
 var profile = async (server, options) => {
     server.get('/item/:employeeid', {
@@ -12,6 +12,17 @@ var profile = async (server, options) => {
             },
         },
     }, getEmployee);
+    server.get('/search', {
+        schema: {
+            querystring: {
+                type: 'object',
+                properties: {
+                    search: { type: 'string' },
+                },
+                required: ['search'],
+            },
+        },
+    }, searchEmployees);
 };
 
 export { profile as default };

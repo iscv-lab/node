@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
-import { getEmployee } from '~controllers/employee/profile';
+import { getEmployee, searchEmployees } from '~controllers/employee/profile';
 
 export default async (server: FastifyInstance, options: FastifyPluginOptions) => {
   server.get(
@@ -16,5 +16,20 @@ export default async (server: FastifyInstance, options: FastifyPluginOptions) =>
       },
     },
     getEmployee,
+  );
+  server.get(
+    '/search',
+    {
+      schema: {
+        querystring: {
+          type: 'object',
+          properties: {
+            search: { type: 'string' },
+          },
+          required: ['search'],
+        },
+      },
+    },
+    searchEmployees,
   );
 };

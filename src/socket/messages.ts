@@ -22,7 +22,7 @@ interface ClientToServerEvents<isSender extends boolean = false> {
 interface ServerToClientEvents<isSender extends boolean = false> {
   // ...
   noArg: () => void;
-  send: (data: { _id: string; employeeId?: number; businessId?: number; content: string; role: ERole }) => void;
+  send: (data: IMesssages) => void;
   basicEmit: (a: number, b: string, c: Buffer) => void;
   withAck: (d: string, callback: (e: number) => void) => void;
 }
@@ -60,6 +60,7 @@ export const messages = (socket: Socket<ClientToServerEvents, ServerToClientEven
           businessId: result.businessId,
           role: ERole.EMPLOYEE,
           content: result.content,
+          time: result.createdAt,
         });
         callback({
           _id: result._id,
@@ -83,6 +84,7 @@ export const messages = (socket: Socket<ClientToServerEvents, ServerToClientEven
           employeeId: result.employeeId,
           role: ERole.BUSINESS,
           content: result.content,
+          time: result.createdAt,
         });
         callback({
           _id: result._id,

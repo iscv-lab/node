@@ -26,6 +26,7 @@ const messages = (socket) => {
                     businessId: result.businessId,
                     role: ERole.EMPLOYEE,
                     content: result.content,
+                    time: result.createdAt,
                 });
                 callback({
                     _id: result._id,
@@ -48,6 +49,7 @@ const messages = (socket) => {
                     employeeId: result.employeeId,
                     role: ERole.BUSINESS,
                     content: result.content,
+                    time: result.createdAt,
                 });
                 callback({
                     _id: result._id,

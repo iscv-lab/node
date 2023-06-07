@@ -1,3 +1,5 @@
-var shared = async (server, options) => { };
+var shared = async (server, options) => {
+    // 
+};
 
 export { shared as default };

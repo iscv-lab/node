@@ -18,6 +18,8 @@ dist-ssr
 build.zip
 *.local
 .env
+.env.development
+.env.production
 
 # Editor directories and files
 .vscode/*

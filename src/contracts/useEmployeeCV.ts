@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 
 export const useEmployeeCV = (provider: ethers.providers.JsonRpcProvider) => {
   return EmployeeCVController__factory.connect(
-    "0xd7Ca062e7B6c25a5f3898E39012E77f15835f8b6",
+    "0x23B906124500B0Ad4015F564767F3cc609fF20dE",
     provider
   );
 };

@@ -6,6 +6,7 @@ import { app } from '~/app';
 import socketblock from '~blocks/socketblock';
 import { ERole } from '~types/index';
 import { messages } from './messages';
+import { interview } from './interview';
 
 export const initSocket = (pubClient: RedisClientType, subClient: RedisClientType) => {
   app.ready().then(() => {
@@ -29,6 +30,7 @@ export const initSocket = (pubClient: RedisClientType, subClient: RedisClientTyp
       await socketblock.add(id, socket.id, role);
 
       messages(socket);
+      interview(socket);
 
       socket.on('disconnect', async () => {
         console.log(`Client ${socket.id} disconnected.`);

@@ -3,6 +3,7 @@ import { app } from '../app.js';
 import socketblock from '../blocks/socketblock.js';
 import { ERole } from '../types/index.js';
 import { messages } from './messages.js';
+import { interview } from './interview.js';
 
 const initSocket = (pubClient, subClient) => {
     app.ready().then(() => {
@@ -23,6 +24,7 @@ const initSocket = (pubClient, subClient) => {
                 return;
             await socketblock.add(id, socket.id, role);
             messages(socket);
+            interview(socket);
             socket.on('disconnect', async () => {
                 console.log(`Client ${socket.id} disconnected.`);
             });

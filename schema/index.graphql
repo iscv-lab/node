@@ -117,6 +117,7 @@ type Post {
   job: String
   applied: Boolean
   businessImage: String
+  businessName: String
   createdAt: Date
   updatedAt: Date
 }

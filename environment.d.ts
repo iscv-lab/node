@@ -3,7 +3,7 @@ declare global {
     interface ProcessEnv {
       GITHUB_AUTH_TOKEN: string;
       APT_ENDPOINT_MONGODB: string;
-      NODE_ENV: "development" | "production";
+      NODE_ENV: 'development' | 'production';
       PYTHON3: string;
       DATABASE: string;
       IPFS_HOST: string;
@@ -13,6 +13,8 @@ declare global {
       PORT: string;
       PWD: string;
       SOCKET_POOL: string;
+      GOOGLE_APPLICATION_CREDENTIALS: string;
+      PYTHON_ENDPOINT: string;
     }
   }
 }

@@ -20,13 +20,7 @@ const interviewAppointmentSchema = new Schema({
     },
     isRead: {
         type: Boolean,
-    },
-    isResult: {
-        type: Boolean,
-    },
-    isReadResult: {
-        type: Boolean,
-    },
+    }
 }, { timestamps: true });
 interviewAppointmentSchema.plugin(softDeletePlugin, {
     deletedAtFieldName: 'deletedAt',

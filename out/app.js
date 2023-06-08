@@ -79,7 +79,7 @@ await app.register(helmet, {
     // permittedCrossDomainPolicies: false,
     // referrerPolicy: false,
     // xssFilter: false,
-    // // crossOriginEmbedderPolicy: false,
+    // crossOriginEmbedderPolicy: false,
     crossOriginResourcePolicy: { policy: 'cross-origin' },
 });
 await app.register(compress);

@@ -21,9 +21,17 @@ import { initRuntime } from '~configs/runtime';
 import { createContext } from '~graphql/context';
 import routes from '~routes/index';
 import { initSocket } from './socket';
+import { Socket } from 'socket.io';
+import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from './socket/types';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+declare module 'fastify' {
+  interface FastifyRequest {
+    io: Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>;
+  }
+}
 
 initDotENV();
 
@@ -85,7 +93,7 @@ await app.register(helmet, {
   // permittedCrossDomainPolicies: false,
   // referrerPolicy: false,
   // xssFilter: false,
-  // // crossOriginEmbedderPolicy: false,
+  // crossOriginEmbedderPolicy: false,
   crossOriginResourcePolicy: { policy: 'cross-origin' },
 });
 await app.register(compress);
@@ -145,4 +153,3 @@ app.listen({ port: Number(process.env.PORT) || 4000 }, (err, address) => {
   console.log(`Server listening at ${address}`);
 });
 export { app, ipfs, provider, pubClient };
-

@@ -8,8 +8,6 @@ export type IInterviewAppointment = {
   fromTime: Date;
   toTime: Date;
   isRead?: boolean;
-  isResult?: boolean;
-  isReadResult?: boolean;
 } & IMyDocument;
 
 const interviewAppointmentSchema = new Schema<IInterviewAppointment>(
@@ -32,13 +30,7 @@ const interviewAppointmentSchema = new Schema<IInterviewAppointment>(
     },
     isRead: {
       type: Boolean,
-    },
-    isResult: {
-      type: Boolean,
-    },
-    isReadResult: {
-      type: Boolean,
-    },
+    }
   },
   { timestamps: true },
 );

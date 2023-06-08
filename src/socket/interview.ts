@@ -7,6 +7,8 @@ import { useEmployee } from '~contracts/useEmployee';
 import { InterviewAppointment } from '~models/employee/InterviewAppointment';
 import socketblock from '~blocks/socketblock';
 import { ERole } from '~types/index';
+import { BigFive } from '~models/employee/BigFive';
+import { EBotCategory } from '~types/messages/bot';
 type WithTimeoutAck<isSender extends boolean, args extends any[]> = isSender extends true ? [Error, ...args] : args;
 
 interface ClientToServerEvents<isSender extends boolean = false> {
@@ -110,12 +112,20 @@ export const interview = (
     const employee = await contractEmployee.getProfile(interviewAppointmentData.employeeId);
     await bigFive(employee.id.toNumber(), employee.name, interviewId!)
       .then(async (success) => {
-        interviewAppointmentData.isResult = true;
-        const [, block] = await Promise.all([
-          interviewAppointmentData.updateOne(interviewAppointmentData),
-          socketblock.get(employee.id.toNumber(), ERole.EMPLOYEE),
-        ]);
-        app.io.to(block!.socketIds).emit('interview_result');
+        const bigFive = new BigFive({
+          employeeId: employee.id.toNumber(),
+          interviewId: interviewId,
+          isRead: false,
+        });
+        const bigFiveResult = await bigFive.save();
+        const [block] = await Promise.all([socketblock.get(employee.id.toNumber(), ERole.EMPLOYEE)]);
+        app.io.to(block!.socketIds).emit('bot_notification', {
+          _id: bigFiveResult._id,
+          role: ERole.BUSINESS,
+          category: EBotCategory.NEW_BIGFIVE_RESULT,
+          content: '',
+          time: bigFiveResult.updatedAt,
+        });
       })
       .catch((error) => console.log(error));
   };

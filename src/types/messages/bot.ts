@@ -13,6 +13,7 @@ export type IBotMessages = {
   _id: string;
   role: ERole;
   content: string;
+  isRead?: boolean;
   time: Date;
   category?: EBotCategory;
   metadata?: IBotMetadata;
@@ -20,4 +21,6 @@ export type IBotMessages = {
 
 export enum EBotCategory {
   NEW_INTERVIEW,
+  INTERVIEW_DIRECTION,
+  NEW_BIGFIVE_RESULT,
 }

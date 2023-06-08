@@ -1,27 +1,26 @@
-import fastifyApollo from "@as-integrations/fastify";
-import compress from "@fastify/compress";
-import cors from "@fastify/cors";
-import helmet from "@fastify/helmet";
-import middie from "@fastify/middie";
-import multipath from "@fastify/multipart";
-import rateLimit from "@fastify/rate-limit";
-import { ethers } from "ethers";
-import fastify, { FastifyInstance } from "fastify";
-import socketio from "fastify-socket.io";
-import { RedisClientType } from "redis";
-import { apolloServer, mongoServer, redisServer } from "~configs/index";
-import { ipfsServer } from "~configs/ipfs";
-import { initDotENV } from "~configs/nodedotenv";
-import { initRuntime } from "~configs/runtime";
-import { createContext } from "~graphql/context";
-import routes from "~routes/index";
-import { interview } from "./socket/interview";
-import fastifyStatic from "@fastify/static";
-import path from "path";
-import { fileURLToPath } from "url";
-import { messages } from "./socket/messages";
-import { initSocket } from "./socket";
-import socketblock from "~blocks/socketblock";
+import fastifyApollo from '@as-integrations/fastify';
+import compress from '@fastify/compress';
+import cors from '@fastify/cors';
+import helmet from '@fastify/helmet';
+import middie from '@fastify/middie';
+import multipath from '@fastify/multipart';
+import rateLimit from '@fastify/rate-limit';
+import fastifyStatic from '@fastify/static';
+import { ethers } from 'ethers';
+import fastify, { FastifyInstance } from 'fastify';
+import socketio from 'fastify-socket.io';
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import path from 'path';
+import { RedisClientType } from 'redis';
+import { fileURLToPath } from 'url';
+import socketblock from '~blocks/socketblock';
+import { apolloServer, mongoServer, redisServer } from '~configs/index';
+import { ipfsServer } from '~configs/ipfs';
+import { initDotENV } from '~configs/nodedotenv';
+import { initRuntime } from '~configs/runtime';
+import { createContext } from '~graphql/context';
+import routes from '~routes/index';
+import { initSocket } from './socket';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,8 +31,8 @@ initRuntime();
 
 const app: FastifyInstance = fastify({
   logger: {
-    level: "info",
-    file: "./logger.log", // Will use pino.destination()
+    level: 'info',
+    file: './logger.log', // Will use pino.destination()
   },
 });
 
@@ -45,11 +44,11 @@ app.setErrorHandler(async (error, request, reply) => {
 await app.register(cors, {
   credentials: true,
   origin: [
-    "http://localhost:3000",
-    "http://localhost:3001",
-    "https://studio.apollographql.com",
-    "https://iscv.ftisu.vn",
-    "https://business.iscv.ftisu.vn",
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://studio.apollographql.com',
+    'https://iscv.ftisu.vn',
+    'https://business.iscv.ftisu.vn',
   ],
 });
 
@@ -58,17 +57,17 @@ const { pubClient, subClient } = await redisServer();
 await app.register(socketio, {
   cors: {
     origin: [
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "https://studio.apollographql.com",
-      "https://iscv.ftisu.vn",
-      "https://business.iscv.ftisu.vn",
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://studio.apollographql.com',
+      'https://iscv.ftisu.vn',
+      'https://business.iscv.ftisu.vn',
     ],
   },
 });
 await app.register(rateLimit, {
   max: 500,
-  timeWindow: "1 minute",
+  timeWindow: '1 minute',
 });
 await app.register(helmet, {
   // contentSecurityPolicy: false,
@@ -87,7 +86,7 @@ await app.register(helmet, {
   // referrerPolicy: false,
   // xssFilter: false,
   // // crossOriginEmbedderPolicy: false,
-  crossOriginResourcePolicy: { policy: "cross-origin" },
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
 });
 await app.register(compress);
 
@@ -96,9 +95,7 @@ await app.register(middie);
 const apollo = await apolloServer(app);
 await apollo.start();
 
-const provider = new ethers.providers.JsonRpcProvider(
-  process.env.ETHEREUM_ENDPOINT
-);
+const provider = new ethers.providers.JsonRpcProvider(process.env.ETHEREUM_ENDPOINT);
 const { ipfs } = ipfsServer();
 
 await app.register(fastifyApollo(apollo), {
@@ -118,9 +115,19 @@ app.register(multipath, {
 });
 
 await app.register(fastifyStatic, {
-  root: path.join(__dirname, "..", "public"),
-  prefix: "/public/", // optional: default '/'
+  root: path.join(__dirname, '..', 'public'),
+  prefix: '/public/', // optional: default '/'
 });
+app.use(
+  '/machine',
+  createProxyMiddleware({
+    target: 'http://localhost:5001',
+    changeOrigin: true,
+    pathRewrite: {
+      '^/machine': '/static', // Path rewrite to remove '/static' prefix
+    },
+  }),
+);
 
 await app.register(routes);
 
@@ -137,4 +144,5 @@ app.listen({ port: Number(process.env.PORT) || 4000 }, (err, address) => {
   }
   console.log(`Server listening at ${address}`);
 });
-export { ipfs, provider, app, pubClient };
+export { app, ipfs, provider, pubClient };
+

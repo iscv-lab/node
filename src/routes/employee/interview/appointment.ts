@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
-import { setInterviewAppointment } from '~controllers/employee/interview';
+import { readInterviewAppointment, setInterviewAppointment } from '~controllers/employee/interview';
 
 export default async (server: FastifyInstance, options: FastifyPluginOptions) => {
   server.post(
@@ -17,5 +17,20 @@ export default async (server: FastifyInstance, options: FastifyPluginOptions) =>
       },
     },
     setInterviewAppointment,
+  );
+  server.get(
+    '/read',
+    {
+      schema: {
+        querystring: {
+          type: 'object',
+          properties: {
+            interview_id: { type: 'string' },
+          },
+          required: ['interview_id'],
+        },
+      },
+    },
+    readInterviewAppointment,
   );
 };

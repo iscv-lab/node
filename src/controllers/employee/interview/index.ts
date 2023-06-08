@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { provider } from '~/app';
 import { useBusiness } from '~contracts/useBusiness';
-import { InterviewAppointment } from '~models/employee/InterviewAppoint';
+import { InterviewAppointment } from '~models/employee/InterviewAppointment';
 
 export const setInterviewAppointment = async (
   request: FastifyRequest<{ Body: { employeeId: number; postId: string } }>,
@@ -27,4 +27,17 @@ export const setInterviewAppointment = async (
   newInterviewAppointment.toTime = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
   const interviewAppointmentResult = await newInterviewAppointment.save();
   await reply.code(201).send(interviewAppointmentResult);
+};
+
+export const readInterviewAppointment = async (
+  request: FastifyRequest<{
+    Querystring: {
+      interview_id: string;
+    };
+  }>,
+  reply: FastifyReply,
+) => {
+  const interviewId = request.query.interview_id;
+  const result = await InterviewAppointment.updateOne({ _id: interviewId }, { $set: { isRead: true } });
+  await reply.code(200).send(result);
 };

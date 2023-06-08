@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { provider } from '~/app';
 import { useBusiness } from '~contracts/useBusiness';
-import { InterviewAppointment } from '~models/employee/InterviewAppoint';
+import { InterviewAppointment } from '~models/employee/InterviewAppointment';
 import { ERole } from '~types/index';
 import { EBotCategory, IBotMessages } from '~types/messages/bot';
 
@@ -27,6 +27,9 @@ export const getRecentTask = async (
       content: '',
       time: appointment.updatedAt,
       category: EBotCategory.NEW_INTERVIEW,
+      isRead: appointment.isRead,
+      isResult: appointment.isResult,
+      isReadResult: appointment.isReadResult,
       metadata: {
         _id: appointment._id,
         fromTime: appointment.fromTime,

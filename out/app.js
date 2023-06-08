@@ -5,9 +5,14 @@ import helmet from '@fastify/helmet';
 import middie from '@fastify/middie';
 import multipath from '@fastify/multipart';
 import rateLimit from '@fastify/rate-limit';
+import fastifyStatic from '@fastify/static';
 import { ethers } from 'ethers';
 import fastify from 'fastify';
 import socketio from 'fastify-socket.io';
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import socketblock from './blocks/socketblock.js';
 import { mongoServer } from './configs/mongo.js';
 import { redisServer } from './configs/redis.js';
 import { initDotENV } from './configs/nodedotenv.js';
@@ -16,11 +21,7 @@ import { apolloServer } from './configs/graphql.js';
 import { ipfsServer } from './configs/ipfs.js';
 import { createContext } from './graphql/context.js';
 import routes from './routes/index.js';
-import fastifyStatic from '@fastify/static';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import { initSocket } from './socket/index.js';
-import socketblock from './blocks/socketblock.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,8 +29,8 @@ initDotENV();
 initRuntime();
 const app = fastify({
     logger: {
-        level: "info",
-        file: "./logger.log", // Will use pino.destination()
+        level: 'info',
+        file: './logger.log', // Will use pino.destination()
     },
 });
 app.setErrorHandler(async (error, request, reply) => {
@@ -39,28 +40,28 @@ app.setErrorHandler(async (error, request, reply) => {
 await app.register(cors, {
     credentials: true,
     origin: [
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "https://studio.apollographql.com",
-        "https://iscv.ftisu.vn",
-        "https://business.iscv.ftisu.vn",
+        'http://localhost:3000',
+        'http://localhost:3001',
+        'https://studio.apollographql.com',
+        'https://iscv.ftisu.vn',
+        'https://business.iscv.ftisu.vn',
     ],
 });
 const { pubClient, subClient } = await redisServer();
 await app.register(socketio, {
     cors: {
         origin: [
-            "http://localhost:3000",
-            "http://localhost:3001",
-            "https://studio.apollographql.com",
-            "https://iscv.ftisu.vn",
-            "https://business.iscv.ftisu.vn",
+            'http://localhost:3000',
+            'http://localhost:3001',
+            'https://studio.apollographql.com',
+            'https://iscv.ftisu.vn',
+            'https://business.iscv.ftisu.vn',
         ],
     },
 });
 await app.register(rateLimit, {
     max: 500,
-    timeWindow: "1 minute",
+    timeWindow: '1 minute',
 });
 await app.register(helmet, {
     // contentSecurityPolicy: false,
@@ -79,7 +80,7 @@ await app.register(helmet, {
     // referrerPolicy: false,
     // xssFilter: false,
     // // crossOriginEmbedderPolicy: false,
-    crossOriginResourcePolicy: { policy: "cross-origin" },
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
 });
 await app.register(compress);
 await app.register(middie);
@@ -102,9 +103,16 @@ app.register(multipath, {
     },
 });
 await app.register(fastifyStatic, {
-    root: path.join(__dirname, "..", "public"),
-    prefix: "/public/", // optional: default '/'
+    root: path.join(__dirname, '..', 'public'),
+    prefix: '/public/', // optional: default '/'
 });
+app.use('/machine', createProxyMiddleware({
+    target: 'http://localhost:5001',
+    changeOrigin: true,
+    pathRewrite: {
+        '^/machine': '/static', // Path rewrite to remove '/static' prefix
+    },
+}));
 await app.register(routes);
 // interview(app, pubClient as RedisClientType, subClient as RedisClientType);
 initSocket(pubClient, subClient);

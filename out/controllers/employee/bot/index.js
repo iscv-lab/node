@@ -1,6 +1,6 @@
 import { provider } from '../../../app.js';
 import { useBusiness } from '../../../contracts/useBusiness.js';
-import { InterviewAppointment } from '../../../models/employee/InterviewAppoint.js';
+import { InterviewAppointment } from '../../../models/employee/InterviewAppointment.js';
 import { ERole } from '../../../types/index.js';
 import { EBotCategory } from '../../../types/messages/bot.js';
 
@@ -19,6 +19,9 @@ const getRecentTask = async (request, reply) => {
             content: '',
             time: appointment.updatedAt,
             category: EBotCategory.NEW_INTERVIEW,
+            isRead: appointment.isRead,
+            isResult: appointment.isResult,
+            isReadResult: appointment.isReadResult,
             metadata: {
                 _id: appointment._id,
                 fromTime: appointment.fromTime,

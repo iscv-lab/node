@@ -1,4 +1,4 @@
-import { setInterviewAppointment } from '../../../controllers/employee/interview/index.js';
+import { setInterviewAppointment, readInterviewAppointment } from '../../../controllers/employee/interview/index.js';
 
 var appointment = async (server, options) => {
     server.post('/new', {
@@ -13,6 +13,17 @@ var appointment = async (server, options) => {
             },
         },
     }, setInterviewAppointment);
+    server.get('/read', {
+        schema: {
+            querystring: {
+                type: 'object',
+                properties: {
+                    interview_id: { type: 'string' },
+                },
+                required: ['interview_id'],
+            },
+        },
+    }, readInterviewAppointment);
 };
 
 export { appointment as default };

@@ -9,6 +9,7 @@ import socketblock from '~blocks/socketblock';
 import { ERole } from '~types/index';
 import { BigFive } from '~models/employee/BigFive';
 import { EBotCategory } from '~types/messages/bot';
+import { handleBigFive } from './hooks/interview';
 type WithTimeoutAck<isSender extends boolean, args extends any[]> = isSender extends true ? [Error, ...args] : args;
 
 interface ClientToServerEvents<isSender extends boolean = false> {
@@ -65,9 +66,9 @@ export const interview = (
   let tmpFilePath: string | undefined = undefined;
   let destStream: fs.WriteStream | undefined = undefined;
   let destTxtStream: fs.WriteStream | undefined = undefined;
-  const introductionDuration = 4000;
+  const introductionDuration = 90000;
   const mainDuration = 900000;
-  // let destAudioStream: any = undefined;
+
   const interviewIntroduction = () => {
     introductionTimer = setTimeout(function () {
       mainEndTime = new Date(new Date().getTime() + mainDuration);
@@ -102,32 +103,8 @@ export const interview = (
     tmpFilePath = undefined;
     destStream = undefined;
     destTxtStream = undefined;
-    handleBigFive();
+    handleBigFive(interviewId!);
     console.log('stoped');
-  };
-  const handleBigFive = async () => {
-    const interviewAppointmentData = await InterviewAppointment.findById(interviewId);
-    if (!interviewAppointmentData) return;
-    const contractEmployee = useEmployee(provider);
-    const employee = await contractEmployee.getProfile(interviewAppointmentData.employeeId);
-    await bigFive(employee.id.toNumber(), employee.name, interviewId!)
-      .then(async (success) => {
-        const bigFive = new BigFive({
-          employeeId: employee.id.toNumber(),
-          interviewId: interviewId,
-          isRead: false,
-        });
-        const bigFiveResult = await bigFive.save();
-        const [block] = await Promise.all([socketblock.get(employee.id.toNumber(), ERole.EMPLOYEE)]);
-        app.io.to(block!.socketIds).emit('bot_notification', {
-          _id: bigFiveResult._id,
-          role: ERole.BUSINESS,
-          category: EBotCategory.NEW_BIGFIVE_RESULT,
-          content: '',
-          time: bigFiveResult.updatedAt,
-        });
-      })
-      .catch((error) => console.log(error));
   };
 
   socket.on('interview_start', (args, callback) => {

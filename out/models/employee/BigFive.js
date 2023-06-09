@@ -6,8 +6,42 @@ const bigFiveSchema = new Schema({
         type: Number,
         required: true,
     },
+    interviewId: {
+        type: Schema.Types.ObjectId,
+        required: true,
+    },
     isRead: {
         type: Boolean,
+    },
+    'Agreeableness Comment': {
+        type: Number,
+    },
+    'Agreeableness Score': {
+        type: Number,
+    },
+    'Conscientiousness Comment': {
+        type: Number,
+    },
+    'Conscientiousness Score': {
+        type: Number,
+    },
+    'Extroversion Comment': {
+        type: Number,
+    },
+    'Extroversion Score': {
+        type: Number,
+    },
+    'Neuroticism Comment': {
+        type: Number,
+    },
+    'Neuroticism Score': {
+        type: Number,
+    },
+    'Openness to Experience Comment': {
+        type: Number,
+    },
+    'Openness to Experience Score': {
+        type: Number,
     },
 }, { timestamps: true });
 bigFiveSchema.plugin(softDeletePlugin, {

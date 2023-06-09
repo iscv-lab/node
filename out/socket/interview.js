@@ -1,13 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { provider, app } from '../app.js';
-import { bigFive } from '../pythonService/interview/index.js';
-import { useEmployee } from '../contracts/useEmployee.js';
-import { InterviewAppointment } from '../models/employee/InterviewAppointment.js';
-import socketblock from '../blocks/socketblock.js';
-import { ERole } from '../types/index.js';
-import { BigFive } from '../models/employee/BigFive.js';
-import { EBotCategory } from '../types/messages/bot.js';
+import { handleBigFive } from './hooks/interview.js';
 
 const interview = (socket) => {
     let interviewId = undefined;
@@ -18,9 +11,8 @@ const interview = (socket) => {
     let tmpFilePath = undefined;
     let destStream = undefined;
     let destTxtStream = undefined;
-    const introductionDuration = 4000;
+    const introductionDuration = 90000;
     const mainDuration = 900000;
-    // let destAudioStream: any = undefined;
     const interviewIntroduction = () => {
         introductionTimer = setTimeout(function () {
             mainEndTime = new Date(new Date().getTime() + mainDuration);
@@ -54,33 +46,8 @@ const interview = (socket) => {
         tmpFilePath = undefined;
         destStream = undefined;
         destTxtStream = undefined;
-        handleBigFive();
+        handleBigFive(interviewId);
         console.log('stoped');
-    };
-    const handleBigFive = async () => {
-        const interviewAppointmentData = await InterviewAppointment.findById(interviewId);
-        if (!interviewAppointmentData)
-            return;
-        const contractEmployee = useEmployee(provider);
-        const employee = await contractEmployee.getProfile(interviewAppointmentData.employeeId);
-        await bigFive(employee.id.toNumber(), employee.name, interviewId)
-            .then(async (success) => {
-            const bigFive = new BigFive({
-                employeeId: employee.id.toNumber(),
-                interviewId: interviewId,
-                isRead: false,
-            });
-            const bigFiveResult = await bigFive.save();
-            const [block] = await Promise.all([socketblock.get(employee.id.toNumber(), ERole.EMPLOYEE)]);
-            app.io.to(block.socketIds).emit('bot_notification', {
-                _id: bigFiveResult._id,
-                role: ERole.BUSINESS,
-                category: EBotCategory.NEW_BIGFIVE_RESULT,
-                content: '',
-                time: bigFiveResult.updatedAt,
-            });
-        })
-            .catch((error) => console.log(error));
     };
     socket.on('interview_start', (args, callback) => {
         console.log('interview_start' + args.interviewId);

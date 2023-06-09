@@ -21,17 +21,11 @@ import { initRuntime } from '~configs/runtime';
 import { createContext } from '~graphql/context';
 import routes from '~routes/index';
 import { initSocket } from './socket';
-import { Socket } from 'socket.io';
-import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from './socket/types';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-declare module 'fastify' {
-  interface FastifyRequest {
-    io: Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>;
-  }
-}
+
 
 initDotENV();
 

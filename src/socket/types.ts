@@ -20,6 +20,7 @@ export interface ServerToClientEvents<isSender extends boolean = false> {
   noArg: () => void;
   send: (data: { _id: string; employeeId?: number; businessId?: number; content: string; role: ERole }) => void;
   bot_notification: (data: IBotMessages) => void;
+  to_business_notification: (data: IBotMessages) => void;
   withAck: (d: string, callback: (e: number) => void) => void;
 }
 

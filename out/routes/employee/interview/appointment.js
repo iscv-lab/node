@@ -1,4 +1,4 @@
-import { setInterviewAppointment, readInterviewAppointment, getBigFive } from '../../../controllers/employee/interview/index.js';
+import { setInterviewAppointment, readInterviewAppointment } from '../../../controllers/employee/interview/index.js';
 
 var appointment = async (server, options) => {
     server.post('/new', {
@@ -24,17 +24,6 @@ var appointment = async (server, options) => {
             },
         },
     }, readInterviewAppointment);
-    server.get('/bigfive', {
-        schema: {
-            querystring: {
-                type: 'object',
-                properties: {
-                    employee_id: { type: 'number' },
-                },
-                required: ['employee_id'],
-            },
-        },
-    }, getBigFive);
 };
 
 export { appointment as default };

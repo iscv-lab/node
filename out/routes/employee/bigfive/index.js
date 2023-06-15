@@ -1,19 +1,21 @@
-import { readBigFive } from '../../../controllers/employee/bigfive/index.js';
-
 var bigfive = async (server) => {
-    server.put('/read', {
-        schema: {
-            querystring: {
-                type: 'object',
-                properties: {
-                    bigfive_id: {
-                        type: 'string',
-                    },
-                },
-                required: ['bigfive_id'],
-            },
-        },
-    }, readBigFive);
+    // server.get(
+    //   '/start',
+    //   {
+    //     schema: {
+    //       querystring: {
+    //         type: 'object',
+    //         properties: {
+    //           employee_id: {
+    //             type: 'number',
+    //           },
+    //         },
+    //         required: ['employee_id'],
+    //       },
+    //     },
+    //   },
+    //   checkDiff,
+    // );
 };
 
 export { bigfive as default };

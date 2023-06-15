@@ -38,6 +38,7 @@
       "~blocks/*": ["./src/blocks/*"],
       "~constants/*": ["./src/constants/*"],
       "~events/*": ["./src/events/*"],
+      "~python/*": ["./src/python/*"],
       "~/*": ["./src/*"]
     }
   },

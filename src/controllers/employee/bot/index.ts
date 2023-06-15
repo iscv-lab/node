@@ -1,7 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { provider } from '~/app';
 import { useBusiness } from '~contracts/useBusiness';
-import { BigFive } from '~models/employee/BigFive';
 import { InterviewAppointment } from '~models/employee/InterviewAppointment';
 import { ERole } from '~types/index';
 import { EBotCategory, IBotMessages } from '~types/messages/bot';
@@ -12,7 +11,7 @@ export const getRecentTask = async (
 ) => {
   const employeeId = request.params.employeeid;
   const businessContract = useBusiness(provider);
-  const [interviewData, bigFiveData] = await Promise.all([
+  const [interviewData] = await Promise.all([
     InterviewAppointment.find(
       {
         employeeId: employeeId,
@@ -20,7 +19,6 @@ export const getRecentTask = async (
       {},
       {},
     ),
-    BigFive.find({ employeeId }),
   ]);
   const pipelineInterview = interviewData.map(async (appointment) => {
     const apply = await businessContract.getApply(appointment.applyId);
@@ -44,19 +42,17 @@ export const getRecentTask = async (
     return temp;
   });
 
-  const pipelineBigFive = bigFiveData.map(async (bigfive) => {
-    return {
-      _id: bigfive._id,
-      role: ERole.BUSINESS,
-      content: '',
-      time: bigfive.updatedAt,
-      category: EBotCategory.NEW_BIGFIVE_RESULT,
-      isRead: bigfive.isRead,
-    };
-  });
+  // const pipelineBigFive = bigFiveData.map(async (bigfive) => {
+  //   return {
+  //     _id: bigfive._id,
+  //     role: ERole.BUSINESS,
+  //     content: '',
+  //     time: bigfive.updatedAt,
+  //     category: EBotCategory.NEW_BIGFIVE_RESULT,
+  //     isRead: bigfive.isRead,
+  //   };
+  // });
 
-  const result = (await Promise.all([...pipelineInterview, ...pipelineBigFive])).sort(
-    (a, b) => b.time.getTime() - a.time.getTime(),
-  );
+  const result = (await Promise.all([...pipelineInterview])).sort((a, b) => b.time.getTime() - a.time.getTime());
   await reply.code(200).send(result);
 };

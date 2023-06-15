@@ -1,4 +1,5 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import * as AxiosLogger from 'axios-logger';
 
 class AxiosServices {
   instance: AxiosInstance;
@@ -13,10 +14,12 @@ class AxiosServices {
     this.instance = instance;
   }
 
-  handleSuccess(response: any) {
-    return response;
+  handleSuccess(response: AxiosResponse) {
+    // if (process.env.NODE_ENV === 'production') return response;
+    return AxiosLogger.responseLogger(response);
   }
-  handleError(error: any) {
+  handleError(error: AxiosError) {
+    AxiosLogger.errorLogger(error);
     return Promise.reject(error);
   }
   get<T>(url: string, config?: AxiosRequestConfig<any> | undefined) {

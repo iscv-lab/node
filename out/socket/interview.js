@@ -3,7 +3,7 @@ import path from 'path';
 import { handleBigFive } from './hooks/interview.js';
 
 const interview = (socket) => {
-    let interviewId = undefined;
+    let sessionId = undefined;
     let introductionEndTime = undefined;
     let mainEndTime = undefined;
     let introductionTimer = undefined;
@@ -38,7 +38,7 @@ const interview = (socket) => {
         clearTimeout(introductionTimer);
         clearTimeout(mainTimer);
         destTxtStream?.end();
-        // interviewId = undefined;
+        // sessionId = undefined;
         introductionEndTime = undefined;
         mainEndTime = undefined;
         introductionTimer = undefined;
@@ -46,13 +46,13 @@ const interview = (socket) => {
         tmpFilePath = undefined;
         destStream = undefined;
         destTxtStream = undefined;
-        handleBigFive(interviewId);
+        handleBigFive(sessionId);
         console.log('stoped');
     };
     socket.on('interview_start', (args, callback) => {
-        console.log('interview_start' + args.interviewId);
-        interviewId = args.interviewId;
-        tmpFilePath = `./public/interview/${interviewId}/`;
+        console.log('interview_start' + args.sessionId);
+        sessionId = args.sessionId;
+        tmpFilePath = `./public/interview/${sessionId}/`;
         if (fs.existsSync(tmpFilePath)) {
             // Read the contents of the folder
             const files = fs.readdirSync(tmpFilePath);

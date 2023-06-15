@@ -4,7 +4,6 @@ import { InterviewAppointment } from '../../../models/employee/InterviewAppointm
 import socketblock from '../../../blocks/socketblock.js';
 import { ERole } from '../../../types/index.js';
 import { EBotCategory } from '../../../types/messages/bot.js';
-import { BigFive } from '../../../models/employee/BigFive.js';
 
 const setInterviewAppointment = async (request, reply) => {
     const employeeId = request.body.employeeId;
@@ -50,14 +49,5 @@ const readInterviewAppointment = async (request, reply) => {
     const result = await InterviewAppointment.updateOne({ _id: interviewId }, { $set: { isRead: true } });
     await reply.code(200).send(result);
 };
-const getBigFive = async (request, reply) => {
-    const employeeId = request.query.employee_id;
-    const bigfive = await BigFive.findOne({
-        employeeId: employeeId,
-    }, {}, {
-        sort: { updatedAt: -1 },
-    });
-    await reply.code(200).send(bigfive);
-};
 
-export { getBigFive, readInterviewAppointment, setInterviewAppointment };
+export { readInterviewAppointment, setInterviewAppointment };

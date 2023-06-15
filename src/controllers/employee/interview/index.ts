@@ -5,8 +5,7 @@ import { InterviewAppointment } from '~models/employee/InterviewAppointment';
 import socketblock from '~blocks/socketblock';
 import { ERole } from '~types/index';
 import { EBotCategory } from '~types/messages/bot';
-import { bigFive } from '~/pythonService/interview';
-import { BigFive } from '~models/employee/BigFive';
+import { BigFiveSession } from '~models/employee/BigFiveSession';
 
 export const setInterviewAppointment = async (
   request: FastifyRequest<{ Body: { employeeId: number; postId: string } }>,
@@ -67,22 +66,4 @@ export const readInterviewAppointment = async (
   const interviewId = request.query.interview_id;
   const result = await InterviewAppointment.updateOne({ _id: interviewId }, { $set: { isRead: true } });
   await reply.code(200).send(result);
-};
-
-export const getBigFive = async (
-  request: FastifyRequest<{ Querystring: { employee_id: number } }>,
-  reply: FastifyReply,
-) => {
-  const employeeId = request.query.employee_id;
-  const bigfive = await BigFive.findOne(
-    {
-      employeeId: employeeId,
-    },
-    {},
-    {
-      sort: { updatedAt: -1 },
-    },
-  );
-
-  await reply.code(200).send(bigfive);
 };

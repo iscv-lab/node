@@ -7,7 +7,7 @@ type WithTimeoutAck<isSender extends boolean, args extends any[]> = isSender ext
 interface ClientToServerEvents<isSender extends boolean = false> {
   interview_start: (
     arg: {
-      interviewId: string;
+      sessionId: string;
     },
     callback?: (data: any) => void,
   ) => void;
@@ -50,7 +50,7 @@ interface SocketData {
 export const interview = (
   socket: Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>,
 ) => {
-  let interviewId: string | undefined = undefined;
+  let sessionId: string | undefined = undefined;
   let introductionEndTime: Date | undefined = undefined;
   let mainEndTime: Date | undefined = undefined;
   let introductionTimer: NodeJS.Timeout | undefined = undefined;
@@ -87,7 +87,7 @@ export const interview = (
     clearTimeout(introductionTimer);
     clearTimeout(mainTimer);
     destTxtStream?.end();
-    // interviewId = undefined;
+    // sessionId = undefined;
     introductionEndTime = undefined;
     mainEndTime = undefined;
     introductionTimer = undefined;
@@ -95,15 +95,15 @@ export const interview = (
     tmpFilePath = undefined;
     destStream = undefined;
     destTxtStream = undefined;
-    handleBigFive(interviewId!);
+    handleBigFive(sessionId!);
     console.log('stoped');
   };
 
   socket.on('interview_start', (args, callback) => {
-    console.log('interview_start' + args.interviewId);
+    console.log('interview_start' + args.sessionId);
 
-    interviewId = args.interviewId;
-    tmpFilePath = `./public/interview/${interviewId}/`;
+    sessionId = args.sessionId;
+    tmpFilePath = `./public/interview/${sessionId}/`;
 
     if (fs.existsSync(tmpFilePath)) {
       // Read the contents of the folder

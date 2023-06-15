@@ -58,6 +58,9 @@ dependencies:
   axios:
     specifier: ^1.4.0
     version: 1.4.0(debug@4.3.4)
+  axios-logger:
+    specifier: ^2.6.2
+    version: 2.6.2
   body-parser:
     specifier: ^1.20.2
     version: 1.20.2
@@ -6191,6 +6194,13 @@ packages:
   /aws4@1.12.0:
     resolution: {integrity: sha512-NmWvPnx0F1SfrQbYwOi7OeaNGokp9XhzNioJ/CSBs8Qa4vxug81mhJEAVZwxXuBmYB5KDRfMq/F3RR0BIU7sWg==}
 
+  /axios-logger@2.6.2:
+    resolution: {integrity: sha512-31ZKZfCUCJVLG1COvoz9t9SpCbNf/69L9Wkd8cEHT+VcjunK02LkGgHgyq77qKCWmFBBraQxARXKXQnnldrFGQ==}
+    dependencies:
+      chalk: 4.1.2
+      dateformat: 3.0.3
+    dev: false
+
   /axios@1.4.0(debug@4.3.4):
     resolution: {integrity: sha512-S4XCWMEmzvo64T9GfvQDOXgYRDJ/wsSZc7Jvdgx5u1sd0JwsuPLqb3SYmusag+edF6ziyMensPVqLTSc1PiSEA==}
     dependencies:
@@ -7166,6 +7176,10 @@ packages:
   /dataloader@2.2.2:
     resolution: {integrity: sha512-8YnDaaf7N3k/q5HnTJVuzSyLETjoZjVmHc4AeKAzOvKHEFQKcn64OKBfzHYtE9zGjctNM7V9I0MfnUVLpi7M5g==}
     dev: true
+
+  /dateformat@3.0.3:
+    resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}
+    dev: false
 
   /death@1.1.0:
     resolution: {integrity: sha512-vsV6S4KVHvTGxbEcij7hkWRv0It+sGGWVOM67dQde/o5Xjnr+KmLjxWJii2uEObIrt1CcM9w0Yaovx+iOlIL+w==}

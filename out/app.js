@@ -22,6 +22,7 @@ import { ipfsServer } from './configs/ipfs.js';
 import { createContext } from './graphql/context.js';
 import routes from './routes/index.js';
 import { initSocket } from './socket/index.js';
+import { listenWeb3 } from './events/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -86,7 +87,7 @@ await app.register(compress);
 await app.register(middie);
 const apollo = await apolloServer(app);
 await apollo.start();
-const provider = new ethers.providers.JsonRpcProvider(process.env.ETHEREUM_ENDPOINT);
+const provider = new ethers.providers.WebSocketProvider(process.env.ETHEREUM_ENDPOINT);
 const { ipfs } = ipfsServer();
 await app.register(fastifyApollo(apollo), {
     context: createContext({ provider, ipfs }),
@@ -117,6 +118,7 @@ await app.register(routes);
 // interview(app, pubClient as RedisClientType, subClient as RedisClientType);
 initSocket(pubClient, subClient);
 await Promise.all([mongoServer(), socketblock.init()]);
+listenWeb3();
 app.listen({ port: Number(process.env.PORT) || 4000 }, (err, address) => {
     if (err) {
         console.error(err);

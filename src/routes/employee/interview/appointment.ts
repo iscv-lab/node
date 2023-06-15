@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
-import { getBigFive, readInterviewAppointment, setInterviewAppointment } from '~controllers/employee/interview';
+import { readInterviewAppointment, setInterviewAppointment } from '~controllers/employee/interview';
 
 export default async (server: FastifyInstance, options: FastifyPluginOptions) => {
   server.post(
@@ -32,20 +32,5 @@ export default async (server: FastifyInstance, options: FastifyPluginOptions) =>
       },
     },
     readInterviewAppointment,
-  );
-  server.get(
-    '/bigfive',
-    {
-      schema: {
-        querystring: {
-          type: 'object',
-          properties: {
-            employee_id: { type: 'number' },
-          },
-          required: ['employee_id'],
-        },
-      },
-    },
-    getBigFive,
   );
 };

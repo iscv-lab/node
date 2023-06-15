@@ -47,7 +47,7 @@ export const getBusinessByUser = async (request: FastifyRequest<{ Params: { user
   const business = businesses.find((x) => x.user.toString().toLowerCase() === user.toLowerCase());
 
   if (!business) {
-    reply.code(404).send('not found');
+    reply.code(400).send("not found");
     return;
   }
   reply.code(200).send({

@@ -4,6 +4,7 @@ import profile from './profile';
 import messages from './messages';
 import interview from './interview';
 import bot from './bot';
+import bigfive from './bigfive';
 
 export default async (server: FastifyInstance, options: FastifyPluginOptions) => {
   await server.register(iig, { prefix: 'iig' });
@@ -11,4 +12,5 @@ export default async (server: FastifyInstance, options: FastifyPluginOptions) =>
   await server.register(messages, { prefix: 'messages' });
   await server.register(interview, { prefix: 'interview' });
   await server.register(bot, { prefix: 'bot' });
+  await server.register(bigfive, { prefix: 'bigfive' });
 };

@@ -1,14 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { Socket } from 'socket.io';
-import { app, provider } from '~/app';
-import { bigFive } from '~/pythonService/interview';
-import { useEmployee } from '~contracts/useEmployee';
-import { InterviewAppointment } from '~models/employee/InterviewAppointment';
-import socketblock from '~blocks/socketblock';
-import { ERole } from '~types/index';
-import { BigFive } from '~models/employee/BigFive';
-import { EBotCategory } from '~types/messages/bot';
 import { handleBigFive } from './hooks/interview';
 type WithTimeoutAck<isSender extends boolean, args extends any[]> = isSender extends true ? [Error, ...args] : args;
 
@@ -66,7 +58,7 @@ export const interview = (
   let tmpFilePath: string | undefined = undefined;
   let destStream: fs.WriteStream | undefined = undefined;
   let destTxtStream: fs.WriteStream | undefined = undefined;
-  const introductionDuration = 90000;
+  const introductionDuration = 5000;
   const mainDuration = 900000;
 
   const interviewIntroduction = () => {

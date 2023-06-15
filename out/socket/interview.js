@@ -11,7 +11,7 @@ const interview = (socket) => {
     let tmpFilePath = undefined;
     let destStream = undefined;
     let destTxtStream = undefined;
-    const introductionDuration = 90000;
+    const introductionDuration = 5000;
     const mainDuration = 900000;
     const interviewIntroduction = () => {
         introductionTimer = setTimeout(function () {

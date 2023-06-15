@@ -6,15 +6,15 @@ export type IBigFive = {
   employeeId: number;
   interviewId: Schema.Types.ObjectId;
   isRead?: boolean;
-  'Agreeableness Comment': number;
+  'Agreeableness Comment': string;
   'Agreeableness Score': number;
-  'Conscientiousness Comment': number;
+  'Conscientiousness Comment': string;
   'Conscientiousness Score': number;
-  'Extroversion Comment': number;
+  'Extroversion Comment': string;
   'Extroversion Score': number;
-  'Neuroticism Comment': number;
+  'Neuroticism Comment': string;
   'Neuroticism Score': number;
-  'Openness to Experience Comment': number;
+  'Openness to Experience Comment': string;
   'Openness to Experience Score': number;
 } & IMyDocument;
 
@@ -32,31 +32,31 @@ const bigFiveSchema = new Schema<IBigFive>(
       type: Boolean,
     },
     'Agreeableness Comment': {
-      type: Number,
+      type: String,
     },
     'Agreeableness Score': {
       type: Number,
     },
     'Conscientiousness Comment': {
-      type: Number,
+      type: String,
     },
     'Conscientiousness Score': {
       type: Number,
     },
     'Extroversion Comment': {
-      type: Number,
+      type: String,
     },
     'Extroversion Score': {
       type: Number,
     },
     'Neuroticism Comment': {
-      type: Number,
+      type: String,
     },
     'Neuroticism Score': {
       type: Number,
     },
     'Openness to Experience Comment': {
-      type: Number,
+      type: String,
     },
     'Openness to Experience Score': {
       type: Number,

@@ -15,7 +15,8 @@ export const initRuntime = () => {
   console.log = function (d: any) {
     // eslint-disable-next-line prefer-rest-params
     logFile.write(
-      `${new Date().toISOString()} ${util.format.apply(null, arguments)} \n`
+      // eslint-disable-next-line prefer-rest-params
+      `${new Date().toISOString()} ${util.format.apply(null, arguments as any)} \n`
     );
     new this.Console(logStdout).log(d);
   };

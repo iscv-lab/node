@@ -12,7 +12,9 @@ const initRuntime = () => {
     const logStdout = process.stdout;
     console.log = function (d) {
         // eslint-disable-next-line prefer-rest-params
-        logFile.write(`${new Date().toISOString()} ${util.format.apply(null, arguments)} \n`);
+        logFile.write(
+        // eslint-disable-next-line prefer-rest-params
+        `${new Date().toISOString()} ${util.format.apply(null, arguments)} \n`);
         new this.Console(logStdout).log(d);
     };
     console.error = (d) => {

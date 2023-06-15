@@ -14,31 +14,31 @@ const bigFiveSchema = new Schema({
         type: Boolean,
     },
     'Agreeableness Comment': {
-        type: Number,
+        type: String,
     },
     'Agreeableness Score': {
         type: Number,
     },
     'Conscientiousness Comment': {
-        type: Number,
+        type: String,
     },
     'Conscientiousness Score': {
         type: Number,
     },
     'Extroversion Comment': {
-        type: Number,
+        type: String,
     },
     'Extroversion Score': {
         type: Number,
     },
     'Neuroticism Comment': {
-        type: Number,
+        type: String,
     },
     'Neuroticism Score': {
         type: Number,
     },
     'Openness to Experience Comment': {
-        type: Number,
+        type: String,
     },
     'Openness to Experience Score': {
         type: Number,

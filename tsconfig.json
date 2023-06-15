@@ -37,6 +37,7 @@
       "~types/*": ["./src/types/*"],
       "~blocks/*": ["./src/blocks/*"],
       "~constants/*": ["./src/constants/*"],
+      "~events/*": ["./src/events/*"],
       "~/*": ["./src/*"]
     }
   },

@@ -13,7 +13,7 @@ export const initSocket = (pubClient: RedisClientType, subClient: RedisClientTyp
     app.io.adapter(createAdapter(pubClient, subClient));
 
     app.io.on('connection', async (socket) => {
-      console.log(`Client ${socket.id} connected.`);
+      console.log(`Client main ${socket.id} connected.`);
       const employeeId = Number(socket.handshake.query['employeeId']);
       const businessId = Number(socket.handshake.query['businessId']);
 
@@ -33,7 +33,7 @@ export const initSocket = (pubClient: RedisClientType, subClient: RedisClientTyp
       interview(socket);
 
       socket.on('disconnect', async () => {
-        console.log(`Client ${socket.id} disconnected.`);
+        console.log(`Client main ${socket.id} disconnected.`);
       });
     });
   });

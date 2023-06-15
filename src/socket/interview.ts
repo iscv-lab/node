@@ -80,6 +80,7 @@ export const interview = (
   };
 
   const handleStop = () => {
+    if (sessionId === undefined) return;
     socket.emit('interview_main_end', new Date().getTime());
     destStream?.end(() => {
       console.log('Video was been saved');
@@ -105,15 +106,8 @@ export const interview = (
     sessionId = args.sessionId;
     tmpFilePath = `./public/interview/${sessionId}/`;
 
-    if (fs.existsSync(tmpFilePath)) {
-      // Read the contents of the folder
-      const files = fs.readdirSync(tmpFilePath);
-
-      // Iterate over the files and delete each one
-      files.forEach((file) => {
-        const filePath = path.join(tmpFilePath!, file);
-        fs.unlinkSync(filePath);
-      });
+    if (!fs.existsSync(tmpFilePath)) {
+      fs.mkdirSync(tmpFilePath);
     }
 
     destStream = fs.createWriteStream(tmpFilePath + 'video.webm');
@@ -128,6 +122,7 @@ export const interview = (
     callback?.(introductionEndTime.getTime());
   });
   socket.on('disconnect', () => {
+    console.log('disconnect');
     handleStop();
   });
 

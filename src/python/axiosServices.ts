@@ -15,7 +15,7 @@ class AxiosServices {
   }
 
   handleSuccess(response: AxiosResponse) {
-    // if (process.env.NODE_ENV === 'production') return response;
+    return response;
     return AxiosLogger.responseLogger(response);
   }
   handleError(error: AxiosError) {

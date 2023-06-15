@@ -20,27 +20,27 @@ export const getRecentTask = async (
       {},
     ),
   ]);
-  const pipelineInterview = interviewData.map(async (appointment) => {
-    const apply = await businessContract.getApply(appointment.applyId);
-    const business = await businessContract.getProfile(apply.businessId.toNumber());
-    const temp = {
-      _id: appointment._id,
-      role: ERole.BUSINESS,
-      content: '',
-      time: appointment.updatedAt,
-      category: EBotCategory.NEW_INTERVIEW,
-      isRead: appointment.isRead,
-      metadata: {
-        _id: appointment._id,
-        fromTime: appointment.fromTime,
-        toTime: appointment.toTime,
-        businessImage: business.sourceImage,
-        businessId: business.id.toNumber(),
-        businessName: business.name,
-      },
-    };
-    return temp;
-  });
+  // const pipelineInterview = interviewData.map(async (appointment) => {
+  //   const apply = await businessContract.getApply(appointment.applyId);
+  //   const business = await businessContract.getProfile(apply.businessId.toNumber());
+  //   const temp = {
+  //     _id: appointment._id,
+  //     role: ERole.BUSINESS,
+  //     content: '',
+  //     time: appointment.updatedAt,
+  //     category: EBotCategory.NEW_INTERVIEW,
+  //     isRead: appointment.isRead,
+  //     metadata: {
+  //       _id: appointment._id,
+  //       fromTime: appointment.fromTime,
+  //       toTime: appointment.toTime,
+  //       businessImage: business.sourceImage,
+  //       businessId: business.id.toNumber(),
+  //       businessName: business.name,
+  //     },
+  //   };
+  //   return temp;
+  // });
 
   // const pipelineBigFive = bigFiveData.map(async (bigfive) => {
   //   return {
@@ -53,6 +53,6 @@ export const getRecentTask = async (
   //   };
   // });
 
-  const result = (await Promise.all([...pipelineInterview])).sort((a, b) => b.time.getTime() - a.time.getTime());
-  await reply.code(200).send(result);
+  // const result = (await Promise.all([])).sort((a, b) => b.time.getTime() - a.time.getTime());
+  await reply.code(200).send([]);
 };

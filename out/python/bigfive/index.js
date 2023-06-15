@@ -1,10 +1,10 @@
-import axios from 'axios';
+import AxiosServices from '../axiosServices.js';
 
 const startedBigFive = async (sessionId) => {
-    return axios.get(`big_five/video?session_id=${sessionId}`);
+    return new AxiosServices().get(`big_five/start?session_id=${sessionId}`);
 };
 const getPDF = async (sessionId) => {
-    return axios.get(`static/interview/${sessionId}/report.pdf`);
+    return new AxiosServices().get(`static/interview/${sessionId}/report.pdf`);
 };
 
 export { getPDF, startedBigFive };

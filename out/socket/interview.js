@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 import { handleBigFive } from './hooks/interview.js';
 
 const interview = (socket) => {
@@ -31,6 +30,8 @@ const interview = (socket) => {
         }, mainDuration);
     };
     const handleStop = () => {
+        if (sessionId === undefined)
+            return;
         socket.emit('interview_main_end', new Date().getTime());
         destStream?.end(() => {
             console.log('Video was been saved');
@@ -53,14 +54,8 @@ const interview = (socket) => {
         console.log('interview_start' + args.sessionId);
         sessionId = args.sessionId;
         tmpFilePath = `./public/interview/${sessionId}/`;
-        if (fs.existsSync(tmpFilePath)) {
-            // Read the contents of the folder
-            const files = fs.readdirSync(tmpFilePath);
-            // Iterate over the files and delete each one
-            files.forEach((file) => {
-                const filePath = path.join(tmpFilePath, file);
-                fs.unlinkSync(filePath);
-            });
+        if (!fs.existsSync(tmpFilePath)) {
+            fs.mkdirSync(tmpFilePath);
         }
         destStream = fs.createWriteStream(tmpFilePath + 'video.webm');
         destTxtStream = fs.createWriteStream(tmpFilePath + 'qa.txt', { flags: 'a' });
@@ -73,6 +68,7 @@ const interview = (socket) => {
         callback?.(introductionEndTime.getTime());
     });
     socket.on('disconnect', () => {
+        console.log('disconnect');
         handleStop();
     });
     socket.on('interview_stop', (args, callback) => {

@@ -11,14 +11,14 @@ export enum EInterviewError {
   TOO_SHORT_TIME,
 }
 
-export const startBigFive = async (employeeId: string) => {
-  const sevenDaysAgo = new Date();
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-  const recent = await BigFiveSession.exists({ employeeId, createdAt: { $gte: sevenDaysAgo } });
-  if (recent?._id) throw EInterviewError.TOO_SHORT_TIME;
-  const newBigFiveSession = new BigFiveSession({
-    employeeId,
-  });
-  const bigfiveSession = await newBigFiveSession.save();
-  return bigfiveSession._id;
-};
+// export const startBigFive = async (employeeId: string) => {
+//   const sevenDaysAgo = new Date();
+//   sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+//   const recent = await BigFiveSession.exists({ employeeId, createdAt: { $gte: sevenDaysAgo } });
+//   if (recent?._id) throw EInterviewError.TOO_SHORT_TIME;
+//   const newBigFiveSession = new BigFiveSession({
+//     employeeId,
+//   });
+//   const bigfiveSession = await newBigFiveSession.save();
+//   return bigfiveSession._id;
+// };

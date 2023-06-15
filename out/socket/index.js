@@ -9,7 +9,7 @@ const initSocket = (pubClient, subClient) => {
     app.ready().then(() => {
         app.io.adapter(createAdapter(pubClient, subClient));
         app.io.on('connection', async (socket) => {
-            console.log(`Client ${socket.id} connected.`);
+            console.log(`Client main ${socket.id} connected.`);
             const employeeId = Number(socket.handshake.query['employeeId']);
             const businessId = Number(socket.handshake.query['businessId']);
             const id = Number.isInteger(employeeId) ? employeeId : Number.isInteger(businessId) ? businessId : undefined;
@@ -26,7 +26,7 @@ const initSocket = (pubClient, subClient) => {
             messages(socket);
             interview(socket);
             socket.on('disconnect', async () => {
-                console.log(`Client ${socket.id} disconnected.`);
+                console.log(`Client main ${socket.id} disconnected.`);
             });
         });
     });

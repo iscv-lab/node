@@ -5,6 +5,7 @@ import messages from './messages';
 import bot from './bot';
 import bigfive from './bigfive';
 import appointment from './appointment';
+import search from './search';
 
 export default async (server: FastifyInstance, options: FastifyPluginOptions) => {
   await server.register(iig, { prefix: 'iig' });
@@ -13,4 +14,5 @@ export default async (server: FastifyInstance, options: FastifyPluginOptions) =>
   await server.register(appointment, { prefix: 'appointment' });
   await server.register(bot, { prefix: 'bot' });
   await server.register(bigfive, { prefix: 'bigfive' });
+  await server.register(search, { prefix: 'search' });
 };

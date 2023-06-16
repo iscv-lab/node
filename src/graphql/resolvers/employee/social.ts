@@ -1,19 +1,14 @@
-import { FastifyReply, FastifyRequest } from "fastify";
-import { PythonShell } from "python-shell";
-import { provider } from "~/app";
-import { useBusiness } from "~contracts/useBusiness";
-import { useEmployee } from "~contracts/useEmployee";
-import { Context } from "~graphql/context";
-import { trim } from "~helpers/trimMultipleSpace";
-import { Post } from "~models/business/Post";
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { PythonShell } from 'python-shell';
+import { provider } from '~/app';
+import { useBusiness } from '~contracts/useBusiness';
+import { useEmployee } from '~contracts/useEmployee';
+import { Context } from '~graphql/context';
+import { trim } from '~helpers/trimMultipleSpace';
+import { Post } from '~models/business/Post';
 
 export const social = {
-  prediction: async (
-    parent,
-    args: { id: number },
-    contextValue: Context,
-    info
-  ) => {
+  prediction: async (parent, args: { id: number }, contextValue: Context, info) => {
     const id = args.id;
     const employeeContract = useEmployee(provider);
     const [skills] = await Promise.all([employeeContract.getAllSkill()]);
@@ -24,15 +19,15 @@ export const social = {
       return;
     }
 
-    const listPredict = await PythonShell.run("KNN.py", {
-      mode: "text",
+    const listPredict = await PythonShell.run('KNN.py', {
+      mode: 'text',
       pythonPath: process.env.PYTHON3,
-      pythonOptions: ["-u"], // get print results in real-time
-      scriptPath: "./tools/employee/prediction", //If you are having python_test.py script in same folder, then it's optional.
+      pythonOptions: ['-u'], // get print results in real-time
+      scriptPath: './tools/employee/prediction', //If you are having python_test.py script in same folder, then it's optional.
       args: [...listSkills], //An argument which can be accessed in the script using sys.argv[1]
     }).then((success) => {
       return success.map((value, index) => {
-        return trim(value.replace(/(\[|\/|\]|\(|\)|\'|\")+/g, " "));
+        return trim(value.replace(/(\[|\/|\]|\(|\)|\'|\")+/g, ' '));
       });
     });
 
@@ -40,16 +35,10 @@ export const social = {
       .then(async (success) => {
         return success.map((value, index) => {
           if (!value.job) return undefined;
-          let arrItem = value["job"].split(" ");
+          const arrItem = value['job'].split(' ');
           for (let i = 0; i < arrItem.length; i++) {
             for (let j = 0; j < listPredict.length; j++) {
-              if (
-                listPredict[j]
-                  .toString()
-                  .toLowerCase()
-                  .includes(arrItem[i].toString().toLowerCase())
-              )
-                return value;
+              if (listPredict[j].toString().toLowerCase().includes(arrItem[i].toString().toLowerCase())) return value;
             }
           }
         });

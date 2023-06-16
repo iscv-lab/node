@@ -4,6 +4,8 @@ import { EIIGRequest } from '../../../../types/business/iig/index.js';
 const iig = {
     requestStatus: async (parent, args, contextValue, info) => {
         const employeeId = args.employeeId;
+        if (employeeId === -1)
+            return;
         const [hasLR, hasSW] = await Promise.all([
             IIGRequest.exists({
                 employeeId: employeeId,
@@ -16,6 +18,7 @@ const iig = {
                 state: ERequestStatus.WAITING,
             }),
         ]);
+        console.log(hasLR);
         return {
             lr: Boolean(hasLR?._id),
             sw: Boolean(hasSW?._id),

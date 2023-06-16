@@ -42,7 +42,8 @@ const interview = (socket) => {
         clearTimeout(introductionTimer);
         clearTimeout(mainTimer);
         destTxtStream?.end();
-        handleBigFive(sessionId, employeeId);
+        if (Math.floor(Math.abs(new Date().getTime() - introductionEndTime.getTime()) / (1000 * 60)) > 5)
+            handleBigFive(sessionId, employeeId);
         sessionId = undefined;
         introductionEndTime = undefined;
         mainEndTime = undefined;

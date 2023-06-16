@@ -15,15 +15,15 @@ const social = {
         if (listSkills.length == 0) {
             return;
         }
-        const listPredict = await PythonShell.run("KNN.py", {
-            mode: "text",
+        const listPredict = await PythonShell.run('KNN.py', {
+            mode: 'text',
             pythonPath: process.env.PYTHON3,
-            pythonOptions: ["-u"],
-            scriptPath: "./tools/employee/prediction",
+            pythonOptions: ['-u'],
+            scriptPath: './tools/employee/prediction',
             args: [...listSkills], //An argument which can be accessed in the script using sys.argv[1]
         }).then((success) => {
             return success.map((value, index) => {
-                return trim(value.replace(/(\[|\/|\]|\(|\)|\'|\")+/g, " "));
+                return trim(value.replace(/(\[|\/|\]|\(|\)|\'|\")+/g, ' '));
             });
         });
         const result = await Post.find()
@@ -31,13 +31,10 @@ const social = {
             return success.map((value, index) => {
                 if (!value.job)
                     return undefined;
-                let arrItem = value["job"].split(" ");
+                const arrItem = value['job'].split(' ');
                 for (let i = 0; i < arrItem.length; i++) {
                     for (let j = 0; j < listPredict.length; j++) {
-                        if (listPredict[j]
-                            .toString()
-                            .toLowerCase()
-                            .includes(arrItem[i].toString().toLowerCase()))
+                        if (listPredict[j].toString().toLowerCase().includes(arrItem[i].toString().toLowerCase()))
                             return value;
                     }
                 }

@@ -1,14 +1,15 @@
+import fs from 'fs';
+import { v4 } from 'uuid';
 import { provider } from '../../../app.js';
 import { useBusiness } from '../../../contracts/useBusiness.js';
-import fs from 'fs';
-import { Post } from '../../../models/business/Post.js';
-import { v4 } from 'uuid';
 import { useEmployee } from '../../../contracts/useEmployee.js';
+import { Post } from '../../../models/business/Post.js';
+import { quickSort } from '../../../utils/quickSort.js';
 
 const getMyPosts = async (request, reply) => {
     const userid = request.params.userid;
     const result = await Post.find({ businessId: userid });
-    reply.code(200).send(result);
+    await reply.code(200).send(result);
 };
 const newPost = async (request, reply) => {
     const images = request.form?.image;
@@ -81,10 +82,7 @@ const getAllApply = async (request, reply) => {
     const pipeline = applies
         .filter((x) => x.businessId.eq(businessId))
         .map(async (x) => {
-        const [employee, post] = await Promise.all([
-            employeeContract.getProfile(x.employeeId),
-            Post.findById(x.postId),
-        ]);
+        const [employee, post] = await Promise.all([employeeContract.getProfile(x.employeeId), Post.findById(x.postId)]);
         return {
             id: x.id.toNumber(),
             employeeId: x.employeeId.toNumber(),
@@ -100,8 +98,14 @@ const getAllApply = async (request, reply) => {
             status: x.status.toNumber(),
         };
     });
-    const result = await Promise.all(pipeline);
+    const addedData = await Promise.all(pipeline);
+    const result = quickSort(addedData, (a, b) => b.time - a.time);
+    await reply.code(200).send(result);
+};
+const getPost = async (request, reply) => {
+    const postId = request.params.post_id;
+    const result = await Post.findById(postId);
     await reply.code(200).send(result);
 };
 
-export { getAllApply, getMyPosts, newPost };
+export { getAllApply, getMyPosts, getPost, newPost };

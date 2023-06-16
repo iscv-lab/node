@@ -1,34 +1,43 @@
-import { FastifyInstance, FastifyPluginOptions } from "fastify";
-import { getMyPosts, newPost } from "~controllers/business/post";
-import { imageMiddleware } from "~middlewares/image/uploadImageMiddleware";
-import { PostStatus } from "~types/post";
+import { FastifyInstance, FastifyPluginOptions } from 'fastify';
+import { getMyPosts, getPost, newPost } from '~controllers/business/post';
+import { imageMiddleware } from '~middlewares/image/uploadImageMiddleware';
+import { PostStatus } from '~types/post';
 
-export default async (
-  server: FastifyInstance,
-  options: FastifyPluginOptions
-) => {
-  server.get("/myposts/:userid", getMyPosts);
+export default async (server: FastifyInstance, options: FastifyPluginOptions) => {
+  server.get('/myposts/:userid', getMyPosts);
   server.post(
-    "/new",
+    '/new',
     {
       preHandler: imageMiddleware,
-      // schema: {
-        
-      //   body: {
-      //     type: "object",
-      //     description: "Post category data",
-      //     properties: {
-      //       job: { type: "string" },
-      //       content: { type: "string" },
-      //       hashtag: { type: "string" },
-      //       image: {},
-      //       video: {},
-      //       status: { type: "number", enum: Object.values(PostStatus) },
-      //     },
-      //     required: ["content", "hashtag", "status"],
-      //   },
-      // },
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            userid: {
+              type: 'number',
+            },
+          },
+          required: ['userid'],
+        },
+      },
     },
-    newPost
+    newPost,
+  );
+  server.get(
+    '/get/:post_id',
+    {
+      schema: {
+        params: {
+          type: 'object',
+          properties: {
+            post_id: {
+              type: 'string',
+            },
+          },
+          required: ['post_id'],
+        },
+      },
+    },
+    getPost,
   );
 };

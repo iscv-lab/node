@@ -1,25 +1,19 @@
-import { FastifyReply, FastifyRequest } from "fastify";
-import { provider } from "~/app";
-import { useBusiness } from "~contracts/useBusiness";
-import fs from "fs";
-import { PostStatus } from "~types/post";
-import { Post } from "~models/business/Post";
-import { v4 as uuidv4 } from "uuid";
-import { IApply } from "~types/business/apply";
-import { useEmployee } from "~contracts/useEmployee";
-export const getMyPosts = async (
-  request: FastifyRequest<{ Params: { userid: number } }>,
-  reply: FastifyReply
-) => {
+import { FastifyReply, FastifyRequest } from 'fastify';
+import fs from 'fs';
+import { v4 as uuidv4 } from 'uuid';
+import { provider } from '~/app';
+import { useBusiness } from '~contracts/useBusiness';
+import { useEmployee } from '~contracts/useEmployee';
+import { Post } from '~models/business/Post';
+import { PostStatus } from '~types/post';
+import { quickSort } from '~utils/quickSort';
+export const getMyPosts = async (request: FastifyRequest<{ Params: { userid: number } }>, reply: FastifyReply) => {
   const userid = request.params.userid;
   const result = await Post.find({ businessId: userid });
-  reply.code(200).send(result);
+  await reply.code(200).send(result);
 };
 
-export const newPost = async (
-  request: FastifyRequest<{ Body: { video: any } }>,
-  reply: FastifyReply
-) => {
+export const newPost = async (request: FastifyRequest<{ Body: { video: any } }>, reply: FastifyReply) => {
   const images = request.form?.image;
   const videos = request.form?.video;
   const businessId = request.form!.businessId as number;
@@ -43,20 +37,14 @@ export const newPost = async (
     if (Array.isArray(images))
       return images.map(async (value) => {
         const name = uuidv4();
-        await fs.promises.writeFile(
-          `./public/business/post/${newPostData._id}/${name}`,
-          value
-        );
+        await fs.promises.writeFile(`./public/business/post/${newPostData._id}/${name}`, value);
         return name;
       });
     else {
       return [
         (async () => {
           const name = uuidv4();
-          await fs.promises.writeFile(
-            `./public/business/post/${newPostData._id}/${name}.jpeg`,
-            images as Buffer
-          );
+          await fs.promises.writeFile(`./public/business/post/${newPostData._id}/${name}.jpeg`, images as Buffer);
           return name;
         })(),
       ];
@@ -68,20 +56,14 @@ export const newPost = async (
     if (Array.isArray(videos))
       return videos.map(async (value) => {
         const name = uuidv4();
-        await fs.promises.writeFile(
-          `./public/business/post/${newPostData._id}/${name}`,
-          value
-        );
+        await fs.promises.writeFile(`./public/business/post/${newPostData._id}/${name}`, value);
         return name;
       });
     else {
       return [
         (async () => {
           const name = uuidv4();
-          await fs.promises.writeFile(
-            `./public/business/post/${newPostData._id}/${name}.mp4`,
-            videos as Buffer
-          );
+          await fs.promises.writeFile(`./public/business/post/${newPostData._id}/${name}.mp4`, videos as Buffer);
           return name;
         })(),
       ];
@@ -98,10 +80,7 @@ export const newPost = async (
   await reply.code(200).send(result);
 };
 
-export const getAllApply = async (
-  request: FastifyRequest<{ Params: { businessId: number } }>,
-  reply: FastifyReply
-) => {
+export const getAllApply = async (request: FastifyRequest<{ Params: { businessId: number } }>, reply: FastifyReply) => {
   const businessId = request.params.businessId;
 
   const businessContract = useBusiness(provider);
@@ -110,10 +89,7 @@ export const getAllApply = async (
   const pipeline = applies
     .filter((x) => x.businessId.eq(businessId))
     .map(async (x) => {
-      const [employee, post] = await Promise.all([
-        employeeContract.getProfile(x.employeeId),
-        Post.findById(x.postId),
-      ]);
+      const [employee, post] = await Promise.all([employeeContract.getProfile(x.employeeId), Post.findById(x.postId)]);
 
       return {
         id: x.id.toNumber(),
@@ -130,6 +106,13 @@ export const getAllApply = async (
         status: x.status.toNumber(),
       };
     });
-  const result = await Promise.all(pipeline);
+  const addedData = await Promise.all(pipeline);
+  const result = quickSort(addedData, (a, b) => b.time - a.time);
+  await reply.code(200).send(result);
+};
+
+export const getPost = async (request: FastifyRequest<{ Params: { post_id: string } }>, reply: FastifyReply) => {
+  const postId = request.params.post_id;
+  const result = await Post.findById(postId);
   await reply.code(200).send(result);
 };

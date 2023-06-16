@@ -1,26 +1,35 @@
-import { getMyPosts, newPost } from '../../../controllers/business/post/index.js';
+import { getMyPosts, newPost, getPost } from '../../../controllers/business/post/index.js';
 import { imageMiddleware } from '../../../middlewares/image/uploadImageMiddleware.js';
 
 var posts = async (server, options) => {
-    server.get("/myposts/:userid", getMyPosts);
-    server.post("/new", {
+    server.get('/myposts/:userid', getMyPosts);
+    server.post('/new', {
         preHandler: imageMiddleware,
-        // schema: {
-        //   body: {
-        //     type: "object",
-        //     description: "Post category data",
-        //     properties: {
-        //       job: { type: "string" },
-        //       content: { type: "string" },
-        //       hashtag: { type: "string" },
-        //       image: {},
-        //       video: {},
-        //       status: { type: "number", enum: Object.values(PostStatus) },
-        //     },
-        //     required: ["content", "hashtag", "status"],
-        //   },
-        // },
+        schema: {
+            params: {
+                type: 'object',
+                properties: {
+                    userid: {
+                        type: 'number',
+                    },
+                },
+                required: ['userid'],
+            },
+        },
     }, newPost);
+    server.get('/get/:post_id', {
+        schema: {
+            params: {
+                type: 'object',
+                properties: {
+                    post_id: {
+                        type: 'string',
+                    },
+                },
+                required: ['post_id'],
+            },
+        },
+    }, getPost);
 };
 
 export { posts as default };

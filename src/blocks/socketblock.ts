@@ -5,7 +5,7 @@ import { removeUndefinedProps } from '~utils/removeUndefinedProps';
 let record: string | undefined = undefined;
 
 type SocketBlock = {
-  [_id: string]: {
+  [id: string]: {
     role: ERole;
     socketIds: string[];
   };
@@ -39,6 +39,18 @@ const findBySocket = async (socket: string) => {
       socketIds: string[];
     }) || undefined
   );
+};
+
+const findUserIdBySocket = async (socket: string) => {
+  const data = await getter();
+  let id: undefined | string = undefined;
+  for (const [key, value] of Object.entries(data!)) {
+    if (value.socketIds.includes(socket)) {
+      id = key;
+      break;
+    }
+  }
+  return Number(id?.replace(ERole.EMPLOYEE, '').replace(ERole.BUSINESS, '').replace('_', ''));
 };
 
 const getter = async () => {
@@ -103,4 +115,5 @@ export default {
   removeSocket,
   find,
   findBySocket,
+  findUserIdBySocket,
 };

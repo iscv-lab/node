@@ -1,15 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 import { Socket } from 'socket.io';
-import { handleBigFive } from './hooks/interview';
+import { handleBigFive, startBigFive } from './hooks/interview';
 type WithTimeoutAck<isSender extends boolean, args extends any[]> = isSender extends true ? [Error, ...args] : args;
 
 interface ClientToServerEvents<isSender extends boolean = false> {
   interview_start: (
     arg: {
-      sessionId: string;
+      sessionId: number;
     },
-    callback?: (data: any) => void,
+    callback?: (data: number, status: boolean) => void,
   ) => void;
 
   interview_chunk: (
@@ -50,7 +50,8 @@ interface SocketData {
 export const interview = (
   socket: Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>,
 ) => {
-  let sessionId: string | undefined = undefined;
+  let sessionId: number | undefined = undefined;
+  let employeeId: number | undefined = undefined;
   let introductionEndTime: Date | undefined = undefined;
   let mainEndTime: Date | undefined = undefined;
   let introductionTimer: NodeJS.Timeout | undefined = undefined;
@@ -58,6 +59,7 @@ export const interview = (
   let tmpFilePath: string | undefined = undefined;
   let destStream: fs.WriteStream | undefined = undefined;
   let destTxtStream: fs.WriteStream | undefined = undefined;
+
   const introductionDuration = 5000;
   const mainDuration = 900000;
 
@@ -80,7 +82,9 @@ export const interview = (
   };
 
   const handleStop = () => {
+    console.log(sessionId);
     if (sessionId === undefined) return;
+    if (employeeId === undefined) return;
     socket.emit('interview_main_end', new Date().getTime());
     destStream?.end(() => {
       console.log('Video was been saved');
@@ -88,7 +92,8 @@ export const interview = (
     clearTimeout(introductionTimer);
     clearTimeout(mainTimer);
     destTxtStream?.end();
-    // sessionId = undefined;
+    handleBigFive(sessionId!, employeeId!);
+    sessionId = undefined;
     introductionEndTime = undefined;
     mainEndTime = undefined;
     introductionTimer = undefined;
@@ -96,14 +101,23 @@ export const interview = (
     tmpFilePath = undefined;
     destStream = undefined;
     destTxtStream = undefined;
-    handleBigFive(sessionId!);
+
     console.log('stoped');
   };
 
-  socket.on('interview_start', (args, callback) => {
+  socket.on('interview_start', async (args, callback) => {
     console.log('interview_start' + args.sessionId);
-
     sessionId = args.sessionId;
+    console.log('socket' + socket.id);
+    const startedData = await startBigFive(socket.id, sessionId).catch((error) => {
+      console.log(error);
+      callback?.(0, false);
+      socket.disconnect();
+      return;
+    });
+    if (!startedData) return;
+    employeeId = startedData.employeeId;
+    console.log(startedData)
     tmpFilePath = `./public/interview/${sessionId}/`;
 
     if (!fs.existsSync(tmpFilePath)) {
@@ -119,7 +133,7 @@ export const interview = (
     });
     introductionEndTime = new Date(new Date().getTime() + introductionDuration);
     interviewIntroduction();
-    callback?.(introductionEndTime.getTime());
+    callback?.(introductionEndTime.getTime(), true);
   });
   socket.on('disconnect', () => {
     console.log('disconnect');

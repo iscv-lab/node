@@ -2,7 +2,7 @@ import 'ethers';
 import { EmployeeCVController__factory } from '../typechain/factories/controller/employee/cv/EmployeeCVController__factory.js';
 
 const useEmployeeCV = (provider) => {
-    return EmployeeCVController__factory.connect("0x1CBaBa95bD5E94cE60CED72393Fa5b115943d072", provider);
+    return EmployeeCVController__factory.connect("0xe2B572f6c175b7a486b52A5FD2Bee62Ac6b53407", provider);
 };
 
 export { useEmployeeCV };

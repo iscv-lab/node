@@ -1,4 +1,5 @@
 import { pubClient } from '../app.js';
+import { ERole } from '../types/index.js';
 import { removeUndefinedProps } from '../utils/removeUndefinedProps.js';
 
 let record = undefined;
@@ -25,6 +26,17 @@ const findBySocket = async (socket) => {
     if (id === undefined)
         return undefined;
     return (data?.[id] || undefined);
+};
+const findUserIdBySocket = async (socket) => {
+    const data = await getter();
+    let id = undefined;
+    for (const [key, value] of Object.entries(data)) {
+        if (value.socketIds.includes(socket)) {
+            id = key;
+            break;
+        }
+    }
+    return Number(id?.replace(ERole.EMPLOYEE, '').replace(ERole.BUSINESS, '').replace('_', ''));
 };
 const getter = async () => {
     const raw = await pubClient.get(record);
@@ -87,6 +99,7 @@ var socketblock = {
     removeSocket,
     find,
     findBySocket,
+    findUserIdBySocket,
 };
 
 export { socketblock as default };

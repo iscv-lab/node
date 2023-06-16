@@ -19,6 +19,12 @@ const bigfiveSessionSchema = new Schema({
     audio: {
         type: Boolean,
     },
+    cid: {
+        type: String,
+    },
+    isRead: {
+        type: Boolean,
+    },
 }, { timestamps: true });
 bigfiveSessionSchema.plugin(softDeletePlugin, {
     deletedAtFieldName: 'deletedAt',

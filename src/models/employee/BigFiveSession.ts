@@ -31,6 +31,12 @@ const bigfiveSessionSchema = new Schema<IBigFiveSession>(
     audio: {
       type: Boolean,
     },
+    cid: {
+      type: String,
+    },
+    isRead: {
+      type: Boolean,
+    },
   },
   { timestamps: true },
 );

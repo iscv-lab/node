@@ -26,7 +26,7 @@ export const initSocket = (pubClient: RedisClientType, subClient: RedisClientTyp
 
       if (role === undefined) return;
       if (id === undefined) return;
-
+      console.log(id);
       await socketblock.add(id, socket.id, role);
 
       messages(socket);

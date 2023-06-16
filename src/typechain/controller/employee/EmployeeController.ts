@@ -129,6 +129,7 @@ export interface EmployeeControllerInterface extends utils.Interface {
     "editSkill(uint256,uint256,uint256)": FunctionFragment;
     "getAllProfile()": FunctionFragment;
     "getAllSkill()": FunctionFragment;
+    "getBigFive(uint256)": FunctionFragment;
     "getBigFives()": FunctionFragment;
     "getListAppliesPost()": FunctionFragment;
     "getProfile(uint256)": FunctionFragment;
@@ -153,6 +154,7 @@ export interface EmployeeControllerInterface extends utils.Interface {
       | "editSkill"
       | "getAllProfile"
       | "getAllSkill"
+      | "getBigFive"
       | "getBigFives"
       | "getListAppliesPost"
       | "getProfile"
@@ -232,6 +234,10 @@ export interface EmployeeControllerInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
+    functionFragment: "getBigFive",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "getBigFives",
     values?: undefined
   ): string;
@@ -294,6 +300,7 @@ export interface EmployeeControllerInterface extends utils.Interface {
     functionFragment: "getAllSkill",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "getBigFive", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getBigFives",
     data: BytesLike
@@ -450,6 +457,11 @@ export interface EmployeeController extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[EmployeeSkillStructOutput[]]>;
 
+    getBigFive(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigFiveStructOutput]>;
+
     getBigFives(overrides?: CallOverrides): Promise<[BigFiveStructOutput[]]>;
 
     getListAppliesPost(
@@ -551,6 +563,11 @@ export interface EmployeeController extends BaseContract {
 
   getAllSkill(overrides?: CallOverrides): Promise<EmployeeSkillStructOutput[]>;
 
+  getBigFive(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigFiveStructOutput>;
+
   getBigFives(overrides?: CallOverrides): Promise<BigFiveStructOutput[]>;
 
   getListAppliesPost(
@@ -651,6 +668,11 @@ export interface EmployeeController extends BaseContract {
     getAllSkill(
       overrides?: CallOverrides
     ): Promise<EmployeeSkillStructOutput[]>;
+
+    getBigFive(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigFiveStructOutput>;
 
     getBigFives(overrides?: CallOverrides): Promise<BigFiveStructOutput[]>;
 
@@ -771,6 +793,11 @@ export interface EmployeeController extends BaseContract {
 
     getAllSkill(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getBigFive(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     getBigFives(overrides?: CallOverrides): Promise<BigNumber>;
 
     getListAppliesPost(overrides?: CallOverrides): Promise<BigNumber>;
@@ -872,6 +899,11 @@ export interface EmployeeController extends BaseContract {
     getAllProfile(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAllSkill(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getBigFive(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     getBigFives(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

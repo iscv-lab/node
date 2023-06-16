@@ -4,6 +4,7 @@ import iig from './iig/index.js';
 import apply from './apply/index.js';
 import messages from './messages/index.js';
 import bigfive from './bigfive/index.js';
+import appointment from './appointment/index.js';
 
 var business = async (server, options) => {
     server.register(profile, { prefix: 'profile' });
@@ -12,6 +13,7 @@ var business = async (server, options) => {
     server.register(apply, { prefix: 'apply' });
     server.register(messages, { prefix: 'messages' });
     server.register(bigfive, { prefix: 'bigfive' });
+    server.register(appointment, { prefix: 'appointment' });
 };
 
 export { business as default };

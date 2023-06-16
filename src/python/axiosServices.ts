@@ -7,7 +7,6 @@ class AxiosServices {
     const instance = axios.create({ baseURL: process.env.PYTHON_ENDPOINT });
     instance.interceptors.response.use(this.handleSuccess, this.handleError);
     instance.interceptors.request.use(async (config) => {
-      config.headers!['Content-Type'] = 'application/json';
       return config;
     }, this.handleError);
     axios.defaults.withCredentials = true;
@@ -16,7 +15,7 @@ class AxiosServices {
 
   handleSuccess(response: AxiosResponse) {
     return response;
-    return AxiosLogger.responseLogger(response);
+    // return AxiosLogger.responseLogger(response);
   }
   handleError(error: AxiosError) {
     AxiosLogger.errorLogger(error);

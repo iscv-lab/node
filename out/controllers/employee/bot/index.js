@@ -1,3 +1,4 @@
+import { v4 } from 'uuid';
 import { provider } from '../../../app.js';
 import { useBusiness } from '../../../contracts/useBusiness.js';
 import { BigFiveSession } from '../../../models/employee/BigFiveSession.js';
@@ -7,18 +8,23 @@ import { EBotCategory } from '../../../types/messages/bot.js';
 
 const getRecentTask = async (request, reply) => {
     const employeeId = request.params.employeeid;
+    console.log(employeeId);
     const businessContract = useBusiness(provider);
     const [interviewData, bigFiveData] = await Promise.all([
         InterviewAppointment.find({
             employeeId: employeeId,
         }, {}, {}),
-        BigFiveSession.find({ cid: true, employeeId }, {}, { sort: { updatedAt: 1 } }),
+        BigFiveSession.find({ cid: { $exists: true }, employeeId }, {}, { sort: { updatedAt: 1 } }),
     ]);
     const pipelineInterview = interviewData.map(async (appointment) => {
-        const apply = await businessContract.getApply(appointment.applyId);
+        const apply = await businessContract.getApply(appointment.applyId).catch((error) => {
+            console.log(error);
+        });
         if (!apply)
             return;
-        const business = await businessContract.getProfile(apply.businessId.toNumber());
+        const business = await businessContract.getProfile(apply.businessId.toNumber()).catch((error) => {
+            console.log(error);
+        });
         const temp = {
             _id: appointment._id,
             role: ERole.BUSINESS,
@@ -28,8 +34,7 @@ const getRecentTask = async (request, reply) => {
             isRead: appointment.isRead,
             metadata: {
                 _id: appointment._id,
-                fromTime: appointment.fromTime,
-                toTime: appointment.toTime,
+                time: appointment.time,
                 businessImage: business?.sourceImage,
                 businessId: business?.id.toNumber(),
                 businessName: business?.name,
@@ -38,14 +43,20 @@ const getRecentTask = async (request, reply) => {
         return temp;
     });
     const pipelineBigFive = bigFiveData.map(async (bigfive) => {
-        return {
+        const temp = {
             _id: bigfive._id,
             role: ERole.BUSINESS,
             content: '',
+            sessionId: bigfive.sessionId,
             time: bigfive.updatedAt,
             category: EBotCategory.NEW_BIGFIVE_RESULT,
             isRead: bigfive.isRead,
+            metadata: {
+                _id: v4(),
+                cid: bigfive.cid,
+            },
         };
+        return temp;
     });
     const result = (await Promise.all([...pipelineInterview, ...pipelineBigFive]))
         .filter((x) => Boolean(x))

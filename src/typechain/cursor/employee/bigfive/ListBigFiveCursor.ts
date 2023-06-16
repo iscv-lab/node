@@ -43,7 +43,7 @@ export interface ListBigFiveCursorInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "AddBigFive(uint256,string)": EventFragment;
+    "AddBigFive(uint256,uint256,string)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AddBigFive"): EventFragment;
@@ -51,10 +51,11 @@ export interface ListBigFiveCursorInterface extends utils.Interface {
 
 export interface AddBigFiveEventObject {
   employeeId: BigNumber;
+  sessionId: BigNumber;
   cid: string;
 }
 export type AddBigFiveEvent = TypedEvent<
-  [BigNumber, string],
+  [BigNumber, BigNumber, string],
   AddBigFiveEventObject
 >;
 
@@ -106,11 +107,16 @@ export interface ListBigFiveCursor extends BaseContract {
   };
 
   filters: {
-    "AddBigFive(uint256,string)"(
+    "AddBigFive(uint256,uint256,string)"(
       employeeId?: null,
+      sessionId?: null,
       cid?: null
     ): AddBigFiveEventFilter;
-    AddBigFive(employeeId?: null, cid?: null): AddBigFiveEventFilter;
+    AddBigFive(
+      employeeId?: null,
+      sessionId?: null,
+      cid?: null
+    ): AddBigFiveEventFilter;
   };
 
   estimateGas: {

@@ -21,6 +21,12 @@ const _abi = [
       },
       {
         indexed: false,
+        internalType: "uint256",
+        name: "sessionId",
+        type: "uint256",
+      },
+      {
+        indexed: false,
         internalType: "string",
         name: "cid",
         type: "string",

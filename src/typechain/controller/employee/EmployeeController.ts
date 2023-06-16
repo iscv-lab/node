@@ -78,14 +78,22 @@ export type EmployeeSkillStructOutput = [
 export type BigFiveStruct = {
   id: PromiseOrValue<BigNumberish>;
   employeeId: PromiseOrValue<BigNumberish>;
-  time: PromiseOrValue<BigNumberish>;
+  startTime: PromiseOrValue<BigNumberish>;
+  endTime: PromiseOrValue<BigNumberish>;
   cid: PromiseOrValue<string>;
 };
 
-export type BigFiveStructOutput = [BigNumber, BigNumber, BigNumber, string] & {
+export type BigFiveStructOutput = [
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  string
+] & {
   id: BigNumber;
   employeeId: BigNumber;
-  time: BigNumber;
+  startTime: BigNumber;
+  endTime: BigNumber;
   cid: string;
 };
 
@@ -121,7 +129,7 @@ export interface EmployeeControllerInterface extends utils.Interface {
     "_checkExistEmployeeAccount()": FunctionFragment;
     "_checkExistSkill(uint256,string)": FunctionFragment;
     "_checkIdBelongsToPostId(uint256,string)": FunctionFragment;
-    "addBigFive(uint256,string)": FunctionFragment;
+    "addBigFive(uint256,uint256,string)": FunctionFragment;
     "addEmployee(string,string,string,string,string,string,string)": FunctionFragment;
     "addSkill(uint256,string,uint256)": FunctionFragment;
     "applyPost(uint256,uint256,string)": FunctionFragment;
@@ -186,7 +194,11 @@ export interface EmployeeControllerInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "addBigFive",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "addEmployee",
@@ -325,7 +337,7 @@ export interface EmployeeControllerInterface extends utils.Interface {
   ): Result;
 
   events: {
-    "AddBigFive(uint256,string)": EventFragment;
+    "AddBigFive(uint256,uint256,string)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
   };
 
@@ -335,10 +347,11 @@ export interface EmployeeControllerInterface extends utils.Interface {
 
 export interface AddBigFiveEventObject {
   employeeId: BigNumber;
+  sessionId: BigNumber;
   cid: string;
 }
 export type AddBigFiveEvent = TypedEvent<
-  [BigNumber, string],
+  [BigNumber, BigNumber, string],
   AddBigFiveEventObject
 >;
 
@@ -411,6 +424,7 @@ export interface EmployeeController extends BaseContract {
 
     addBigFive(
       employeeId: PromiseOrValue<BigNumberish>,
+      sessionId: PromiseOrValue<BigNumberish>,
       cid: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -519,6 +533,7 @@ export interface EmployeeController extends BaseContract {
 
   addBigFive(
     employeeId: PromiseOrValue<BigNumberish>,
+    sessionId: PromiseOrValue<BigNumberish>,
     cid: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
@@ -625,6 +640,7 @@ export interface EmployeeController extends BaseContract {
 
     addBigFive(
       employeeId: PromiseOrValue<BigNumberish>,
+      sessionId: PromiseOrValue<BigNumberish>,
       cid: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -704,11 +720,16 @@ export interface EmployeeController extends BaseContract {
   };
 
   filters: {
-    "AddBigFive(uint256,string)"(
+    "AddBigFive(uint256,uint256,string)"(
       employeeId?: null,
+      sessionId?: null,
       cid?: null
     ): AddBigFiveEventFilter;
-    AddBigFive(employeeId?: null, cid?: null): AddBigFiveEventFilter;
+    AddBigFive(
+      employeeId?: null,
+      sessionId?: null,
+      cid?: null
+    ): AddBigFiveEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: PromiseOrValue<string> | null,
@@ -749,6 +770,7 @@ export interface EmployeeController extends BaseContract {
 
     addBigFive(
       employeeId: PromiseOrValue<BigNumberish>,
+      sessionId: PromiseOrValue<BigNumberish>,
       cid: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -856,6 +878,7 @@ export interface EmployeeController extends BaseContract {
 
     addBigFive(
       employeeId: PromiseOrValue<BigNumberish>,
+      sessionId: PromiseOrValue<BigNumberish>,
       cid: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;

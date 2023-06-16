@@ -21,8 +21,7 @@ const handleNotification = async (sessionId, employeeId) => {
     const pdf = await getPDF(sessionId).then((success) => success.data);
     if (!pdf)
         throw 'cannot get pdf';
-    const pdfData = Buffer.from(pdf, 'binary');
-    const cid = await toCID(pdfData);
+    const cid = await toCID(pdf);
     if (!cid)
         throw 'not have cid';
     await BigFiveSession.updateOne({ sessionId }, { $set: { cid } });

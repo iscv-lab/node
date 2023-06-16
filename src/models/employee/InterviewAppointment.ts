@@ -4,9 +4,9 @@ import SoftDeletableModel, { IMyDocument, softDeletePlugin } from '../utils';
 
 export type IInterviewAppointment = {
   employeeId: number;
+  businessId: number;
   applyId: number;
-  fromTime: Date;
-  toTime: Date;
+  time: Date;
   isRead?: boolean;
 } & IMyDocument;
 
@@ -16,21 +16,22 @@ const interviewAppointmentSchema = new Schema<IInterviewAppointment>(
       type: Number,
       required: true,
     },
+    businessId: {
+      type: Number,
+      required: true,
+    },
     applyId: {
       type: Number,
       required: true,
     },
-    fromTime: {
+    time: {
       type: Date,
       required: true,
     },
-    toTime: {
-      type: Date,
-      required: true,
-    },
+
     isRead: {
       type: Boolean,
-    }
+    },
   },
   { timestamps: true },
 );

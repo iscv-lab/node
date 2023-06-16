@@ -6,7 +6,6 @@ import socketblock from '../../blocks/socketblock.js';
 
 const handleBigFive = async (sessionId, employeeId) => {
     const employeeContract = useEmployee(provider);
-    console.log(sessionId + ':' + employeeId);
     const bigfiveSession = await employeeContract.getBigFive(sessionId);
     if (!bigfiveSession.employeeId.eq(employeeId)) {
         console.log('employeeId not belongs to bigfive session');
@@ -22,10 +21,8 @@ var EInterviewError;
 })(EInterviewError || (EInterviewError = {}));
 const startBigFive = async (socketId, sessionId) => {
     const employeeId = await socketblock.findUserIdBySocket(socketId);
-    console.log('employeeId' + employeeId);
     if (employeeId === undefined)
         throw 'not found socket block';
-    console.log('first');
     const newBigFiveSession = new BigFiveSession({
         employeeId,
         sessionId,

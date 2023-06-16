@@ -19,5 +19,7 @@ export const reportBigFive = (sessionId: number, employeeName: string, employeeI
 };
 
 export const getPDF = (sessionId: number) => {
-  return new AxiosServices().get<any>(`static/interview/${sessionId}/report.pdf`);
+  return new AxiosServices().get<Buffer>(`static/interview/${sessionId}/report.pdf`, {
+    responseType: 'arraybuffer',
+  });
 };

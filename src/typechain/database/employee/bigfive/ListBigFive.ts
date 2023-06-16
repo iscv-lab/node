@@ -30,23 +30,32 @@ import type {
 export type BigFiveStruct = {
   id: PromiseOrValue<BigNumberish>;
   employeeId: PromiseOrValue<BigNumberish>;
-  time: PromiseOrValue<BigNumberish>;
+  startTime: PromiseOrValue<BigNumberish>;
+  endTime: PromiseOrValue<BigNumberish>;
   cid: PromiseOrValue<string>;
 };
 
-export type BigFiveStructOutput = [BigNumber, BigNumber, BigNumber, string] & {
+export type BigFiveStructOutput = [
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  BigNumber,
+  string
+] & {
   id: BigNumber;
   employeeId: BigNumber;
-  time: BigNumber;
+  startTime: BigNumber;
+  endTime: BigNumber;
   cid: string;
 };
 
 export interface ListBigFiveInterface extends utils.Interface {
   functions: {
-    "add((uint256,uint256,uint256,string))": FunctionFragment;
+    "add((uint256,uint256,uint256,uint256,string))": FunctionFragment;
     "approve(address)": FunctionFragment;
     "at(uint256)": FunctionFragment;
     "destroy()": FunctionFragment;
+    "edit((uint256,uint256,uint256,uint256,string))": FunctionFragment;
     "getAll()": FunctionFragment;
     "list(uint256)": FunctionFragment;
     "owner()": FunctionFragment;
@@ -60,6 +69,7 @@ export interface ListBigFiveInterface extends utils.Interface {
       | "approve"
       | "at"
       | "destroy"
+      | "edit"
       | "getAll"
       | "list"
       | "owner"
@@ -77,6 +87,7 @@ export interface ListBigFiveInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(functionFragment: "destroy", values?: undefined): string;
+  encodeFunctionData(functionFragment: "edit", values: [BigFiveStruct]): string;
   encodeFunctionData(functionFragment: "getAll", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "list",
@@ -96,6 +107,7 @@ export interface ListBigFiveInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "at", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "destroy", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "edit", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "getAll", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "list", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
@@ -107,11 +119,13 @@ export interface ListBigFiveInterface extends utils.Interface {
 
   events: {
     "Add(tuple)": EventFragment;
+    "Edit(tuple)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Remove(tuple)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Add"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Edit"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Remove"): EventFragment;
 }
@@ -122,6 +136,13 @@ export interface AddEventObject {
 export type AddEvent = TypedEvent<[BigFiveStructOutput], AddEventObject>;
 
 export type AddEventFilter = TypedEventFilter<AddEvent>;
+
+export interface EditEventObject {
+  item: BigFiveStructOutput;
+}
+export type EditEvent = TypedEvent<[BigFiveStructOutput], EditEventObject>;
+
+export type EditEventFilter = TypedEventFilter<EditEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -188,16 +209,22 @@ export interface ListBigFive extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    edit(
+      item: BigFiveStruct,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     getAll(overrides?: CallOverrides): Promise<[BigFiveStructOutput[]]>;
 
     list(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, string] & {
+      [BigNumber, BigNumber, BigNumber, BigNumber, string] & {
         id: BigNumber;
         employeeId: BigNumber;
-        time: BigNumber;
+        startTime: BigNumber;
+        endTime: BigNumber;
         cid: string;
       }
     >;
@@ -234,16 +261,22 @@ export interface ListBigFive extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  edit(
+    item: BigFiveStruct,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   getAll(overrides?: CallOverrides): Promise<BigFiveStructOutput[]>;
 
   list(
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<
-    [BigNumber, BigNumber, BigNumber, string] & {
+    [BigNumber, BigNumber, BigNumber, BigNumber, string] & {
       id: BigNumber;
       employeeId: BigNumber;
-      time: BigNumber;
+      startTime: BigNumber;
+      endTime: BigNumber;
       cid: string;
     }
   >;
@@ -275,16 +308,19 @@ export interface ListBigFive extends BaseContract {
 
     destroy(overrides?: CallOverrides): Promise<void>;
 
+    edit(item: BigFiveStruct, overrides?: CallOverrides): Promise<void>;
+
     getAll(overrides?: CallOverrides): Promise<BigFiveStructOutput[]>;
 
     list(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, string] & {
+      [BigNumber, BigNumber, BigNumber, BigNumber, string] & {
         id: BigNumber;
         employeeId: BigNumber;
-        time: BigNumber;
+        startTime: BigNumber;
+        endTime: BigNumber;
         cid: string;
       }
     >;
@@ -305,6 +341,9 @@ export interface ListBigFive extends BaseContract {
   filters: {
     "Add(tuple)"(item?: null): AddEventFilter;
     Add(item?: null): AddEventFilter;
+
+    "Edit(tuple)"(item?: null): EditEventFilter;
+    Edit(item?: null): EditEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: PromiseOrValue<string> | null,
@@ -336,6 +375,11 @@ export interface ListBigFive extends BaseContract {
     ): Promise<BigNumber>;
 
     destroy(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    edit(
+      item: BigFiveStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -376,6 +420,11 @@ export interface ListBigFive extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     destroy(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    edit(
+      item: BigFiveStruct,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

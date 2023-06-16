@@ -1,4 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
+import { v4 } from 'uuid';
 import { provider } from '~/app';
 import { useBusiness } from '~contracts/useBusiness';
 import { BigFiveSession } from '~models/employee/BigFiveSession';
@@ -11,6 +12,7 @@ export const getRecentTask = async (
   reply: FastifyReply,
 ) => {
   const employeeId = request.params.employeeid;
+  console.log(employeeId);
   const businessContract = useBusiness(provider);
   const [interviewData, bigFiveData] = await Promise.all([
     InterviewAppointment.find(
@@ -20,13 +22,17 @@ export const getRecentTask = async (
       {},
       {},
     ),
-    BigFiveSession.find({ cid: true, employeeId }, {}, { sort: { updatedAt: 1 } }),
+    BigFiveSession.find({ cid: { $exists: true }, employeeId }, {}, { sort: { updatedAt: 1 } }),
   ]);
   const pipelineInterview = interviewData.map(async (appointment) => {
-    const apply = await businessContract.getApply(appointment.applyId);
+    const apply = await businessContract.getApply(appointment.applyId).catch((error) => {
+      console.log(error);
+    });
     if (!apply) return;
-    const business = await businessContract.getProfile(apply.businessId.toNumber());
-    const temp = {
+    const business = await businessContract.getProfile(apply.businessId.toNumber()).catch((error) => {
+      console.log(error);
+    });
+    const temp: IBotMessages = {
       _id: appointment._id,
       role: ERole.BUSINESS,
       content: '',
@@ -35,8 +41,7 @@ export const getRecentTask = async (
       isRead: appointment.isRead,
       metadata: {
         _id: appointment._id,
-        fromTime: appointment.fromTime,
-        toTime: appointment.toTime,
+        time: appointment.time,
         businessImage: business?.sourceImage,
         businessId: business?.id.toNumber(),
         businessName: business?.name,
@@ -46,14 +51,20 @@ export const getRecentTask = async (
   });
 
   const pipelineBigFive = bigFiveData.map(async (bigfive) => {
-    return {
+    const temp: IBotMessages = {
       _id: bigfive._id,
       role: ERole.BUSINESS,
       content: '',
+      sessionId: bigfive.sessionId,
       time: bigfive.updatedAt,
       category: EBotCategory.NEW_BIGFIVE_RESULT,
       isRead: bigfive.isRead,
+      metadata: {
+        _id: v4(),
+        cid: bigfive.cid,
+      },
     };
+    return temp;
   });
 
   const result = (await Promise.all([...pipelineInterview, ...pipelineBigFive]))

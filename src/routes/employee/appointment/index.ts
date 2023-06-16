@@ -1,23 +1,7 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
-import { readInterviewAppointment, setInterviewAppointment } from '~controllers/employee/interview';
+import { readInterviewAppointment } from '~controllers/employee/appointment';
 
 export default async (server: FastifyInstance, options: FastifyPluginOptions) => {
-  server.post(
-    '/new',
-    {
-      schema: {
-        body: {
-          type: 'object',
-          properties: {
-            employeeId: { type: 'number' },
-            postId: { type: 'string' },
-          },
-          required: ['employeeId', 'postId'],
-        },
-      },
-    },
-    setInterviewAppointment,
-  );
   server.get(
     '/read',
     {

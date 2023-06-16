@@ -6,21 +6,21 @@ const interviewAppointmentSchema = new Schema({
         type: Number,
         required: true,
     },
+    businessId: {
+        type: Number,
+        required: true,
+    },
     applyId: {
         type: Number,
         required: true,
     },
-    fromTime: {
-        type: Date,
-        required: true,
-    },
-    toTime: {
+    time: {
         type: Date,
         required: true,
     },
     isRead: {
         type: Boolean,
-    }
+    },
 }, { timestamps: true });
 interviewAppointmentSchema.plugin(softDeletePlugin, {
     deletedAtFieldName: 'deletedAt',

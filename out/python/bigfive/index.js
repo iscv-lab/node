@@ -13,7 +13,9 @@ const reportBigFive = (sessionId, employeeName, employeeId) => {
     return new AxiosServices().get(`big_five/report?employee_id=${employeeId}&session_id=${sessionId}&employee_name=${employeeName}`);
 };
 const getPDF = (sessionId) => {
-    return new AxiosServices().get(`static/interview/${sessionId}/report.pdf`);
+    return new AxiosServices().get(`static/interview/${sessionId}/report.pdf`, {
+        responseType: 'arraybuffer',
+    });
 };
 
 export { audioBigFive, getPDF, reportBigFive, startedBigFive, videoBigFive };

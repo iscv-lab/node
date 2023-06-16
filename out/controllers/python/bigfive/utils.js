@@ -1,3 +1,4 @@
+import { v4 } from 'uuid';
 import { provider, app } from '../../../app.js';
 import { reportBigFive, getPDF } from '../../../python/bigfive/index.js';
 import socketblock from '../../../blocks/socketblock.js';
@@ -27,7 +28,8 @@ const handleNotification = async (sessionId, employeeId) => {
     await BigFiveSession.updateOne({ sessionId }, { $set: { cid } });
     if (employeeblock?.socketIds?.length) {
         app.io.to(employeeblock.socketIds).emit('bot_notification', {
-            _id: sessionId,
+            _id: v4(),
+            sessionId: sessionId,
             role: ERole.BUSINESS,
             category: EBotCategory.NEW_BIGFIVE_RESULT,
             content: '',

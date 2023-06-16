@@ -75,6 +75,14 @@ type CV {
   source: String
 }
 
+type BigFive {
+  id: Int
+  employeeId: Int
+  startTime: Int
+  endTime: Int
+  cid: String
+}
+
 type DefaultCV {
   category: Int
   id: Int
@@ -143,4 +151,5 @@ type Query {
   prediction(id: Int!): [Post]
   post(id: String!, employeeId: Int): Post
   requestStatus(employeeId: Int!): IIGStatus
+  bigFiveEmployee(employeeId: Int!): BigFive
 }

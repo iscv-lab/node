@@ -22,7 +22,6 @@ const initSocket = (pubClient, subClient) => {
                 return;
             if (id === undefined)
                 return;
-            console.log(id);
             await socketblock.add(id, socket.id, role);
             messages(socket);
             interview(socket);

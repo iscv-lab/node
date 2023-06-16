@@ -72,7 +72,6 @@ export const interview = (
   };
   const interviewMain = () => {
     socket.on('interview_answer', (args) => {
-      console.log(args.answer);
       destTxtStream?.write(args.answer.toString() + '\n');
     });
     mainTimer = setTimeout(function () {
@@ -117,7 +116,7 @@ export const interview = (
     });
     if (!startedData) return;
     employeeId = startedData.employeeId;
-    console.log(startedData)
+    console.log(startedData);
     tmpFilePath = `./public/interview/${sessionId}/`;
 
     if (!fs.existsSync(tmpFilePath)) {
@@ -137,10 +136,6 @@ export const interview = (
   });
   socket.on('disconnect', () => {
     console.log('disconnect');
-    handleStop();
-  });
-
-  socket.on('interview_stop', (args, callback) => {
     handleStop();
   });
 };

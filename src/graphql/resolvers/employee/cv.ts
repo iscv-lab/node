@@ -43,10 +43,6 @@ export const cv = {
       iigContract.getAllIIGSWResult(),
     ]);
 
-    // const employeeIndex = exponentialSearch(employees, employeeId, "id", "eq");
-    // const employeeIndex = employees.findIndex((x) => x.id.eq(employeeId));
-    // console.log(employeeIndex);
-    // if (employeeIndex === -1) return;
     const employee = employees.find((x) => x.id.eq(employeeId));
     if (!employee) return;
 

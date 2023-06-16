@@ -22,7 +22,6 @@ const interview = (socket) => {
     };
     const interviewMain = () => {
         socket.on('interview_answer', (args) => {
-            console.log(args.answer);
             destTxtStream?.write(args.answer.toString() + '\n');
         });
         mainTimer = setTimeout(function () {
@@ -84,9 +83,6 @@ const interview = (socket) => {
     });
     socket.on('disconnect', () => {
         console.log('disconnect');
-        handleStop();
-    });
-    socket.on('interview_stop', (args, callback) => {
         handleStop();
     });
 };

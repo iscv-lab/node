@@ -1,5 +1,7 @@
-import { listenBigfive } from "./bigfive"
+import { ethers } from 'ethers';
+import { listenBigfive } from './bigfive';
 
-export const listenWeb3 = ()=>{
-    listenBigfive()
-}
+export const listenWeb3 = async (wsProvider: ethers.providers.WebSocketProvider) => {
+  console.log(await wsProvider._ready());
+  listenBigfive(wsProvider);
+};

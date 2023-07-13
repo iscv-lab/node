@@ -4,6 +4,7 @@ import common from './common/index.js';
 import shared from './shared/index.js';
 import admin from './admin/index.js';
 import python from './python/index.js';
+import ftisu from './ftisu/index.js';
 
 var routes = async (server, options) => {
     server.get('/', {}, async (request, reply) => {
@@ -15,6 +16,7 @@ var routes = async (server, options) => {
     server.register(shared, { prefix: 'shared' });
     server.register(admin, { prefix: 'admin' });
     server.register(python, { prefix: 'python' });
+    server.register(ftisu, { prefix: 'ftisu' });
 };
 
 export { routes as default };

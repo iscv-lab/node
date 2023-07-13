@@ -9,12 +9,19 @@ declare global {
       IPFS_HOST: string;
       IPFS_PORT: string;
       IPFS_PROTOCOL: string;
-      ETHEREUM_ENDPOINT: string;
+      ETHEREUM_ENDPOINT_WS: string;
+      ETHEREUM_ENDPOINT_HTTP: string;
+      NUM_CLUSTER: number;
       PORT: string;
       PWD: string;
       SOCKET_POOL: string;
       GOOGLE_APPLICATION_CREDENTIALS: string;
       PYTHON_ENDPOINT: string;
+      NODE2_PRIVATE_KEY: string;
+      IIG_ADDRESS: string;
+      BUSINESS_ADDRESS: string;
+      EMPLOYEE_ADDRESS: string;
+      EMPLOYEE_CV_ADDRESS: string;
     }
   }
 }

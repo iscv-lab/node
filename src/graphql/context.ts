@@ -5,7 +5,7 @@ import { BaseContext } from '@apollo/server';
 import { IPFSHTTPClient } from 'ipfs-http-client/dist/src/types';
 
 type NewType = {
-  provider: ethers.providers.WebSocketProvider;
+  provider: ethers.providers.WebSocketProvider | ethers.providers.JsonRpcProvider;
   ipfs: IPFSHTTPClient;
 };
 
@@ -15,7 +15,7 @@ export const createContext = ({
   provider,
   ipfs,
 }: {
-  provider: ethers.providers.WebSocketProvider;
+  provider: ethers.providers.WebSocketProvider | ethers.providers.JsonRpcProvider;
   ipfs: IPFSHTTPClient;
 }) => {
   const context: ApolloFastifyContextFunction<Context> = async (request, reply) => {

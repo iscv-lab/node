@@ -1,42 +1,39 @@
-import { FastifyInstance, FastifyPluginOptions } from "fastify";
-import { postJSON, postObject } from "~controllers/common/ipfs";
+import { FastifyInstance, FastifyPluginOptions } from 'fastify';
+import { postJSON, postObject } from '~controllers/common/ipfs';
 
-export default async (
-  server: FastifyInstance,
-  options: FastifyPluginOptions
-) => {
+export default async (server: FastifyInstance, options: FastifyPluginOptions) => {
   server.post(
-    "/object",
+    '/object',
     {
       schema: {
         body: {
-          type: "object",
+          type: 'object',
           properties: {
             data: {
-              type: "object",
+              type: 'object',
             },
           },
-          required: ["data"],
+          required: ['data'],
         },
       },
     },
-    postObject
+    postObject,
   );
   server.post(
-    "/json",
+    '/json',
     {
       schema: {
         body: {
-          type: "object",
+          type: 'object',
           properties: {
             data: {
-              type: "string",
+              type: 'string',
             },
           },
-          required: ["data"],
+          required: ['data'],
         },
       },
     },
-    postJSON
+    postJSON,
   );
 };

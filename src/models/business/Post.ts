@@ -1,9 +1,9 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
-import SoftDeletableModel, { IMyDocument, softDeletePlugin } from "../utils";
+import SoftDeletableModel, { IMyDocument, softDeletePlugin } from '../utils';
 // import mongodb from 'mongodb';
-import { Document } from "mongoose";
-import { PostStatus } from "~types/post";
+import { Document } from 'mongoose';
+import { PostStatus } from '~types/post';
 
 export type IPost = {
   businessId: number;
@@ -44,15 +44,12 @@ const postSchema = new Schema<IPost>(
       enum: PostStatus,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 postSchema.plugin(softDeletePlugin, {
-  deletedAtFieldName: "deletedAt",
+  deletedAtFieldName: 'deletedAt',
   overrideMethods: true,
 });
 
-export const Post = model<IPost, SoftDeletableModel<IPost>>(
-  "business_post",
-  postSchema
-);
+export const Post = model<IPost, SoftDeletableModel<IPost>>('business_post', postSchema);

@@ -19,12 +19,7 @@ export function quickSort<T extends object | number | string | undefined>(
   return arr;
 }
 
-function partition<T>(
-  arr: T[],
-  compare: (a: T, b: T) => number,
-  left: number,
-  right: number,
-): number {
+function partition<T>(arr: T[], compare: (a: T, b: T) => number, left: number, right: number): number {
   const pivot = arr[right];
   let i = left - 1;
 

@@ -8,10 +8,10 @@ import { ERole } from '~types/index';
 import { messages } from './messages';
 import { interview } from './interview';
 
-export const initSocket = (pubClient: RedisClientType, subClient: RedisClientType) => {
-  app.ready().then(() => {
-    app.io.adapter(createAdapter(pubClient, subClient));
-
+export const initSocket = async (pubClient: RedisClientType, subClient: RedisClientType) => {
+  await app.ready().then(() => {
+    app.io.adapter(createAdapter(pubClient, subClient, {}));
+    // app.io.adapter();
     app.io.on('connection', async (socket) => {
       console.log(`Client main ${socket.id} connected.`);
       const employeeId = Number(socket.handshake.query['employeeId']);

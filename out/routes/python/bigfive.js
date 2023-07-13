@@ -12,7 +12,7 @@ var bigfive = async (server) => {
             },
         },
     }, reciveStarted);
-    server.get('/video', {
+    server.post('/video', {
         schema: {
             querystring: {
                 type: 'object',
@@ -23,7 +23,7 @@ var bigfive = async (server) => {
             },
         },
     }, reciveVideo);
-    server.get('/audio', {
+    server.post('/audio', {
         schema: {
             querystring: {
                 type: 'object',

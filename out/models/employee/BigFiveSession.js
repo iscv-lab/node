@@ -25,6 +25,24 @@ const bigfiveSessionSchema = new Schema({
     isRead: {
         type: Boolean,
     },
+    audioResult: {
+        type: {
+            o: { type: Number, required: true },
+            c: { type: Number, required: true },
+            e: { type: Number, required: true },
+            a: { type: Number, required: true },
+            n: { type: Number, required: true },
+        },
+    },
+    videoResult: {
+        type: {
+            o: { type: Number, required: true },
+            c: { type: Number, required: true },
+            e: { type: Number, required: true },
+            a: { type: Number, required: true },
+            n: { type: Number, required: true },
+        },
+    },
 }, { timestamps: true });
 bigfiveSessionSchema.plugin(softDeletePlugin, {
     deletedAtFieldName: 'deletedAt',

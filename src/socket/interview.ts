@@ -60,7 +60,7 @@ export const interview = (
   let destStream: fs.WriteStream | undefined = undefined;
   let destTxtStream: fs.WriteStream | undefined = undefined;
 
-  const introductionDuration = 5000;
+  const introductionDuration = 15000;
   const mainDuration = 900000;
 
   const interviewIntroduction = () => {
@@ -81,17 +81,17 @@ export const interview = (
   };
 
   const handleStop = () => {
-    console.log(sessionId);
+    console.log("stop")
     if (sessionId === undefined) return;
     if (employeeId === undefined) return;
     socket.emit('interview_main_end', new Date().getTime());
     destStream?.end(() => {
-      console.log('Video was been saved');
+      //
     });
     clearTimeout(introductionTimer);
     clearTimeout(mainTimer);
     destTxtStream?.end();
-    if (Math.floor(Math.abs(new Date().getTime() - introductionEndTime!.getTime()) / (1000 * 60)) > 5)
+    if (Math.floor(Math.abs(new Date().getTime() - introductionEndTime!.getTime()) / (1000 * 60)) > 1)
       handleBigFive(sessionId!, employeeId!);
     sessionId = undefined;
     introductionEndTime = undefined;
@@ -101,14 +101,10 @@ export const interview = (
     tmpFilePath = undefined;
     destStream = undefined;
     destTxtStream = undefined;
-
-    console.log('stoped');
   };
 
   socket.on('interview_start', async (args, callback) => {
-    console.log('interview_start' + args.sessionId);
     sessionId = args.sessionId;
-    console.log('socket' + socket.id);
     const startedData = await startBigFive(socket.id, sessionId).catch((error) => {
       console.log(error);
       callback?.(0, false);
@@ -117,7 +113,6 @@ export const interview = (
     });
     if (!startedData) return;
     employeeId = startedData.employeeId;
-    console.log(startedData);
     tmpFilePath = `./public/interview/${sessionId}/`;
 
     if (!fs.existsSync(tmpFilePath)) {
@@ -128,7 +123,6 @@ export const interview = (
     destTxtStream = fs.createWriteStream(tmpFilePath + 'qa.txt', { flags: 'a' });
 
     socket.on('interview_chunk', (arg) => {
-      console.log('introduction_chunk');
       destStream!.write(arg?.data);
     });
     introductionEndTime = new Date(new Date().getTime() + introductionDuration);
@@ -136,7 +130,6 @@ export const interview = (
     callback?.(introductionEndTime.getTime(), true);
   });
   socket.on('disconnect', () => {
-    console.log('disconnect');
     handleStop();
   });
 };

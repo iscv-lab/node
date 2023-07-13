@@ -1,19 +1,14 @@
-import { Context } from "~graphql/context";
-import { post } from "./post";
-import { useBusiness } from "~contracts/useBusiness";
-import { provider } from "~/app";
-import { IBusiness } from "~types/business";
-import { iig } from "./iig";
+import { Context } from '~graphql/context';
+import { post } from './post';
+import { useBusiness } from '~contracts/useBusiness';
+import { provider } from '~/app';
+import { IBusiness } from '~types/business';
+import { iig } from './iig';
 
 export const business = {
   ...post,
   ...iig,
-  businessByUser: async (
-    parent,
-    args: { user: string },
-    contextValue: Context,
-    info
-  ) => {
+  businessByUser: async (parent, args: { user: string }, contextValue: Context, info) => {
     const user = args.user;
 
     const businessContract = useBusiness(provider);
@@ -34,17 +29,10 @@ export const business = {
     };
     return result;
   },
-  business: async (
-    parent,
-    args: { id: number },
-    contextValue: Context,
-    info
-  ) => {
+  business: async (parent, args: { id: number }, contextValue: Context, info) => {
     const id = args.id;
-
     const businessContract = useBusiness(provider);
     const businessData = await businessContract.getProfile(id);
-
     if (!businessData) return;
     const result: IBusiness = {
       id: businessData.id.toNumber(),

@@ -5,9 +5,10 @@ import { ERole } from '../types/index.js';
 import { messages } from './messages.js';
 import { interview } from './interview.js';
 
-const initSocket = (pubClient, subClient) => {
-    app.ready().then(() => {
-        app.io.adapter(createAdapter(pubClient, subClient));
+const initSocket = async (pubClient, subClient) => {
+    await app.ready().then(() => {
+        app.io.adapter(createAdapter(pubClient, subClient, {}));
+        // app.io.adapter();
         app.io.on('connection', async (socket) => {
             console.log(`Client main ${socket.id} connected.`);
             const employeeId = Number(socket.handshake.query['employeeId']);

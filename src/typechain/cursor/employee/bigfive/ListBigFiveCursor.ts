@@ -10,43 +10,27 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "../../../common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from '../../../common';
 
 export interface ListBigFiveCursorInterface extends utils.Interface {
   functions: {
-    "isDiffSevenDays(uint256)": FunctionFragment;
+    'isDiffSevenDays(uint256)': FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "isDiffSevenDays"): FunctionFragment;
+  getFunction(nameOrSignatureOrTopic: 'isDiffSevenDays'): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "isDiffSevenDays",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
+  encodeFunctionData(functionFragment: 'isDiffSevenDays', values: [PromiseOrValue<BigNumberish>]): string;
 
-  decodeFunctionResult(
-    functionFragment: "isDiffSevenDays",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'isDiffSevenDays', data: BytesLike): Result;
 
   events: {
-    "AddBigFive(uint256,uint256,string)": EventFragment;
+    'AddBigFive(uint256,uint256,string)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AddBigFive"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AddBigFive'): EventFragment;
 }
 
 export interface AddBigFiveEventObject {
@@ -54,10 +38,7 @@ export interface AddBigFiveEventObject {
   sessionId: BigNumber;
   cid: string;
 }
-export type AddBigFiveEvent = TypedEvent<
-  [BigNumber, BigNumber, string],
-  AddBigFiveEventObject
->;
+export type AddBigFiveEvent = TypedEvent<[BigNumber, BigNumber, string], AddBigFiveEventObject>;
 
 export type AddBigFiveEventFilter = TypedEventFilter<AddBigFiveEvent>;
 
@@ -71,16 +52,12 @@ export interface ListBigFiveCursor extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -88,48 +65,25 @@ export interface ListBigFiveCursor extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    isDiffSevenDays(
-      employeeId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    isDiffSevenDays(employeeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[boolean]>;
   };
 
-  isDiffSevenDays(
-    employeeId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  isDiffSevenDays(employeeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
   callStatic: {
-    isDiffSevenDays(
-      employeeId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    isDiffSevenDays(employeeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
   };
 
   filters: {
-    "AddBigFive(uint256,uint256,string)"(
-      employeeId?: null,
-      sessionId?: null,
-      cid?: null
-    ): AddBigFiveEventFilter;
-    AddBigFive(
-      employeeId?: null,
-      sessionId?: null,
-      cid?: null
-    ): AddBigFiveEventFilter;
+    'AddBigFive(uint256,uint256,string)'(employeeId?: null, sessionId?: null, cid?: null): AddBigFiveEventFilter;
+    AddBigFive(employeeId?: null, sessionId?: null, cid?: null): AddBigFiveEventFilter;
   };
 
   estimateGas: {
-    isDiffSevenDays(
-      employeeId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    isDiffSevenDays(employeeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    isDiffSevenDays(
-      employeeId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    isDiffSevenDays(employeeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

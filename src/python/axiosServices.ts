@@ -18,7 +18,7 @@ class AxiosServices {
     // return AxiosLogger.responseLogger(response);
   }
   handleError(error: AxiosError) {
-    AxiosLogger.errorLogger(error);
+    console.log(error.code);
     return Promise.reject(error);
   }
   get<T>(url: string, config?: AxiosRequestConfig<any> | undefined) {

@@ -12,20 +12,10 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "../../../common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from '../../../common';
 
 export type BigFiveStruct = {
   id: PromiseOrValue<BigNumberish>;
@@ -35,13 +25,7 @@ export type BigFiveStruct = {
   cid: PromiseOrValue<string>;
 };
 
-export type BigFiveStructOutput = [
-  BigNumber,
-  BigNumber,
-  BigNumber,
-  BigNumber,
-  string
-] & {
+export type BigFiveStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, string] & {
   id: BigNumber;
   employeeId: BigNumber;
   startTime: BigNumber;
@@ -51,83 +35,65 @@ export type BigFiveStructOutput = [
 
 export interface ListBigFiveInterface extends utils.Interface {
   functions: {
-    "add((uint256,uint256,uint256,uint256,string))": FunctionFragment;
-    "approve(address)": FunctionFragment;
-    "at(uint256)": FunctionFragment;
-    "destroy()": FunctionFragment;
-    "edit((uint256,uint256,uint256,uint256,string))": FunctionFragment;
-    "getAll()": FunctionFragment;
-    "list(uint256)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "retrive(address)": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
+    'add((uint256,uint256,uint256,uint256,string))': FunctionFragment;
+    'approve(address)': FunctionFragment;
+    'at(uint256)': FunctionFragment;
+    'destroy()': FunctionFragment;
+    'edit((uint256,uint256,uint256,uint256,string))': FunctionFragment;
+    'getAll()': FunctionFragment;
+    'list(uint256)': FunctionFragment;
+    'owner()': FunctionFragment;
+    'retrive(address)': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "add"
-      | "approve"
-      | "at"
-      | "destroy"
-      | "edit"
-      | "getAll"
-      | "list"
-      | "owner"
-      | "retrive"
-      | "transferOwnership"
+      | 'add'
+      | 'approve'
+      | 'at'
+      | 'destroy'
+      | 'edit'
+      | 'getAll'
+      | 'list'
+      | 'owner'
+      | 'retrive'
+      | 'transferOwnership',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: "add", values: [BigFiveStruct]): string;
-  encodeFunctionData(
-    functionFragment: "approve",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "at",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(functionFragment: "destroy", values?: undefined): string;
-  encodeFunctionData(functionFragment: "edit", values: [BigFiveStruct]): string;
-  encodeFunctionData(functionFragment: "getAll", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "list",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "retrive",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: 'add', values: [BigFiveStruct]): string;
+  encodeFunctionData(functionFragment: 'approve', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'at', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'destroy', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'edit', values: [BigFiveStruct]): string;
+  encodeFunctionData(functionFragment: 'getAll', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'list', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'retrive', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
-  decodeFunctionResult(functionFragment: "add", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "at", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "destroy", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "edit", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getAll", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "list", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "retrive", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'at', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'destroy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'edit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'list', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'retrive', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
 
   events: {
-    "Add(tuple)": EventFragment;
-    "Edit(tuple)": EventFragment;
-    "OwnershipTransferred(address,address)": EventFragment;
-    "Remove(tuple)": EventFragment;
+    'Add(tuple)': EventFragment;
+    'Edit(tuple)': EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
+    'Remove(tuple)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Add"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Edit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Remove"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Add'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Edit'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Remove'): EventFragment;
 }
 
 export interface AddEventObject {
@@ -148,13 +114,9 @@ export interface OwnershipTransferredEventObject {
   previousOwner: string;
   newOwner: string;
 }
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  OwnershipTransferredEventObject
->;
+export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
 
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
+export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface RemoveEventObject {
   item: BigFiveStructOutput;
@@ -173,16 +135,12 @@ export interface ListBigFive extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -190,35 +148,24 @@ export interface ListBigFive extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    add(
-      item: BigFiveStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    add(item: BigFiveStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     approve(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    at(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[BigFiveStructOutput]>;
+    at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigFiveStructOutput]>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    edit(
-      item: BigFiveStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    edit(item: BigFiveStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     getAll(overrides?: CallOverrides): Promise<[BigFiveStructOutput[]]>;
 
     list(
       arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, string] & {
         id: BigNumber;
@@ -233,44 +180,33 @@ export interface ListBigFive extends BaseContract {
 
     retrive(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  add(
-    item: BigFiveStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  add(item: BigFiveStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   approve(
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  at(
-    index: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BigFiveStructOutput>;
+  at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigFiveStructOutput>;
 
-  destroy(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  edit(
-    item: BigFiveStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  edit(item: BigFiveStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   getAll(overrides?: CallOverrides): Promise<BigFiveStructOutput[]>;
 
   list(
     arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, string] & {
       id: BigNumber;
@@ -285,26 +221,20 @@ export interface ListBigFive extends BaseContract {
 
   retrive(
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     add(item: BigFiveStruct, overrides?: CallOverrides): Promise<void>;
 
-    approve(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    approve(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    at(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigFiveStructOutput>;
+    at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigFiveStructOutput>;
 
     destroy(overrides?: CallOverrides): Promise<void>;
 
@@ -314,7 +244,7 @@ export interface ListBigFive extends BaseContract {
 
     list(
       arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, string] & {
         id: BigNumber;
@@ -327,124 +257,90 @@ export interface ListBigFive extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    retrive(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    retrive(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    "Add(tuple)"(item?: null): AddEventFilter;
+    'Add(tuple)'(item?: null): AddEventFilter;
     Add(item?: null): AddEventFilter;
 
-    "Edit(tuple)"(item?: null): EditEventFilter;
+    'Edit(tuple)'(item?: null): EditEventFilter;
     Edit(item?: null): EditEventFilter;
 
-    "OwnershipTransferred(address,address)"(
+    'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
 
-    "Remove(tuple)"(item?: null): RemoveEventFilter;
+    'Remove(tuple)'(item?: null): RemoveEventFilter;
     Remove(item?: null): RemoveEventFilter;
   };
 
   estimateGas: {
-    add(
-      item: BigFiveStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    add(item: BigFiveStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     approve(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    at(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    edit(
-      item: BigFiveStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    edit(item: BigFiveStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getAll(overrides?: CallOverrides): Promise<BigNumber>;
 
-    list(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     retrive(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    add(
-      item: BigFiveStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    add(item: BigFiveStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     approve(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    at(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    edit(
-      item: BigFiveStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    edit(item: BigFiveStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getAll(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    list(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     retrive(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

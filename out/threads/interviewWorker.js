@@ -7,7 +7,6 @@ const interviewWorker = async (workerData) => {
     initDotENV();
     initRuntime();
     await mongoServer();
-    console.log(workerData);
     parentPort.postMessage({ event: 'introduction', data: 'a' });
     parentPort.postMessage({ event: 'main', data: 'b' });
     parentPort.postMessage({ event: 'end', data: 'c' });

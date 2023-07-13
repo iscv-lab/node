@@ -5,17 +5,6 @@ var posts = async (server, options) => {
     server.get('/myposts/:userid', getMyPosts);
     server.post('/new', {
         preHandler: imageMiddleware,
-        schema: {
-            params: {
-                type: 'object',
-                properties: {
-                    userid: {
-                        type: 'number',
-                    },
-                },
-                required: ['userid'],
-            },
-        },
     }, newPost);
     server.get('/get/:post_id', {
         schema: {

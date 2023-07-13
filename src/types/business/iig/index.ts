@@ -1,4 +1,4 @@
 export enum EIIGRequest {
-  LR = "lr",
-  SW = "sw",
+  LR = 'lr',
+  SW = 'sw',
 }

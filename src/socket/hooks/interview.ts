@@ -4,15 +4,14 @@ import { useEmployee } from '~contracts/useEmployee';
 import { BigFiveSession } from '~models/employee/BigFiveSession';
 import socketblock from '~blocks/socketblock';
 export const handleBigFive = async (sessionId: number, employeeId: number) => {
+  console.log('start bigfive');
   const employeeContract = useEmployee(provider);
   const bigfiveSession = await employeeContract.getBigFive(sessionId);
   if (!bigfiveSession.employeeId.eq(employeeId)) {
     console.log('employeeId not belongs to bigfive session');
     return;
   }
-  await startedBigFive(sessionId).then((success) => {
-    console.log(success);
-  });
+  await startedBigFive(sessionId).catch((error) => console.log(error));
 };
 
 export enum EInterviewError {

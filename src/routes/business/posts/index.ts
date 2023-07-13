@@ -9,17 +9,6 @@ export default async (server: FastifyInstance, options: FastifyPluginOptions) =>
     '/new',
     {
       preHandler: imageMiddleware,
-      schema: {
-        params: {
-          type: 'object',
-          properties: {
-            userid: {
-              type: 'number',
-            },
-          },
-          required: ['userid'],
-        },
-      },
     },
     newPost,
   );

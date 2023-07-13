@@ -1,28 +1,25 @@
-import { FastifyInstance, FastifyPluginOptions } from "fastify";
-import { postRequest, putApproved } from "~controllers/employee/iig";
-import { EIIGRequest } from "~types/business/iig";
+import { FastifyInstance, FastifyPluginOptions } from 'fastify';
+import { postRequest, putApproved } from '~controllers/employee/iig';
+import { EIIGRequest } from '~types/business/iig';
 
-export default async (
-  server: FastifyInstance,
-  options: FastifyPluginOptions
-) => {
+export default async (server: FastifyInstance, options: FastifyPluginOptions) => {
   server.post(
-    "/request",
+    '/request',
     {
       schema: {
         body: {
-          type: "object",
+          type: 'object',
           properties: {
-            employeeId: { type: "string" },
+            employeeId: { type: 'string' },
             certificateType: {
-              type: "string",
+              type: 'string',
               enum: Object.values(EIIGRequest),
             },
           },
-          required: ["employeeId", "certificateType"],
+          required: ['employeeId', 'certificateType'],
         },
       },
     },
-    postRequest
+    postRequest,
   );
 };

@@ -17,7 +17,7 @@ export default async (server: FastifyInstance) => {
     },
     reciveStarted,
   );
-  server.get(
+  server.post(
     '/video',
     {
       schema: {
@@ -32,7 +32,7 @@ export default async (server: FastifyInstance) => {
     },
     reciveVideo,
   );
-  server.get(
+  server.post(
     '/audio',
     {
       schema: {

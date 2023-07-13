@@ -2,212 +2,162 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { ethers } from "ethers";
-import {
-  FactoryOptions,
-  HardhatEthersHelpers as HardhatEthersHelpersBase,
-} from "@nomiclabs/hardhat-ethers/types";
+import { ethers } from 'ethers';
+import { FactoryOptions, HardhatEthersHelpers as HardhatEthersHelpersBase } from '@nomiclabs/hardhat-ethers/types';
 
-import * as Contracts from ".";
+import * as Contracts from '.';
 
-declare module "hardhat/types/runtime" {
+declare module 'hardhat/types/runtime' {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
-      name: "Ownable",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'Ownable',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.Ownable__factory>;
     getContractFactory(
-      name: "Permission",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'Permission',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.Permission__factory>;
     getContractFactory(
-      name: "BusinessController",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'BusinessController',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.BusinessController__factory>;
     getContractFactory(
-      name: "IIGController",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'IIGController',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IIGController__factory>;
     getContractFactory(
-      name: "EmployeeCVController",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'EmployeeCVController',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.EmployeeCVController__factory>;
     getContractFactory(
-      name: "EmployeeController",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'EmployeeController',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.EmployeeController__factory>;
     getContractFactory(
-      name: "ListBusinessApplyCursor",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ListBusinessApplyCursor',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ListBusinessApplyCursor__factory>;
     getContractFactory(
-      name: "ListBusinessCursor",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ListBusinessCursor',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ListBusinessCursor__factory>;
     getContractFactory(
-      name: "ListBigFiveCursor",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ListBigFiveCursor',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ListBigFiveCursor__factory>;
     getContractFactory(
-      name: "ListEmployeeCursor",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ListEmployeeCursor',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ListEmployeeCursor__factory>;
     getContractFactory(
-      name: "ListEmployeeSkillCursor",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ListEmployeeSkillCursor',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ListEmployeeSkillCursor__factory>;
     getContractFactory(
-      name: "ListBusinessApply",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ListBusinessApply',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ListBusinessApply__factory>;
     getContractFactory(
-      name: "IIGData",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'IIGData',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.IIGData__factory>;
     getContractFactory(
-      name: "ListIIGLRResult",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ListIIGLRResult',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ListIIGLRResult__factory>;
     getContractFactory(
-      name: "ListIIGSWResult",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ListIIGSWResult',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ListIIGSWResult__factory>;
     getContractFactory(
-      name: "ListBusiness",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ListBusiness',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ListBusiness__factory>;
     getContractFactory(
-      name: "ListBigFive",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ListBigFive',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ListBigFive__factory>;
     getContractFactory(
-      name: "ListEmployeeCV",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ListEmployeeCV',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ListEmployeeCV__factory>;
     getContractFactory(
-      name: "ListEmployee",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ListEmployee',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ListEmployee__factory>;
     getContractFactory(
-      name: "ListEmployeeSkill",
-      signerOrOptions?: ethers.Signer | FactoryOptions
+      name: 'ListEmployeeSkill',
+      signerOrOptions?: ethers.Signer | FactoryOptions,
     ): Promise<Contracts.ListEmployeeSkill__factory>;
 
+    getContractAt(name: 'Ownable', address: string, signer?: ethers.Signer): Promise<Contracts.Ownable>;
+    getContractAt(name: 'Permission', address: string, signer?: ethers.Signer): Promise<Contracts.Permission>;
     getContractAt(
-      name: "Ownable",
+      name: 'BusinessController',
       address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.Ownable>;
-    getContractAt(
-      name: "Permission",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.Permission>;
-    getContractAt(
-      name: "BusinessController",
-      address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.BusinessController>;
+    getContractAt(name: 'IIGController', address: string, signer?: ethers.Signer): Promise<Contracts.IIGController>;
     getContractAt(
-      name: "IIGController",
+      name: 'EmployeeCVController',
       address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IIGController>;
-    getContractAt(
-      name: "EmployeeCVController",
-      address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.EmployeeCVController>;
     getContractAt(
-      name: "EmployeeController",
+      name: 'EmployeeController',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.EmployeeController>;
     getContractAt(
-      name: "ListBusinessApplyCursor",
+      name: 'ListBusinessApplyCursor',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.ListBusinessApplyCursor>;
     getContractAt(
-      name: "ListBusinessCursor",
+      name: 'ListBusinessCursor',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.ListBusinessCursor>;
     getContractAt(
-      name: "ListBigFiveCursor",
+      name: 'ListBigFiveCursor',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.ListBigFiveCursor>;
     getContractAt(
-      name: "ListEmployeeCursor",
+      name: 'ListEmployeeCursor',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.ListEmployeeCursor>;
     getContractAt(
-      name: "ListEmployeeSkillCursor",
+      name: 'ListEmployeeSkillCursor',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.ListEmployeeSkillCursor>;
     getContractAt(
-      name: "ListBusinessApply",
+      name: 'ListBusinessApply',
       address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.ListBusinessApply>;
+    getContractAt(name: 'IIGData', address: string, signer?: ethers.Signer): Promise<Contracts.IIGData>;
+    getContractAt(name: 'ListIIGLRResult', address: string, signer?: ethers.Signer): Promise<Contracts.ListIIGLRResult>;
+    getContractAt(name: 'ListIIGSWResult', address: string, signer?: ethers.Signer): Promise<Contracts.ListIIGSWResult>;
+    getContractAt(name: 'ListBusiness', address: string, signer?: ethers.Signer): Promise<Contracts.ListBusiness>;
+    getContractAt(name: 'ListBigFive', address: string, signer?: ethers.Signer): Promise<Contracts.ListBigFive>;
+    getContractAt(name: 'ListEmployeeCV', address: string, signer?: ethers.Signer): Promise<Contracts.ListEmployeeCV>;
+    getContractAt(name: 'ListEmployee', address: string, signer?: ethers.Signer): Promise<Contracts.ListEmployee>;
     getContractAt(
-      name: "IIGData",
+      name: 'ListEmployeeSkill',
       address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IIGData>;
-    getContractAt(
-      name: "ListIIGLRResult",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ListIIGLRResult>;
-    getContractAt(
-      name: "ListIIGSWResult",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ListIIGSWResult>;
-    getContractAt(
-      name: "ListBusiness",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ListBusiness>;
-    getContractAt(
-      name: "ListBigFive",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ListBigFive>;
-    getContractAt(
-      name: "ListEmployeeCV",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ListEmployeeCV>;
-    getContractAt(
-      name: "ListEmployee",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ListEmployee>;
-    getContractAt(
-      name: "ListEmployeeSkill",
-      address: string,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<Contracts.ListEmployeeSkill>;
 
     // default types
-    getContractFactory(
-      name: string,
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<ethers.ContractFactory>;
+    getContractFactory(name: string, signerOrOptions?: ethers.Signer | FactoryOptions): Promise<ethers.ContractFactory>;
     getContractFactory(
       abi: any[],
       bytecode: ethers.utils.BytesLike,
-      signer?: ethers.Signer
+      signer?: ethers.Signer,
     ): Promise<ethers.ContractFactory>;
-    getContractAt(
-      nameOrAbi: string | any[],
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<ethers.Contract>;
+    getContractAt(nameOrAbi: string | any[], address: string, signer?: ethers.Signer): Promise<ethers.Contract>;
   }
 }

@@ -18,9 +18,9 @@ const iigRequestSchema = new Schema({
     },
 }, { timestamps: true });
 iigRequestSchema.plugin(softDeletePlugin, {
-    deletedAtFieldName: "deletedAt",
+    deletedAtFieldName: 'deletedAt',
     overrideMethods: true,
 });
-const IIGRequest = model("iig_request", iigRequestSchema);
+const IIGRequest = model('iig_request', iigRequestSchema);
 
 export { ERequestStatus, IIGRequest };

@@ -31,9 +31,9 @@ const postSchema = new Schema({
     },
 }, { timestamps: true });
 postSchema.plugin(softDeletePlugin, {
-    deletedAtFieldName: "deletedAt",
+    deletedAtFieldName: 'deletedAt',
     overrideMethods: true,
 });
-const Post = model("business_post", postSchema);
+const Post = model('business_post', postSchema);
 
 export { Post };

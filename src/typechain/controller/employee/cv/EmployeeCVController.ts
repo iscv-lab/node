@@ -12,20 +12,10 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "../../../common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from '../../../common';
 
 export type EmployeeCVStruct = {
   id: PromiseOrValue<BigNumberish>;
@@ -34,80 +24,61 @@ export type EmployeeCVStruct = {
   source: PromiseOrValue<string>;
 };
 
-export type EmployeeCVStructOutput = [
-  BigNumber,
-  BigNumber,
-  BigNumber,
-  string
-] & { id: BigNumber; employeeId: BigNumber; time: BigNumber; source: string };
+export type EmployeeCVStructOutput = [BigNumber, BigNumber, BigNumber, string] & {
+  id: BigNumber;
+  employeeId: BigNumber;
+  time: BigNumber;
+  source: string;
+};
 
 export interface EmployeeCVControllerInterface extends utils.Interface {
   functions: {
-    "_checkExistEmployeeAccount()": FunctionFragment;
-    "addCV(uint256,string)": FunctionFragment;
-    "destroy()": FunctionFragment;
-    "getCVs()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
+    '_checkExistEmployeeAccount()': FunctionFragment;
+    'addCV(uint256,string)': FunctionFragment;
+    'destroy()': FunctionFragment;
+    'getCVs()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "_checkExistEmployeeAccount"
-      | "addCV"
-      | "destroy"
-      | "getCVs"
-      | "owner"
-      | "transferOwnership"
+      | '_checkExistEmployeeAccount'
+      | 'addCV'
+      | 'destroy'
+      | 'getCVs'
+      | 'owner'
+      | 'transferOwnership',
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "_checkExistEmployeeAccount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addCV",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "destroy", values?: undefined): string;
-  encodeFunctionData(functionFragment: "getCVs", values?: undefined): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: '_checkExistEmployeeAccount', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'addCV', values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'destroy', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getCVs', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
-  decodeFunctionResult(
-    functionFragment: "_checkExistEmployeeAccount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "addCV", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "destroy", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getCVs", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: '_checkExistEmployeeAccount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addCV', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'destroy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getCVs', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
 
   events: {
-    "OwnershipTransferred(address,address)": EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
 }
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
   newOwner: string;
 }
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  OwnershipTransferredEventObject
->;
+export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
 
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
+export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface EmployeeCVController extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -119,16 +90,12 @@ export interface EmployeeCVController extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -141,12 +108,10 @@ export interface EmployeeCVController extends BaseContract {
     addCV(
       employeeId: PromiseOrValue<BigNumberish>,
       source: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     getCVs(overrides?: CallOverrides): Promise<[EmployeeCVStructOutput[]]>;
 
@@ -154,7 +119,7 @@ export interface EmployeeCVController extends BaseContract {
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -163,12 +128,10 @@ export interface EmployeeCVController extends BaseContract {
   addCV(
     employeeId: PromiseOrValue<BigNumberish>,
     source: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  destroy(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   getCVs(overrides?: CallOverrides): Promise<EmployeeCVStructOutput[]>;
 
@@ -176,7 +139,7 @@ export interface EmployeeCVController extends BaseContract {
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -185,7 +148,7 @@ export interface EmployeeCVController extends BaseContract {
     addCV(
       employeeId: PromiseOrValue<BigNumberish>,
       source: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     destroy(overrides?: CallOverrides): Promise<void>;
@@ -194,20 +157,17 @@ export interface EmployeeCVController extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    "OwnershipTransferred(address,address)"(
+    'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
   };
 
@@ -217,12 +177,10 @@ export interface EmployeeCVController extends BaseContract {
     addCV(
       employeeId: PromiseOrValue<BigNumberish>,
       source: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getCVs(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -230,24 +188,20 @@ export interface EmployeeCVController extends BaseContract {
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    _checkExistEmployeeAccount(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    _checkExistEmployeeAccount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addCV(
       employeeId: PromiseOrValue<BigNumberish>,
       source: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getCVs(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -255,7 +209,7 @@ export interface EmployeeCVController extends BaseContract {
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

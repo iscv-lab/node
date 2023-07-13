@@ -1,5 +1,4 @@
 import axios from 'axios';
-import * as AxiosLogger from 'axios-logger';
 
 class AxiosServices {
     instance;
@@ -17,7 +16,7 @@ class AxiosServices {
         // return AxiosLogger.responseLogger(response);
     }
     handleError(error) {
-        AxiosLogger.errorLogger(error);
+        console.log(error.code);
         return Promise.reject(error);
     }
     get(url, config) {

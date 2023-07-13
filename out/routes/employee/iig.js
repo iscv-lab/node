@@ -2,18 +2,18 @@ import { postRequest } from '../../controllers/employee/iig/index.js';
 import { EIIGRequest } from '../../types/business/iig/index.js';
 
 var iig = async (server, options) => {
-    server.post("/request", {
+    server.post('/request', {
         schema: {
             body: {
-                type: "object",
+                type: 'object',
                 properties: {
-                    employeeId: { type: "string" },
+                    employeeId: { type: 'string' },
                     certificateType: {
-                        type: "string",
+                        type: 'string',
                         enum: Object.values(EIIGRequest),
                     },
                 },
-                required: ["employeeId", "certificateType"],
+                required: ['employeeId', 'certificateType'],
             },
         },
     }, postRequest);

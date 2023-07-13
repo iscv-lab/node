@@ -12,7 +12,7 @@ const cv = {
         return await employeeCVContract
             .getCVs()
             .then((success) => {
-            const data = success.find((value, index) => value.id.eq(id));
+            const data = success.find((value, index) => value.employeeId.eq(id));
             return {
                 ...data,
             };
@@ -55,7 +55,9 @@ const cv = {
             github: employee.github,
             linkedin: employee.linkedin,
             sourceImage: employee.sourceImage,
-            skills: skills.map((x) => ({
+            skills: skills
+                .filter((x) => x.employeeId.eq(employeeId))
+                .map((x) => ({
                 id: x.id.toNumber(),
                 employeeId: x.employeeId.toNumber(),
                 title: x.title,
@@ -132,7 +134,9 @@ const cv = {
             github: employee.github,
             linkedin: employee.linkedin,
             sourceImage: employee.sourceImage,
-            skills: skills.map((x) => ({
+            skills: skills
+                .filter((x) => x.employeeId.eq(employeeId))
+                .map((x) => ({
                 id: x.id.toNumber(),
                 employeeId: x.employeeId.toNumber(),
                 title: x.title,

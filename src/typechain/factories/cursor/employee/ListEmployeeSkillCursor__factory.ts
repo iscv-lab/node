@@ -2,37 +2,37 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import type { Provider } from "@ethersproject/providers";
+import { Contract, Signer, utils } from 'ethers';
+import type { Provider } from '@ethersproject/providers';
 import type {
   ListEmployeeSkillCursor,
   ListEmployeeSkillCursorInterface,
-} from "../../../cursor/employee/ListEmployeeSkillCursor";
+} from '../../../cursor/employee/ListEmployeeSkillCursor';
 
 const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "employeeId",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'employeeId',
+        type: 'uint256',
       },
       {
-        internalType: "string",
-        name: "title",
-        type: "string",
+        internalType: 'string',
+        name: 'title',
+        type: 'string',
       },
     ],
-    name: "_checkExistSkill",
+    name: '_checkExistSkill',
     outputs: [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
 ] as const;
 
@@ -41,14 +41,7 @@ export class ListEmployeeSkillCursor__factory {
   static createInterface(): ListEmployeeSkillCursorInterface {
     return new utils.Interface(_abi) as ListEmployeeSkillCursorInterface;
   }
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): ListEmployeeSkillCursor {
-    return new Contract(
-      address,
-      _abi,
-      signerOrProvider
-    ) as ListEmployeeSkillCursor;
+  static connect(address: string, signerOrProvider: Signer | Provider): ListEmployeeSkillCursor {
+    return new Contract(address, _abi, signerOrProvider) as ListEmployeeSkillCursor;
   }
 }

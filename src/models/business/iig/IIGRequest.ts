@@ -1,9 +1,9 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
-import SoftDeletableModel, { IMyDocument, softDeletePlugin } from "../../utils";
+import SoftDeletableModel, { IMyDocument, softDeletePlugin } from '../../utils';
 // import mongodb from 'mongodb';
-import { PostStatus } from "~types/post";
-import { EIIGRequest } from "~types/business/iig";
+import { PostStatus } from '~types/post';
+import { EIIGRequest } from '~types/business/iig';
 export enum ERequestStatus {
   NULL,
   WAITING,
@@ -28,15 +28,12 @@ const iigRequestSchema = new Schema<IIIGRequest>(
       enum: ERequestStatus,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 iigRequestSchema.plugin(softDeletePlugin, {
-  deletedAtFieldName: "deletedAt",
+  deletedAtFieldName: 'deletedAt',
   overrideMethods: true,
 });
 
-export const IIGRequest = model<IIIGRequest, SoftDeletableModel<IIIGRequest>>(
-  "iig_request",
-  iigRequestSchema
-);
+export const IIGRequest = model<IIIGRequest, SoftDeletableModel<IIIGRequest>>('iig_request', iigRequestSchema);

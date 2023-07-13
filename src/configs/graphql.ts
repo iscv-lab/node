@@ -54,7 +54,7 @@ export const apolloServer = async (app: FastifyInstance) => {
     //   return formattedError;
     // },
   });
-
+  await apollo.start();
   console.log('connect to apollo');
   return apollo;
 };

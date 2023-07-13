@@ -43,14 +43,13 @@ const findBySocket = async (socket: string) => {
 
 const findUserIdBySocket = async (socket: string) => {
   const data = await getter();
-  let id: undefined | string = undefined;
+
   for (const [key, value] of Object.entries(data!)) {
     if (value.socketIds.includes(socket)) {
-      id = key;
-      break;
+      return Number(key.replace(ERole.EMPLOYEE, '').replace(ERole.BUSINESS, '').replace('_', ''));
     }
   }
-  return Number(id?.replace(ERole.EMPLOYEE, '').replace(ERole.BUSINESS, '').replace('_', ''));
+  return undefined;
 };
 
 const getter = async () => {

@@ -12,20 +12,10 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "../../common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from '../../common';
 
 export type BusinessApplyStruct = {
   id: PromiseOrValue<BigNumberish>;
@@ -36,14 +26,7 @@ export type BusinessApplyStruct = {
   status: PromiseOrValue<BigNumberish>;
 };
 
-export type BusinessApplyStructOutput = [
-  BigNumber,
-  BigNumber,
-  BigNumber,
-  string,
-  BigNumber,
-  BigNumber
-] & {
+export type BusinessApplyStructOutput = [BigNumber, BigNumber, BigNumber, string, BigNumber, BigNumber] & {
   id: BigNumber;
   employeeId: BigNumber;
   businessId: BigNumber;
@@ -75,7 +58,7 @@ export type ProfileStructOutput = [
   string,
   string,
   string,
-  number
+  number,
 ] & {
   id: BigNumber;
   user: string;
@@ -91,54 +74,51 @@ export type ProfileStructOutput = [
 
 export interface BusinessControllerInterface extends utils.Interface {
   functions: {
-    "_checkApplyIdBelongsToEmployeeId(uint256,uint256)": FunctionFragment;
-    "_checkExistApply(uint256,string)": FunctionFragment;
-    "_checkExistBusinessAccount()": FunctionFragment;
-    "_checkIdBelongsToPostId(uint256,string)": FunctionFragment;
-    "addBusiness(string,string,string,string,string,string,string)": FunctionFragment;
-    "destroy()": FunctionFragment;
-    "getAllApplies()": FunctionFragment;
-    "getAllProfile()": FunctionFragment;
-    "getApply(uint256)": FunctionFragment;
-    "getProfile(uint256)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
+    '_checkApplyIdBelongsToEmployeeId(uint256,uint256)': FunctionFragment;
+    '_checkExistApply(uint256,string)': FunctionFragment;
+    '_checkExistBusinessAccount()': FunctionFragment;
+    '_checkIdBelongsToPostId(uint256,string)': FunctionFragment;
+    'addBusiness(string,string,string,string,string,string,string)': FunctionFragment;
+    'destroy()': FunctionFragment;
+    'getAllApplies()': FunctionFragment;
+    'getAllProfile()': FunctionFragment;
+    'getApply(uint256)': FunctionFragment;
+    'getProfile(uint256)': FunctionFragment;
+    'owner()': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "_checkApplyIdBelongsToEmployeeId"
-      | "_checkExistApply"
-      | "_checkExistBusinessAccount"
-      | "_checkIdBelongsToPostId"
-      | "addBusiness"
-      | "destroy"
-      | "getAllApplies"
-      | "getAllProfile"
-      | "getApply"
-      | "getProfile"
-      | "owner"
-      | "transferOwnership"
+      | '_checkApplyIdBelongsToEmployeeId'
+      | '_checkExistApply'
+      | '_checkExistBusinessAccount'
+      | '_checkIdBelongsToPostId'
+      | 'addBusiness'
+      | 'destroy'
+      | 'getAllApplies'
+      | 'getAllProfile'
+      | 'getApply'
+      | 'getProfile'
+      | 'owner'
+      | 'transferOwnership',
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "_checkApplyIdBelongsToEmployeeId",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: '_checkApplyIdBelongsToEmployeeId',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "_checkExistApply",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    functionFragment: '_checkExistApply',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: '_checkExistBusinessAccount', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: '_checkIdBelongsToPostId',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
-    functionFragment: "_checkExistBusinessAccount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "_checkIdBelongsToPostId",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addBusiness",
+    functionFragment: 'addBusiness',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
@@ -146,87 +126,44 @@ export interface BusinessControllerInterface extends utils.Interface {
       PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
-      PromiseOrValue<string>
-    ]
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: "destroy", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "getAllApplies",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getAllProfile",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getApply",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getProfile",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: 'destroy', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getAllApplies', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getAllProfile', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getApply', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getProfile', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
-  decodeFunctionResult(
-    functionFragment: "_checkApplyIdBelongsToEmployeeId",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "_checkExistApply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "_checkExistBusinessAccount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "_checkIdBelongsToPostId",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "addBusiness",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "destroy", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getAllApplies",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAllProfile",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "getApply", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getProfile", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: '_checkApplyIdBelongsToEmployeeId', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: '_checkExistApply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: '_checkExistBusinessAccount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: '_checkIdBelongsToPostId', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addBusiness', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'destroy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAllApplies', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAllProfile', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getApply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getProfile', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
 
   events: {
-    "OwnershipTransferred(address,address)": EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
 }
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
   newOwner: string;
 }
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  OwnershipTransferredEventObject
->;
+export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
 
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
+export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface BusinessController extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -238,16 +175,12 @@ export interface BusinessController extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -258,13 +191,13 @@ export interface BusinessController extends BaseContract {
     _checkApplyIdBelongsToEmployeeId(
       id: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     _checkExistApply(
       employeeId: PromiseOrValue<BigNumberish>,
       postId: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     _checkExistBusinessAccount(overrides?: CallOverrides): Promise<[boolean]>;
@@ -272,7 +205,7 @@ export interface BusinessController extends BaseContract {
     _checkIdBelongsToPostId(
       id: PromiseOrValue<BigNumberish>,
       postId: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     addBusiness(
@@ -283,47 +216,37 @@ export interface BusinessController extends BaseContract {
       github: PromiseOrValue<string>,
       linkedin: PromiseOrValue<string>,
       sourceImage: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    getAllApplies(
-      overrides?: CallOverrides
-    ): Promise<[BusinessApplyStructOutput[]]>;
+    getAllApplies(overrides?: CallOverrides): Promise<[BusinessApplyStructOutput[]]>;
 
     getAllProfile(overrides?: CallOverrides): Promise<[ProfileStructOutput[]]>;
 
-    getApply(
-      id: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[BusinessApplyStructOutput]>;
+    getApply(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BusinessApplyStructOutput]>;
 
-    getProfile(
-      id: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[ProfileStructOutput]>;
+    getProfile(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[ProfileStructOutput]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   _checkApplyIdBelongsToEmployeeId(
     id: PromiseOrValue<BigNumberish>,
     employeeId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   _checkExistApply(
     employeeId: PromiseOrValue<BigNumberish>,
     postId: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   _checkExistBusinessAccount(overrides?: CallOverrides): Promise<boolean>;
@@ -331,7 +254,7 @@ export interface BusinessController extends BaseContract {
   _checkIdBelongsToPostId(
     id: PromiseOrValue<BigNumberish>,
     postId: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   addBusiness(
@@ -342,47 +265,37 @@ export interface BusinessController extends BaseContract {
     github: PromiseOrValue<string>,
     linkedin: PromiseOrValue<string>,
     sourceImage: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  destroy(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  getAllApplies(
-    overrides?: CallOverrides
-  ): Promise<BusinessApplyStructOutput[]>;
+  getAllApplies(overrides?: CallOverrides): Promise<BusinessApplyStructOutput[]>;
 
   getAllProfile(overrides?: CallOverrides): Promise<ProfileStructOutput[]>;
 
-  getApply(
-    id: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<BusinessApplyStructOutput>;
+  getApply(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BusinessApplyStructOutput>;
 
-  getProfile(
-    id: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<ProfileStructOutput>;
+  getProfile(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<ProfileStructOutput>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     _checkApplyIdBelongsToEmployeeId(
       id: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     _checkExistApply(
       employeeId: PromiseOrValue<BigNumberish>,
       postId: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     _checkExistBusinessAccount(overrides?: CallOverrides): Promise<boolean>;
@@ -390,7 +303,7 @@ export interface BusinessController extends BaseContract {
     _checkIdBelongsToPostId(
       id: PromiseOrValue<BigNumberish>,
       postId: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     addBusiness(
@@ -401,43 +314,32 @@ export interface BusinessController extends BaseContract {
       github: PromiseOrValue<string>,
       linkedin: PromiseOrValue<string>,
       sourceImage: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     destroy(overrides?: CallOverrides): Promise<void>;
 
-    getAllApplies(
-      overrides?: CallOverrides
-    ): Promise<BusinessApplyStructOutput[]>;
+    getAllApplies(overrides?: CallOverrides): Promise<BusinessApplyStructOutput[]>;
 
     getAllProfile(overrides?: CallOverrides): Promise<ProfileStructOutput[]>;
 
-    getApply(
-      id: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BusinessApplyStructOutput>;
+    getApply(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BusinessApplyStructOutput>;
 
-    getProfile(
-      id: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<ProfileStructOutput>;
+    getProfile(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<ProfileStructOutput>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    "OwnershipTransferred(address,address)"(
+    'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
   };
 
@@ -445,13 +347,13 @@ export interface BusinessController extends BaseContract {
     _checkApplyIdBelongsToEmployeeId(
       id: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     _checkExistApply(
       employeeId: PromiseOrValue<BigNumberish>,
       postId: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     _checkExistBusinessAccount(overrides?: CallOverrides): Promise<BigNumber>;
@@ -459,7 +361,7 @@ export interface BusinessController extends BaseContract {
     _checkIdBelongsToPostId(
       id: PromiseOrValue<BigNumberish>,
       postId: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     addBusiness(
@@ -470,32 +372,24 @@ export interface BusinessController extends BaseContract {
       github: PromiseOrValue<string>,
       linkedin: PromiseOrValue<string>,
       sourceImage: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getAllApplies(overrides?: CallOverrides): Promise<BigNumber>;
 
     getAllProfile(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getApply(
-      id: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getApply(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getProfile(
-      id: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getProfile(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -503,23 +397,21 @@ export interface BusinessController extends BaseContract {
     _checkApplyIdBelongsToEmployeeId(
       id: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     _checkExistApply(
       employeeId: PromiseOrValue<BigNumberish>,
       postId: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    _checkExistBusinessAccount(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    _checkExistBusinessAccount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _checkIdBelongsToPostId(
       id: PromiseOrValue<BigNumberish>,
       postId: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     addBusiness(
@@ -530,32 +422,24 @@ export interface BusinessController extends BaseContract {
       github: PromiseOrValue<string>,
       linkedin: PromiseOrValue<string>,
       sourceImage: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getAllApplies(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAllProfile(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getApply(
-      id: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getApply(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getProfile(
-      id: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getProfile(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

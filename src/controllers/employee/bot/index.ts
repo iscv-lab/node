@@ -12,7 +12,6 @@ export const getRecentTask = async (
   reply: FastifyReply,
 ) => {
   const employeeId = request.params.employeeid;
-  console.log(employeeId);
   const businessContract = useBusiness(provider);
   const [interviewData, bigFiveData] = await Promise.all([
     InterviewAppointment.find(
@@ -22,7 +21,15 @@ export const getRecentTask = async (
       {},
       {},
     ),
-    BigFiveSession.find({ cid: { $exists: true }, employeeId }, {}, { sort: { updatedAt: 1 } }),
+    BigFiveSession.find(
+      {
+        cid: { $exists: true },
+        employeeId,
+        $or: [{ isRead: { $exists: false } }, { isRead: false }],
+      },
+      {},
+      { sort: { updatedAt: 1 } },
+    ),
   ]);
   const pipelineInterview = interviewData.map(async (appointment) => {
     const apply = await businessContract.getApply(appointment.applyId).catch((error) => {

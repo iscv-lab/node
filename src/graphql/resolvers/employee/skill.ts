@@ -1,15 +1,10 @@
-import { useEmployee } from "~contracts/useEmployee";
-import { Context } from "~graphql/context";
+import { useEmployee } from '~contracts/useEmployee';
+import { Context } from '~graphql/context';
 
 export const skill = {
-  skillsByEmployee: async (
-    parent,
-    args: { employeeId: number },
-    contextValue: Context,
-    info
-  ) => {
+  skillsByEmployee: async (parent, args: { employeeId: number }, contextValue: Context, info) => {
     const employeeId = args.employeeId;
-    if (employeeId === undefined  ) return;
+    if (employeeId === undefined) return;
     const { provider } = contextValue;
     const employeeContract = useEmployee(provider);
     const skills = await employeeContract.getAllSkill();

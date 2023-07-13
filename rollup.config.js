@@ -8,7 +8,7 @@ const production = !process.env.ROLLUP_WATCH;
 export default [
   {
     input: [
-      "./src/app.ts",
+      "./src/server.ts",
       // './src/*.(ts|js)',
       "./src/threads/*.(ts|js)",
       // './src/controllers/admin/data/reportworker.ts',

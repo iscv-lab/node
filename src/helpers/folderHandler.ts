@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from 'fs';
 export function create(path) {
   if (!fs.existsSync(path)) {
     fs.mkdirSync(path, { recursive: true });

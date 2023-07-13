@@ -41,9 +41,10 @@ export const messages = (socket: Socket<ClientToServerEvents, ServerToClientEven
     const employeeId = Number.isInteger(Number(args.employeeId)) ? Number(args.employeeId) : undefined;
     const businessId = Number.isInteger(Number(args.businessId)) ? Number(args.businessId) : undefined;
     const content = String(args.content);
-    const block = await socketblock.findBySocket(socket.id);
-    if (!block) return;
-    const role = block.role;
+    // if (!block) return;
+    const role =
+      (employeeId !== undefined && employeeId !== null && ERole.EMPLOYEE) ||
+      (businessId !== undefined && businessId !== null && ERole.BUSINESS);
 
     switch (role) {
       case ERole.EMPLOYEE:
@@ -51,6 +52,7 @@ export const messages = (socket: Socket<ClientToServerEvents, ServerToClientEven
         const newMessages = new Messages({
           employeeId,
           businessId,
+          from: ERole.EMPLOYEE,
           content: content,
         });
         const result = await newMessages.save();
@@ -75,6 +77,7 @@ export const messages = (socket: Socket<ClientToServerEvents, ServerToClientEven
         const newMessages = new Messages({
           businessId,
           employeeId,
+          from: ERole.BUSINESS,
           content: content,
         });
         const result = await newMessages.save();
@@ -82,13 +85,13 @@ export const messages = (socket: Socket<ClientToServerEvents, ServerToClientEven
           _id: result._id,
           businessId: result.businessId,
           employeeId: result.employeeId,
-          role: ERole.BUSINESS,
+          role: ERole.EMPLOYEE,
           content: result.content,
           time: result.createdAt,
         });
         callback({
           _id: result._id,
-          role: ERole.BUSINESS,
+          role: ERole.EMPLOYEE,
           content: content,
           time: result.createdAt,
         });

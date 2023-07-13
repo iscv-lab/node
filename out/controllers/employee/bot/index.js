@@ -8,7 +8,6 @@ import { EBotCategory } from '../../../types/messages/bot.js';
 
 const getRecentTask = async (request, reply) => {
     const employeeId = request.params.employeeid;
-    console.log(employeeId);
     const businessContract = useBusiness(provider);
     const [interviewData, bigFiveData] = await Promise.all([
         InterviewAppointment.find({

@@ -1,5 +1,5 @@
 function trim(value) {
-    return value.replace(/ +(?= )/g, "").trim();
+    return value.replace(/ +(?= )/g, '').trim();
 }
 
 export { trim };

@@ -10,13 +10,25 @@ import { toCID } from '../../../utils/ipfs.js';
 
 const handleNotification = async (sessionId, employeeId) => {
     const contractEmployee = useEmployee(provider);
-    const [employeeblock, employee] = await Promise.all([
+    const [employeeblock, employee, bigfive] = await Promise.all([
         socketblock.get(employeeId, ERole.EMPLOYEE),
         contractEmployee.getProfile(employeeId),
+        BigFiveSession.findOne({ sessionId }),
     ]);
     if (!employee)
         throw 'employee not found';
-    const reportResult = await reportBigFive(sessionId, employee.name, employeeId).then((success) => success.data);
+    const reportResult = await reportBigFive({
+        employeeId,
+        sessionId,
+        employeeName: employee.name,
+        bigfive: {
+            o: Math.round((bigfive.audioResult.o + bigfive.audioResult.o) / 2),
+            c: Math.round((bigfive.audioResult.c + bigfive.audioResult.c) / 2),
+            e: Math.round((bigfive.audioResult.e + bigfive.audioResult.e) / 2),
+            a: Math.round((bigfive.audioResult.a + bigfive.audioResult.a) / 2),
+            n: Math.round((bigfive.audioResult.n + bigfive.audioResult.n) / 2),
+        },
+    }).then((success) => success.data);
     if (!(reportResult === 'success'))
         throw 'report error';
     const pdf = await getPDF(sessionId).then((success) => success.data);

@@ -2,16 +2,16 @@ import { getListLR, getListRequest } from '../../../controllers/business/iig/ind
 import { putApproved } from '../../../controllers/employee/iig/index.js';
 
 var iig = async (server, options) => {
-    server.get("/listlr", getListLR);
-    server.get("/listrequest", getListRequest);
-    server.put("/approved", {
+    server.get('/listlr', getListLR);
+    server.get('/listrequest', getListRequest);
+    server.put('/approved', {
         schema: {
             querystring: {
-                type: "object",
+                type: 'object',
                 properties: {
-                    requestId: { type: "string" },
+                    requestId: { type: 'string' },
                 },
-                required: ["requestId"],
+                required: ['requestId'],
             },
         },
     }, putApproved);

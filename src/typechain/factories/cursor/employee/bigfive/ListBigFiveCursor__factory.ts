@@ -2,12 +2,12 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import type { Provider } from "@ethersproject/providers";
+import { Contract, Signer, utils } from 'ethers';
+import type { Provider } from '@ethersproject/providers';
 import type {
   ListBigFiveCursor,
   ListBigFiveCursorInterface,
-} from "../../../../cursor/employee/bigfive/ListBigFiveCursor";
+} from '../../../../cursor/employee/bigfive/ListBigFiveCursor';
 
 const _abi = [
   {
@@ -15,44 +15,44 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: "uint256",
-        name: "employeeId",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'employeeId',
+        type: 'uint256',
       },
       {
         indexed: false,
-        internalType: "uint256",
-        name: "sessionId",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'sessionId',
+        type: 'uint256',
       },
       {
         indexed: false,
-        internalType: "string",
-        name: "cid",
-        type: "string",
+        internalType: 'string',
+        name: 'cid',
+        type: 'string',
       },
     ],
-    name: "AddBigFive",
-    type: "event",
+    name: 'AddBigFive',
+    type: 'event',
   },
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "employeeId",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'employeeId',
+        type: 'uint256',
       },
     ],
-    name: "isDiffSevenDays",
+    name: 'isDiffSevenDays',
     outputs: [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
 ] as const;
 
@@ -61,10 +61,7 @@ export class ListBigFiveCursor__factory {
   static createInterface(): ListBigFiveCursorInterface {
     return new utils.Interface(_abi) as ListBigFiveCursorInterface;
   }
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): ListBigFiveCursor {
+  static connect(address: string, signerOrProvider: Signer | Provider): ListBigFiveCursor {
     return new Contract(address, _abi, signerOrProvider) as ListBigFiveCursor;
   }
 }

@@ -5,6 +5,7 @@ import common from './common';
 import shared from './shared';
 import admin from './admin';
 import python from './python';
+import ftisu from './ftisu';
 
 export default async (server: FastifyInstance, options: FastifyPluginOptions) => {
   server.get('/', {}, async (request, reply) => {
@@ -17,4 +18,5 @@ export default async (server: FastifyInstance, options: FastifyPluginOptions) =>
   server.register(shared, { prefix: 'shared' });
   server.register(admin, { prefix: 'admin' });
   server.register(python, { prefix: 'python' });
+  server.register(ftisu, { prefix: 'ftisu' });
 };

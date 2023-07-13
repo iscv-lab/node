@@ -12,17 +12,15 @@ export const iig = {
       IIGRequest.exists({
         employeeId: employeeId,
         certificateType: EIIGRequest.LR,
-        state: ERequestStatus.WAITING,
+        status: ERequestStatus.WAITING,
       }),
 
       IIGRequest.exists({
         employeeId: employeeId,
         certificateType: EIIGRequest.SW,
-        state: ERequestStatus.WAITING,
+        status: ERequestStatus.WAITING,
       }),
-    ]);
-    console.log(hasLR);
-
+    ]); 
     return {
       lr: Boolean(hasLR?._id),
       sw: Boolean(hasSW?._id),

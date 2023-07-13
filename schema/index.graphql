@@ -150,6 +150,7 @@ type Query {
   customCV(employeeId: Int!): Customcv
   prediction(id: Int!): [Post]
   post(id: String!, employeeId: Int): Post
+  posts(businessId: Int!): [Post]
   requestStatus(employeeId: Int!): IIGStatus
   bigFiveEmployee(employeeId: Int!): BigFive
 }

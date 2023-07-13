@@ -3,7 +3,7 @@
   "watch": ["./out", "./schema"],
   "ext": "ts,json,js",
   "ignore": [".git", ".gitignore", "access.log", "debug.log", "./public/**/*.spec.ts"],
-  "exec": "node --inspect ./out/app.js",
+  "exec": "node --inspect ./out/server.js",
   "env": {
     "NODE_ENV": "development"
   }

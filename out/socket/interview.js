@@ -11,7 +11,7 @@ const interview = (socket) => {
     let tmpFilePath = undefined;
     let destStream = undefined;
     let destTxtStream = undefined;
-    const introductionDuration = 5000;
+    const introductionDuration = 15000;
     const mainDuration = 900000;
     const interviewIntroduction = () => {
         introductionTimer = setTimeout(function () {
@@ -30,19 +30,18 @@ const interview = (socket) => {
         }, mainDuration);
     };
     const handleStop = () => {
-        console.log(sessionId);
         if (sessionId === undefined)
             return;
         if (employeeId === undefined)
             return;
         socket.emit('interview_main_end', new Date().getTime());
         destStream?.end(() => {
-            console.log('Video was been saved');
+            //
         });
         clearTimeout(introductionTimer);
         clearTimeout(mainTimer);
         destTxtStream?.end();
-        if (Math.floor(Math.abs(new Date().getTime() - introductionEndTime.getTime()) / (1000 * 60)) > 5)
+        if (Math.floor(Math.abs(new Date().getTime() - introductionEndTime.getTime()) / (1000 * 60)) > 2)
             handleBigFive(sessionId, employeeId);
         sessionId = undefined;
         introductionEndTime = undefined;
@@ -52,12 +51,9 @@ const interview = (socket) => {
         tmpFilePath = undefined;
         destStream = undefined;
         destTxtStream = undefined;
-        console.log('stoped');
     };
     socket.on('interview_start', async (args, callback) => {
-        console.log('interview_start' + args.sessionId);
         sessionId = args.sessionId;
-        console.log('socket' + socket.id);
         const startedData = await startBigFive(socket.id, sessionId).catch((error) => {
             console.log(error);
             callback?.(0, false);
@@ -67,7 +63,6 @@ const interview = (socket) => {
         if (!startedData)
             return;
         employeeId = startedData.employeeId;
-        console.log(startedData);
         tmpFilePath = `./public/interview/${sessionId}/`;
         if (!fs.existsSync(tmpFilePath)) {
             fs.mkdirSync(tmpFilePath);
@@ -75,7 +70,6 @@ const interview = (socket) => {
         destStream = fs.createWriteStream(tmpFilePath + 'video.webm');
         destTxtStream = fs.createWriteStream(tmpFilePath + 'qa.txt', { flags: 'a' });
         socket.on('interview_chunk', (arg) => {
-            console.log('introduction_chunk');
             destStream.write(arg?.data);
         });
         introductionEndTime = new Date(new Date().getTime() + introductionDuration);
@@ -83,7 +77,6 @@ const interview = (socket) => {
         callback?.(introductionEndTime.getTime(), true);
     });
     socket.on('disconnect', () => {
-        console.log('disconnect');
         handleStop();
     });
 };

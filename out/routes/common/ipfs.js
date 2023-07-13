@@ -1,29 +1,29 @@
 import { postObject, postJSON } from '../../controllers/common/ipfs.js';
 
 var ipfs = async (server, options) => {
-    server.post("/object", {
+    server.post('/object', {
         schema: {
             body: {
-                type: "object",
+                type: 'object',
                 properties: {
                     data: {
-                        type: "object",
+                        type: 'object',
                     },
                 },
-                required: ["data"],
+                required: ['data'],
             },
         },
     }, postObject);
-    server.post("/json", {
+    server.post('/json', {
         schema: {
             body: {
-                type: "object",
+                type: 'object',
                 properties: {
                     data: {
-                        type: "string",
+                        type: 'string',
                     },
                 },
-                required: ["data"],
+                required: ['data'],
             },
         },
     }, postJSON);

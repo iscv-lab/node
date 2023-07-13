@@ -1,8 +1,8 @@
-import { useIIG } from "~contracts/iig/useIIG";
-import { useEmployee } from "~contracts/useEmployee";
-import { useEmployeeCV } from "~contracts/useEmployeeCV";
-import { Context } from "~graphql/context";
-import { exponentialSearch } from "~utils/search";
+import { useIIG } from '~contracts/iig/useIIG';
+import { useEmployee } from '~contracts/useEmployee';
+import { useEmployeeCV } from '~contracts/useEmployeeCV';
+import { Context } from '~graphql/context';
+import { exponentialSearch } from '~utils/search';
 
 export const cv = {
   cv: async (parent, args, contextValue: Context, info) => {
@@ -13,7 +13,7 @@ export const cv = {
     return await employeeCVContract
       .getCVs()
       .then((success) => {
-        const data = success.find((value, index) => value.id.eq(id));
+        const data = success.find((value, index) => value.employeeId.eq(id));
 
         return {
           ...data,
@@ -23,12 +23,7 @@ export const cv = {
         console.log(error);
       });
   },
-  defaultCV: async (
-    parent,
-    args: { employeeId: number },
-    contextValue: Context,
-    info
-  ) => {
+  defaultCV: async (parent, args: { employeeId: number }, contextValue: Context, info) => {
     const employeeId = args.employeeId;
 
     if (employeeId === undefined || employeeId === null) return;
@@ -66,12 +61,14 @@ export const cv = {
       github: employee.github,
       linkedin: employee.linkedin,
       sourceImage: employee.sourceImage,
-      skills: skills.map((x) => ({
-        id: x.id.toNumber(),
-        employeeId: x.employeeId.toNumber(),
-        title: x.title,
-        level: x.level.toNumber(),
-      })),
+      skills: skills
+        .filter((x) => x.employeeId.eq(employeeId))
+        .map((x) => ({
+          id: x.id.toNumber(),
+          employeeId: x.employeeId.toNumber(),
+          title: x.title,
+          level: x.level.toNumber(),
+        })),
       certificate: {
         iig: {
           lr: {
@@ -100,12 +97,7 @@ export const cv = {
 
     return result;
   },
-  customCV: async (
-    parent,
-    args: { employeeId: number },
-    contextValue: Context,
-    info
-  ) => {
+  customCV: async (parent, args: { employeeId: number }, contextValue: Context, info) => {
     const employeeId = args.employeeId;
 
     if (employeeId === undefined || employeeId === null) return;
@@ -142,7 +134,6 @@ export const cv = {
       .slice()
       .reverse()
       .find((x) => x.employeeId.eq(employeeId));
-
     const result = {
       id: employee.id.toNumber(),
       user: employee.user,
@@ -153,12 +144,14 @@ export const cv = {
       github: employee.github,
       linkedin: employee.linkedin,
       sourceImage: employee.sourceImage,
-      skills: skills.map((x) => ({
-        id: x.id.toNumber(),
-        employeeId: x.employeeId.toNumber(),
-        title: x.title,
-        level: x.level.toNumber(),
-      })),
+      skills: skills
+        .filter((x) => x.employeeId.eq(employeeId))
+        .map((x) => ({
+          id: x.id.toNumber(),
+          employeeId: x.employeeId.toNumber(),
+          title: x.title,
+          level: x.level.toNumber(),
+        })),
       certificate: {
         iig: {
           lr: {

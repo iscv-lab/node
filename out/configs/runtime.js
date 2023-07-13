@@ -3,11 +3,11 @@ import util from 'util';
 import path from 'path';
 
 const initRuntime = () => {
-    process.on("uncaughtException", (err) => {
+    process.on('uncaughtException', (err) => {
         console.log(err);
     });
-    const logFile = fs.createWriteStream(path.join("./debug.log"), {
-        flags: "a",
+    const logFile = fs.createWriteStream(path.join('./debug.log'), {
+        flags: 'a',
     });
     const logStdout = process.stdout;
     console.log = function (d) {

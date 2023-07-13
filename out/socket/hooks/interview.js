@@ -11,9 +11,9 @@ const handleBigFive = async (sessionId, employeeId) => {
         console.log('employeeId not belongs to bigfive session');
         return;
     }
-    await startedBigFive(sessionId).then((success) => {
-        console.log(success);
-    });
+    await startedBigFive(sessionId)
+        .then((success) => console.log(success))
+        .catch((error) => console.log(error));
 };
 var EInterviewError;
 (function (EInterviewError) {

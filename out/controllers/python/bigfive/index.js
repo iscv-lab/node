@@ -13,17 +13,19 @@ const reciveStarted = async (request, reply) => {
 };
 const reciveAudio = async (request, reply) => {
     const sessionId = request.query.session_id;
-    const result = await BigFiveSession.findOneAndUpdate({ sessionId }, { $set: { audio: true } });
+    const data = request.body;
+    const result = await BigFiveSession.findOneAndUpdate({ sessionId }, { $set: { audio: true, audioResult: data } });
     if (result?.video && result.started)
-        handleNotification(sessionId, result.employeeId);
-    await reply.code(200).send(result);
+        handleNotification(sessionId, result.employeeId).catch((error) => console.log(error));
+    await reply.code(200).send('result');
 };
 const reciveVideo = async (request, reply) => {
     const sessionId = request.query.session_id;
-    const result = await BigFiveSession.findOneAndUpdate({ sessionId }, { $set: { video: true } });
+    const data = request.body;
+    const result = await BigFiveSession.findOneAndUpdate({ sessionId }, { $set: { video: true, videoResult: data } });
     if (result?.audio && result?.started)
-        handleNotification(sessionId, result.employeeId);
-    await reply.code(200).send(result);
+        handleNotification(sessionId, result.employeeId).catch((error) => console.log(error));
+    await reply.code(200).send('result');
 };
 
 export { reciveAudio, reciveStarted, reciveVideo };

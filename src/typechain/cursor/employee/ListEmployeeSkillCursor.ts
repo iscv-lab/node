@@ -10,33 +10,24 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "../../common";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from '../../common';
 
 export interface ListEmployeeSkillCursorInterface extends utils.Interface {
   functions: {
-    "_checkExistSkill(uint256,string)": FunctionFragment;
+    '_checkExistSkill(uint256,string)': FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "_checkExistSkill"): FunctionFragment;
+  getFunction(nameOrSignatureOrTopic: '_checkExistSkill'): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "_checkExistSkill",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    functionFragment: '_checkExistSkill',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "_checkExistSkill",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: '_checkExistSkill', data: BytesLike): Result;
 
   events: {};
 }
@@ -51,16 +42,12 @@ export interface ListEmployeeSkillCursor extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -71,21 +58,21 @@ export interface ListEmployeeSkillCursor extends BaseContract {
     _checkExistSkill(
       employeeId: PromiseOrValue<BigNumberish>,
       title: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
   };
 
   _checkExistSkill(
     employeeId: PromiseOrValue<BigNumberish>,
     title: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   callStatic: {
     _checkExistSkill(
       employeeId: PromiseOrValue<BigNumberish>,
       title: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
   };
 
@@ -95,7 +82,7 @@ export interface ListEmployeeSkillCursor extends BaseContract {
     _checkExistSkill(
       employeeId: PromiseOrValue<BigNumberish>,
       title: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
@@ -103,7 +90,7 @@ export interface ListEmployeeSkillCursor extends BaseContract {
     _checkExistSkill(
       employeeId: PromiseOrValue<BigNumberish>,
       title: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -11,108 +11,67 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "../../../common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from '../../../common';
 
 export interface IIGDataInterface extends utils.Interface {
   functions: {
-    "approve(address)": FunctionFragment;
-    "destroy()": FunctionFragment;
-    "getIIGAccount()": FunctionFragment;
-    "iigAccount()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "retrive(address)": FunctionFragment;
-    "setIIGAccount(address)": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
+    'approve(address)': FunctionFragment;
+    'destroy()': FunctionFragment;
+    'getIIGAccount()': FunctionFragment;
+    'iigAccount()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'retrive(address)': FunctionFragment;
+    'setIIGAccount(address)': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "approve"
-      | "destroy"
-      | "getIIGAccount"
-      | "iigAccount"
-      | "owner"
-      | "retrive"
-      | "setIIGAccount"
-      | "transferOwnership"
+      | 'approve'
+      | 'destroy'
+      | 'getIIGAccount'
+      | 'iigAccount'
+      | 'owner'
+      | 'retrive'
+      | 'setIIGAccount'
+      | 'transferOwnership',
   ): FunctionFragment;
 
-  encodeFunctionData(
-    functionFragment: "approve",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "destroy", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "getIIGAccount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "iigAccount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "retrive",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setIIGAccount",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: 'approve', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'destroy', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getIIGAccount', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'iigAccount', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'retrive', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setIIGAccount', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "destroy", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getIIGAccount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "iigAccount", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "retrive", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setIIGAccount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'destroy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getIIGAccount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'iigAccount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'retrive', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setIIGAccount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
 
   events: {
-    "OwnershipTransferred(address,address)": EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
 }
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
   newOwner: string;
 }
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  OwnershipTransferredEventObject
->;
+export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
 
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
+export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface IIGData extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -124,16 +83,12 @@ export interface IIGData extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -143,12 +98,10 @@ export interface IIGData extends BaseContract {
   functions: {
     approve(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     getIIGAccount(overrides?: CallOverrides): Promise<[string]>;
 
@@ -158,28 +111,26 @@ export interface IIGData extends BaseContract {
 
     retrive(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setIIGAccount(
       iigAccountAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   approve(
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  destroy(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   getIIGAccount(overrides?: CallOverrides): Promise<string>;
 
@@ -189,24 +140,21 @@ export interface IIGData extends BaseContract {
 
   retrive(
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setIIGAccount(
     iigAccountAddress: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    approve(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    approve(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     destroy(overrides?: CallOverrides): Promise<void>;
 
@@ -216,42 +164,31 @@ export interface IIGData extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    retrive(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    retrive(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setIIGAccount(
-      iigAccountAddress: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    setIIGAccount(iigAccountAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    "OwnershipTransferred(address,address)"(
+    'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
     approve(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getIIGAccount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -261,29 +198,27 @@ export interface IIGData extends BaseContract {
 
     retrive(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setIIGAccount(
       iigAccountAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     approve(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getIIGAccount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -293,17 +228,17 @@ export interface IIGData extends BaseContract {
 
     retrive(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setIIGAccount(
       iigAccountAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

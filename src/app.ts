@@ -10,139 +10,148 @@ import { ethers } from 'ethers';
 import fastify, { FastifyInstance } from 'fastify';
 import socketio from 'fastify-socket.io';
 import { createProxyMiddleware } from 'http-proxy-middleware';
+import { IPFSHTTPClient } from 'ipfs-http-client/dist/src/types';
 import path from 'path';
 import { RedisClientType } from 'redis';
 import { fileURLToPath } from 'url';
 import socketblock from '~blocks/socketblock';
 import { apolloServer, mongoServer, redisServer } from '~configs/index';
 import { ipfsServer } from '~configs/ipfs';
-import { initDotENV } from '~configs/nodedotenv';
-import { initRuntime } from '~configs/runtime';
+import { startWebSocketProvider } from '~configs/web3';
 import { createContext } from '~graphql/context';
 import routes from '~routes/index';
 import { initSocket } from './socket';
-import { listenWeb3 } from './events';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-initDotENV();
-
-initRuntime();
-
-const app: FastifyInstance = fastify({
-  logger: {
-    level: 'info',
-    file: './logger.log', // Will use pino.destination()
-  },
-});
-
-app.setErrorHandler(async (error, request, reply) => {
-  console.error(error);
-  reply.status(500).send(error);
-});
-
-await app.register(cors, {
-  credentials: true,
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://studio.apollographql.com',
-    'https://iscv.ftisu.vn',
-    'https://business.iscv.ftisu.vn',
-  ],
-});
-
-const { pubClient, subClient } = await redisServer();
-
-await app.register(socketio, {
-  cors: {
-    origin: [
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'https://studio.apollographql.com',
-      'https://iscv.ftisu.vn',
-      'https://business.iscv.ftisu.vn',
-    ],
-  },
-});
-await app.register(rateLimit, {
-  max: 500,
-  timeWindow: '1 minute',
-});
-await app.register(helmet, {
-  // contentSecurityPolicy: false,
-  // crossOriginEmbedderPolicy: false,
-  // crossOriginOpenerPolicy: false,
-  // crossOriginResourcePolicy: false,
-  // dnsPrefetchControl: false,
-  // expectCt: false,
-  // frameguard: false,
-  // hidePoweredBy: false,
-  // hsts: false,
-  // ieNoOpen: false,
-  // noSniff: false,
-  // originAgentCluster: false,
-  // permittedCrossDomainPolicies: false,
-  // referrerPolicy: false,
-  // xssFilter: false,
-  // crossOriginEmbedderPolicy: false,
-  crossOriginResourcePolicy: { policy: 'cross-origin' },
-});
-await app.register(compress);
-
-await app.register(middie);
-
-const apollo = await apolloServer(app);
-await apollo.start();
-
-const provider = new ethers.providers.WebSocketProvider(process.env.ETHEREUM_ENDPOINT);
-const { ipfs } = ipfsServer();
-
-await app.register(fastifyApollo(apollo), {
-  context: createContext({ provider, ipfs }),
-});
-
-app.register(multipath, {
-  // addToBody: true,
-  limits: {
-    fieldNameSize: 100, // Max field name size in bytes
-    fieldSize: 100, // Max field value size in bytes
-    fields: 10, // Max number of non-file fields
-    fileSize: 299 * 1024 * 1024, // 10 MB
-    files: 10, // Max number of file fields
-    headerPairs: 2000, // Max number of header key=>value pairs
-  },
-});
-
-await app.register(fastifyStatic, {
-  root: path.join(__dirname, '..', 'public'),
-  prefix: '/public/', // optional: default '/'
-});
-app.use(
-  '/machine',
-  createProxyMiddleware({
-    target: 'http://localhost:5001',
-    changeOrigin: true,
-    pathRewrite: {
-      '^/machine': '/static', // Path rewrite to remove '/static' prefix
+let app: FastifyInstance,
+  ipfs: IPFSHTTPClient,
+  provider: ethers.providers.JsonRpcProvider,
+  pubClient: RedisClientType,
+  wsProvider: ethers.providers.WebSocketProvider;
+export { app, ipfs, provider, pubClient, wsProvider };
+export const startInstance = async () => {
+  app = fastify({
+    logger: {
+      level: 'info',
+      file: './logger.log', // Will use pino.destination()
     },
-  }),
-);
+  });
 
-await app.register(routes);
+  app.setErrorHandler(async (error, request, reply) => {
+    console.error(error);
+    reply.status(500).send(error);
+  });
+  wsProvider = startWebSocketProvider(process.env.ETHEREUM_ENDPOINT_WS);
+  provider = new ethers.providers.JsonRpcProvider(process.env.ETHEREUM_ENDPOINT_HTTP);
+  const { ipfs: ipfsTemp } = ipfsServer();
+  ipfs = ipfsTemp;
+  const { pubClient: pubClientTemp, subClient } = await redisServer();
+  pubClient = pubClientTemp as RedisClientType;
+  await Promise.all([
+    app.register(cors, {
+      credentials: true,
+      origin:
+        process.env.NODE_ENV === 'production'
+          ? ['https://iscv.ftisu.vn', 'https://business.iscv.ftisu.vn', 'https://ftisu.vn']
+          : [
+              'http://localhost:3000',
+              'http://localhost:3001',
+              'https://studio.apollographql.com',
+              'https://iscv.ftisu.vn',
+              'https://business.iscv.ftisu.vn',
+            ],
+    }),
+    app.register(socketio, {
+      path: '/socket.io',
+      transports: ['websocket'],
+      cors: {
+        credentials: true,
 
-// interview(app, pubClient as RedisClientType, subClient as RedisClientType);
+        origin:
+          process.env.NODE_ENV === 'production'
+            ? ['https://iscv.ftisu.vn', 'https://business.iscv.ftisu.vn', 'https://ftisu.vn']
+            : [
+                'http://localhost:3000',
+                'http://localhost:3001',
+                'https://studio.apollographql.com',
+                'https://iscv.ftisu.vn',
+                'https://business.iscv.ftisu.vn',
+              ],
+      },
+    }),
+    app.register(rateLimit, {
+      max: 500,
+      timeWindow: '1 minute',
+    }),
+    app.register(helmet, {
+      // contentSecurityPolicy: false,
+      // crossOriginEmbedderPolicy: false,
+      // crossOriginOpenerPolicy: false,
+      // crossOriginResourcePolicy: false,
+      // dnsPrefetchControl: false,
+      // expectCt: false,
+      // frameguard: false,
+      // hidePoweredBy: false,
+      // hsts: false,
+      // ieNoOpen: false,
+      // noSniff: false,
+      // originAgentCluster: false,
+      // permittedCrossDomainPolicies: false,
+      // referrerPolicy: false,
+      // xssFilter: false,
+      // crossOriginEmbedderPolicy: false,
+      crossOriginResourcePolicy: { policy: 'cross-origin' },
+    }),
+    app.register(compress),
+    app.register(middie),
+    (async () => {
+      const apollo = await apolloServer(app);
+      app.register(fastifyApollo(apollo), {
+        context: createContext({ provider, ipfs }),
+      });
+    })(),
+    app.register(multipath, {
+      // addToBody: true,
+      limits: {
+        // fieldNameSize: 100, // Max field name size in bytes
+        // fieldSize: 100, // Max field value size in bytes
+        // fields: 10, // Max number of non-file fields
+        // fileSize: 299 * 1024 * 1024, // 10 MB
+        // files: 10, // Max number of file fields
+        // headerPairs: 2000, // Max number of header key=>value pairs
+      },
+    }),
+    app.register(fastifyStatic, {
+      root: path.join(__dirname, '..', 'public'),
+      prefix: '/public/', // optional: default '/'
+    }),
+    app.register(routes),
+    mongoServer(),
+    socketblock.init(),
+  ]);
 
-initSocket(pubClient as RedisClientType, subClient as RedisClientType);
+  app.use(
+    '/machine',
+    createProxyMiddleware({
+      target: process.env.PYTHON_ENDPOINT,
+      changeOrigin: true,
+      pathRewrite: {
+        '^/machine': '/static', // Path rewrite to remove '/static' prefix
+      },
+    }),
+  );
 
-await Promise.all([mongoServer(), socketblock.init()]);
-listenWeb3();
-app.listen({ port: Number(process.env.PORT) || 4000 }, (err, address) => {
-  if (err) {
-    console.error(err);
-    process.exit(1);
-  }
-  console.log(`Server listening at ${address}`);
-});
-export { app, ipfs, provider, pubClient };
+  // interview(app, pubClient as RedisClientType, subClient as RedisClientType);
+
+  await Promise.all([initSocket(pubClient as RedisClientType, subClient as RedisClientType)]);
+
+  app.listen({ port: Number(process.env.PORT) || 4000, host: process.env.HOST }, (err, address) => {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+    console.log(`Server listening at ${address}`);
+  });
+};

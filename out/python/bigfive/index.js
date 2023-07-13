@@ -9,13 +9,16 @@ const audioBigFive = (sessionId) => {
 const videoBigFive = (sessionId) => {
     return new AxiosServices().get(`big_five/video?session_id=${sessionId}`);
 };
-const reportBigFive = (sessionId, employeeName, employeeId) => {
-    return new AxiosServices().get(`big_five/report?employee_id=${employeeId}&session_id=${sessionId}&employee_name=${employeeName}`);
+const reportBigFive = (data) => {
+    return new AxiosServices().post(`big_five/report`, data);
 };
 const getPDF = (sessionId) => {
     return new AxiosServices().get(`static/interview/${sessionId}/report.pdf`, {
         responseType: 'arraybuffer',
     });
 };
+const cleanBigFive = (sessionId) => {
+    return new AxiosServices().get(`/big_five/clean?session_id=${sessionId}`);
+};
 
-export { audioBigFive, getPDF, reportBigFive, startedBigFive, videoBigFive };
+export { audioBigFive, cleanBigFive, getPDF, reportBigFive, startedBigFive, videoBigFive };

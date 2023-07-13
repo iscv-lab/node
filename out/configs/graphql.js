@@ -49,6 +49,7 @@ const apolloServer = async (app) => {
         //   return formattedError;
         // },
     });
+    await apollo.start();
     console.log('connect to apollo');
     return apollo;
 };

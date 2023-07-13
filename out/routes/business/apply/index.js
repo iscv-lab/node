@@ -1,14 +1,14 @@
 import { getAllApply } from '../../../controllers/business/post/index.js';
 
 var apply = async (server, options) => {
-    server.get("/list/:businessId", {
+    server.get('/list/:businessId', {
         schema: {
             params: {
-                type: "object",
+                type: 'object',
                 properties: {
-                    businessId: { type: "number" },
+                    businessId: { type: 'number' },
                 },
-                required: ["businessId"],
+                required: ['businessId'],
             },
         },
     }, getAllApply);

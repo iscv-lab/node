@@ -1,8 +1,7 @@
-import { PythonShell } from 'python-shell';
 import { provider } from '../../../app.js';
 import { useEmployee } from '../../../contracts/useEmployee.js';
-import { trim } from '../../../helpers/trimMultipleSpace.js';
 import { Post } from '../../../models/business/Post.js';
+import { postRecommend } from '../../../python/job/recommend.js';
 
 const social = {
     prediction: async (parent, args, contextValue, info) => {
@@ -11,21 +10,11 @@ const social = {
         const [skills] = await Promise.all([employeeContract.getAllSkill()]);
         //   const employee = employees.find(x=>x.id.eq(id))
         const myskills = skills.filter((skill) => skill.employeeId.eq(id));
-        const listSkills = myskills.map((x) => x.title);
+        const listSkills = myskills.map((x) => x.title.toUpperCase());
         if (listSkills.length == 0) {
             return;
         }
-        const listPredict = await PythonShell.run('KNN.py', {
-            mode: 'text',
-            pythonPath: process.env.PYTHON3,
-            pythonOptions: ['-u'],
-            scriptPath: './tools/employee/prediction',
-            args: [...listSkills], //An argument which can be accessed in the script using sys.argv[1]
-        }).then((success) => {
-            return success.map((value, index) => {
-                return trim(value.replace(/(\[|\/|\]|\(|\)|\'|\")+/g, ' '));
-            });
-        });
+        const listPredict = await postRecommend(listSkills).then((success) => success.data);
         const result = await Post.find()
             .then(async (success) => {
             return success.map((value, index) => {
@@ -41,27 +30,8 @@ const social = {
             });
         })
             .then((success) => {
-            return (success
-                //   .filter(
-                //     (value, index, self) =>
-                //       index === self.findIndex((t) => t?.id === value?.id)
-                //   )
-                .filter(Boolean));
+            return success.filter(Boolean);
         })
-            // .then((success) =>
-            //   success.map((post) => {
-            //     return {
-            //       id: post!.id.toNumber(),
-            //       businessId: post!.businessId,
-            //       hashTag: post!.hashtag,
-            //       time: post?.createdAt,
-            //       content: post!.content,
-            //       imageSource: post?.images,
-            //       job: post!.job,
-            //       status: post!.status,
-            //     };
-            //   })
-            // )
             .catch((error) => {
             console.error(error);
         });

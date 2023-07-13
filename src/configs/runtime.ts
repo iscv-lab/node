@@ -1,14 +1,14 @@
-import fs from "fs";
-import util from "util";
-import path from "path";
+import fs from 'fs';
+import util from 'util';
+import path from 'path';
 
 export const initRuntime = () => {
-  process.on("uncaughtException", (err) => {
+  process.on('uncaughtException', (err) => {
     console.log(err);
   });
 
-  const logFile = fs.createWriteStream(path.join("./debug.log"), {
-    flags: "a",
+  const logFile = fs.createWriteStream(path.join('./debug.log'), {
+    flags: 'a',
   });
   const logStdout = process.stdout;
 
@@ -16,7 +16,7 @@ export const initRuntime = () => {
     // eslint-disable-next-line prefer-rest-params
     logFile.write(
       // eslint-disable-next-line prefer-rest-params
-      `${new Date().toISOString()} ${util.format.apply(null, arguments as any)} \n`
+      `${new Date().toISOString()} ${util.format.apply(null, arguments as any)} \n`,
     );
     new this.Console(logStdout).log(d);
   };

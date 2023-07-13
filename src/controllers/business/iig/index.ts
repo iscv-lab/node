@@ -1,13 +1,10 @@
-import { FastifyReply, FastifyRequest } from "fastify";
-import { provider } from "~/app";
-import { useIIG } from "~contracts/iig/useIIG";
-import { ILR } from "./types";
-import { IIGRequest } from "~models/business/iig/IIGRequest";
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { provider } from '~/app';
+import { useIIG } from '~contracts/iig/useIIG';
+import { ILR } from './types';
+import { IIGRequest } from '~models/business/iig/IIGRequest';
 
-export const getListLR = async (
-  request: FastifyRequest,
-  reply: FastifyReply
-) => {
+export const getListLR = async (request: FastifyRequest, reply: FastifyReply) => {
   const iigContract = useIIG(provider);
 
   const listLR = (await iigContract.getAllIIGLRResult()).map((lr) => {
@@ -25,10 +22,7 @@ export const getListLR = async (
   await reply.code(200).send(listLR.reverse());
 };
 
-export const getListRequest = async (
-  request: FastifyRequest,
-  reply: FastifyReply
-) => {
+export const getListRequest = async (request: FastifyRequest, reply: FastifyReply) => {
   const list = await IIGRequest.find({}, {}, { skip: 0, limit: 100 });
   await reply.code(200).send(list);
 };

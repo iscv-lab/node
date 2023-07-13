@@ -38,7 +38,7 @@ const resolvers = {
             const user = args.user;
             if (!user)
                 return;
-            info.cacheControl.setCacheHint({ maxAge: 600, scope: "PRIVATE" });
+            info.cacheControl.setCacheHint({ maxAge: 600, scope: 'PRIVATE' });
             const provider = contextValue.provider;
             const employeeContract = useEmployee(provider);
             return await employeeContract
@@ -77,13 +77,13 @@ const resolvers = {
 const books = [
     {
         id: 0,
-        title: "The Awakening",
-        author: "Kate Chopin",
+        title: 'The Awakening',
+        author: 'Kate Chopin',
     },
     {
         id: 1,
-        title: "City of Glass",
-        author: "Paul Auster",
+        title: 'City of Glass',
+        author: 'Paul Auster',
     },
 ];
 

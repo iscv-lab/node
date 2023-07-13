@@ -1,23 +1,20 @@
-import { FastifyInstance, FastifyPluginOptions } from "fastify";
-import { getAllApply } from "~controllers/business/post";
+import { FastifyInstance, FastifyPluginOptions } from 'fastify';
+import { getAllApply } from '~controllers/business/post';
 
-export default async (
-  server: FastifyInstance,
-  options: FastifyPluginOptions
-) => {
+export default async (server: FastifyInstance, options: FastifyPluginOptions) => {
   server.get(
-    "/list/:businessId",
+    '/list/:businessId',
     {
       schema: {
         params: {
-          type: "object",
+          type: 'object',
           properties: {
-            businessId: { type: "number" },
+            businessId: { type: 'number' },
           },
-          required: ["businessId"],
+          required: ['businessId'],
         },
       },
     },
-    getAllApply
+    getAllApply,
   );
 };

@@ -12,20 +12,10 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "../../common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from '../../common';
 
 export type ProfileStruct = {
   id: PromiseOrValue<BigNumberish>;
@@ -50,7 +40,7 @@ export type ProfileStructOutput = [
   string,
   string,
   string,
-  number
+  number,
 ] & {
   id: BigNumber;
   user: string;
@@ -66,170 +56,134 @@ export type ProfileStructOutput = [
 
 export interface ListBusinessInterface extends utils.Interface {
   functions: {
-    "add((uint256,address,string,string,string,string,string,string,string,uint8))": FunctionFragment;
-    "approve(address)": FunctionFragment;
-    "at(uint256)": FunctionFragment;
-    "atAddress(address)": FunctionFragment;
-    "destroy()": FunctionFragment;
-    "edit((uint256,address,string,string,string,string,string,string,string,uint8))": FunctionFragment;
-    "findIdByAddress(address)": FunctionFragment;
-    "getAll()": FunctionFragment;
-    "list(uint256)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "retrive(address)": FunctionFragment;
-    "setEmail(uint256,string)": FunctionFragment;
-    "setGithub(uint256,string)": FunctionFragment;
-    "setId(uint256,uint256)": FunctionFragment;
-    "setLinkedin(uint256,string)": FunctionFragment;
-    "setName(uint256,string)": FunctionFragment;
-    "setPhone(uint256,string)": FunctionFragment;
-    "setProfessional(uint256,string)": FunctionFragment;
-    "setSourceImage(uint256,string)": FunctionFragment;
-    "setUser(uint256,address)": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
+    'add((uint256,address,string,string,string,string,string,string,string,uint8))': FunctionFragment;
+    'approve(address)': FunctionFragment;
+    'at(uint256)': FunctionFragment;
+    'atAddress(address)': FunctionFragment;
+    'destroy()': FunctionFragment;
+    'edit((uint256,address,string,string,string,string,string,string,string,uint8))': FunctionFragment;
+    'findIdByAddress(address)': FunctionFragment;
+    'getAll()': FunctionFragment;
+    'list(uint256)': FunctionFragment;
+    'owner()': FunctionFragment;
+    'retrive(address)': FunctionFragment;
+    'setEmail(uint256,string)': FunctionFragment;
+    'setGithub(uint256,string)': FunctionFragment;
+    'setId(uint256,uint256)': FunctionFragment;
+    'setLinkedin(uint256,string)': FunctionFragment;
+    'setName(uint256,string)': FunctionFragment;
+    'setPhone(uint256,string)': FunctionFragment;
+    'setProfessional(uint256,string)': FunctionFragment;
+    'setSourceImage(uint256,string)': FunctionFragment;
+    'setUser(uint256,address)': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "add"
-      | "approve"
-      | "at"
-      | "atAddress"
-      | "destroy"
-      | "edit"
-      | "findIdByAddress"
-      | "getAll"
-      | "list"
-      | "owner"
-      | "retrive"
-      | "setEmail"
-      | "setGithub"
-      | "setId"
-      | "setLinkedin"
-      | "setName"
-      | "setPhone"
-      | "setProfessional"
-      | "setSourceImage"
-      | "setUser"
-      | "transferOwnership"
+      | 'add'
+      | 'approve'
+      | 'at'
+      | 'atAddress'
+      | 'destroy'
+      | 'edit'
+      | 'findIdByAddress'
+      | 'getAll'
+      | 'list'
+      | 'owner'
+      | 'retrive'
+      | 'setEmail'
+      | 'setGithub'
+      | 'setId'
+      | 'setLinkedin'
+      | 'setName'
+      | 'setPhone'
+      | 'setProfessional'
+      | 'setSourceImage'
+      | 'setUser'
+      | 'transferOwnership',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: "add", values: [ProfileStruct]): string;
+  encodeFunctionData(functionFragment: 'add', values: [ProfileStruct]): string;
+  encodeFunctionData(functionFragment: 'approve', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'at', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'atAddress', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'destroy', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'edit', values: [ProfileStruct]): string;
+  encodeFunctionData(functionFragment: 'findIdByAddress', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getAll', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'list', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'retrive', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "approve",
-    values: [PromiseOrValue<string>]
+    functionFragment: 'setEmail',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
-    functionFragment: "at",
-    values: [PromiseOrValue<BigNumberish>]
+    functionFragment: 'setGithub',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
-    functionFragment: "atAddress",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "destroy", values?: undefined): string;
-  encodeFunctionData(functionFragment: "edit", values: [ProfileStruct]): string;
-  encodeFunctionData(
-    functionFragment: "findIdByAddress",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "getAll", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "list",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "retrive",
-    values: [PromiseOrValue<string>]
+    functionFragment: 'setId',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "setEmail",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    functionFragment: 'setLinkedin',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
-    functionFragment: "setGithub",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    functionFragment: 'setName',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
-    functionFragment: "setId",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: 'setPhone',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
-    functionFragment: "setLinkedin",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    functionFragment: 'setProfessional',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
-    functionFragment: "setName",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    functionFragment: 'setSourceImage',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
-    functionFragment: "setPhone",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    functionFragment: 'setUser',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(
-    functionFragment: "setProfessional",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setSourceImage",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setUser",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
-  decodeFunctionResult(functionFragment: "add", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "at", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "atAddress", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "destroy", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "edit", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "findIdByAddress",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "getAll", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "list", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "retrive", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setEmail", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setGithub", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setId", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setLinkedin",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "setName", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setPhone", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setProfessional",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setSourceImage",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "setUser", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'at', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'atAddress', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'destroy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'edit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'findIdByAddress', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'list', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'retrive', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setEmail', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setGithub', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setId', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setLinkedin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setName', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setPhone', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setProfessional', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setSourceImage', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setUser', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
 
   events: {
-    "Add(tuple)": EventFragment;
-    "OwnershipTransferred(address,address)": EventFragment;
-    "Remove(tuple)": EventFragment;
+    'Add(tuple)': EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
+    'Remove(tuple)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Add"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Remove"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Add'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Remove'): EventFragment;
 }
 
 export interface AddEventObject {
@@ -243,13 +197,9 @@ export interface OwnershipTransferredEventObject {
   previousOwner: string;
   newOwner: string;
 }
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  OwnershipTransferredEventObject
->;
+export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
 
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
+export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface RemoveEventObject {
   item: ProfileStructOutput;
@@ -268,16 +218,12 @@ export interface ListBusiness extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -285,58 +231,30 @@ export interface ListBusiness extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    add(
-      item: ProfileStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    add(item: ProfileStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     approve(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    at(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[ProfileStructOutput]>;
+    at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[ProfileStructOutput]>;
 
-    atAddress(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[ProfileStructOutput]>;
+    atAddress(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[ProfileStructOutput]>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    edit(
-      item: ProfileStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    edit(item: ProfileStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    findIdByAddress(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    findIdByAddress(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getAll(overrides?: CallOverrides): Promise<[ProfileStructOutput[]]>;
 
     list(
       arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<
-      [
-        BigNumber,
-        string,
-        string,
-        string,
-        string,
-        string,
-        string,
-        string,
-        string,
-        number
-      ] & {
+      [BigNumber, string, string, string, string, string, string, string, string, number] & {
         id: BigNumber;
         user: string;
         name: string;
@@ -354,121 +272,93 @@ export interface ListBusiness extends BaseContract {
 
     retrive(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setEmail(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setGithub(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setId(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLinkedin(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setName(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPhone(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setProfessional(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setSourceImage(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setUser(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  add(
-    item: ProfileStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  add(item: ProfileStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   approve(
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  at(
-    index: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<ProfileStructOutput>;
+  at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<ProfileStructOutput>;
 
-  atAddress(
-    value: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<ProfileStructOutput>;
+  atAddress(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<ProfileStructOutput>;
 
-  destroy(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  edit(
-    item: ProfileStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  edit(item: ProfileStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  findIdByAddress(
-    value: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  findIdByAddress(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getAll(overrides?: CallOverrides): Promise<ProfileStructOutput[]>;
 
   list(
     arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<
-    [
-      BigNumber,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      string,
-      number
-    ] & {
+    [BigNumber, string, string, string, string, string, string, string, string, number] & {
       id: BigNumber;
       user: string;
       name: string;
@@ -486,113 +376,90 @@ export interface ListBusiness extends BaseContract {
 
   retrive(
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setEmail(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setGithub(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setId(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLinkedin(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setName(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPhone(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setProfessional(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setSourceImage(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setUser(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     add(item: ProfileStruct, overrides?: CallOverrides): Promise<void>;
 
-    approve(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    approve(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    at(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<ProfileStructOutput>;
+    at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<ProfileStructOutput>;
 
-    atAddress(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<ProfileStructOutput>;
+    atAddress(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<ProfileStructOutput>;
 
     destroy(overrides?: CallOverrides): Promise<void>;
 
     edit(item: ProfileStruct, overrides?: CallOverrides): Promise<void>;
 
-    findIdByAddress(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    findIdByAddress(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getAll(overrides?: CallOverrides): Promise<ProfileStructOutput[]>;
 
     list(
       arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<
-      [
-        BigNumber,
-        string,
-        string,
-        string,
-        string,
-        string,
-        string,
-        string,
-        string,
-        number
-      ] & {
+      [BigNumber, string, string, string, string, string, string, string, string, number] & {
         id: BigNumber;
         user: string;
         name: string;
@@ -608,303 +475,257 @@ export interface ListBusiness extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    retrive(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    retrive(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setEmail(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setGithub(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setId(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setLinkedin(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setName(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setPhone(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setProfessional(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setSourceImage(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setUser(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    "Add(tuple)"(item?: null): AddEventFilter;
+    'Add(tuple)'(item?: null): AddEventFilter;
     Add(item?: null): AddEventFilter;
 
-    "OwnershipTransferred(address,address)"(
+    'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
 
-    "Remove(tuple)"(item?: null): RemoveEventFilter;
+    'Remove(tuple)'(item?: null): RemoveEventFilter;
     Remove(item?: null): RemoveEventFilter;
   };
 
   estimateGas: {
-    add(
-      item: ProfileStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    add(item: ProfileStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     approve(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    at(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    atAddress(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    atAddress(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    edit(
-      item: ProfileStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    edit(item: ProfileStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    findIdByAddress(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    findIdByAddress(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getAll(overrides?: CallOverrides): Promise<BigNumber>;
 
-    list(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     retrive(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setEmail(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setGithub(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setId(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setLinkedin(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setName(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setPhone(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setProfessional(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setSourceImage(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setUser(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    add(
-      item: ProfileStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    add(item: ProfileStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     approve(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    at(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    atAddress(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    atAddress(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    edit(
-      item: ProfileStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    edit(item: ProfileStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    findIdByAddress(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    findIdByAddress(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAll(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    list(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     retrive(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setEmail(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setGithub(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setId(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLinkedin(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setName(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPhone(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setProfessional(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setSourceImage(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setUser(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

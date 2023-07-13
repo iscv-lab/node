@@ -1,4 +1,4 @@
-import { ERole } from "..";
+import { ERole } from '..';
 
 export type IMesssages = {
   _id: string;

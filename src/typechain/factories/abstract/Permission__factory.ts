@@ -2,12 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import type { Provider } from "@ethersproject/providers";
-import type {
-  Permission,
-  PermissionInterface,
-} from "../../abstract/Permission";
+import { Contract, Signer, utils } from 'ethers';
+import type { Provider } from '@ethersproject/providers';
+import type { Permission, PermissionInterface } from '../../abstract/Permission';
 
 const _abi = [
   {
@@ -15,78 +12,78 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "address",
-        name: "previousOwner",
-        type: "address",
+        internalType: 'address',
+        name: 'previousOwner',
+        type: 'address',
       },
       {
         indexed: true,
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
       },
     ],
-    name: "OwnershipTransferred",
-    type: "event",
+    name: 'OwnershipTransferred',
+    type: 'event',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "value",
-        type: "address",
+        internalType: 'address',
+        name: 'value',
+        type: 'address',
       },
     ],
-    name: "approve",
+    name: 'approve',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "destroy",
+    name: 'destroy',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [],
-    name: "owner",
+    name: 'owner',
     outputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "value",
-        type: "address",
+        internalType: 'address',
+        name: 'value',
+        type: 'address',
       },
     ],
-    name: "retrive",
+    name: 'retrive',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "address",
-        name: "newOwner",
-        type: "address",
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
       },
     ],
-    name: "transferOwnership",
+    name: 'transferOwnership',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
 ] as const;
 
@@ -95,10 +92,7 @@ export class Permission__factory {
   static createInterface(): PermissionInterface {
     return new utils.Interface(_abi) as PermissionInterface;
   }
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): Permission {
+  static connect(address: string, signerOrProvider: Signer | Provider): Permission {
     return new Contract(address, _abi, signerOrProvider) as Permission;
   }
 }

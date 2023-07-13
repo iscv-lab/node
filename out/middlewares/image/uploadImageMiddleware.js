@@ -1,7 +1,7 @@
-import sharp from 'sharp';
-import fs from 'fs';
-import { v4 } from 'uuid';
 import { EventEmitter } from 'events';
+import fs from 'fs';
+import sharp from 'sharp';
+import { v4 } from 'uuid';
 
 const imageMiddleware = async (request, reply, done) => {
     const pm = new Promise((resolve, reject) => {
@@ -10,17 +10,15 @@ const imageMiddleware = async (request, reply, done) => {
         const waiter = new EventEmitter();
         const mp = request.multipart((field, file, filename, encoding, mimetype) => {
             const chunks = [];
-            file.on("data", (chunk) => {
+            file.on('data', (chunk) => {
                 chunks.push(chunk);
             });
-            file.on("end", async () => {
+            file.on('end', async () => {
                 listTask++;
                 const buffer = Buffer.concat(chunks);
-                if (mimetype === "image/png" ||
-                    mimetype === "image/jpg" ||
-                    mimetype === "image/jpeg") {
+                if (mimetype === 'image/png' || mimetype === 'image/jpg' || mimetype === 'image/jpeg') {
                     const resizedBuffer = await sharp(buffer)
-                        .resize({ height: 1000, width: 1000, fit: "contain" })
+                        .resize({ fit: 'contain' })
                         .jpeg({ quality: 80 })
                         .rotate()
                         .toBuffer();
@@ -34,8 +32,12 @@ const imageMiddleware = async (request, reply, done) => {
                         form[field].push(resizedBuffer);
                     }
                 }
-                else if (mimetype === "video/mp4") {
-                    const inputPath = `./uploads/temp/${v4()}.mp4`;
+                else if (mimetype === 'video/mp4') {
+                    const folder_path = './uploads/temp/';
+                    if (!fs.existsSync(folder_path)) {
+                        await fs.promises.mkdir(folder_path, { recursive: true });
+                    }
+                    const inputPath = `${folder_path}${v4()}.mp4`;
                     // const outputPath = `./uploads/temp/${uuidv4()}.mp4`;
                     // Write the buffer to a temporary file
                     await fs.promises.writeFile(inputPath, buffer);
@@ -59,25 +61,23 @@ const imageMiddleware = async (request, reply, done) => {
                     }
                     // Delete the temporary file
                     await Promise.all([
-                        fs.promises
-                            .unlink(inputPath)
-                            .catch((error) => console.error(error)),
+                        fs.promises.unlink(inputPath).catch((error) => console.error(error)),
                         // fs.promises
                         //   .unlink(outputPath)
                         //   .catch((error) => console.error(error)),
                     ]);
                 }
                 listTask--;
-                waiter.emit("end");
+                waiter.emit('end');
             });
         }, function (err) {
             if (err) {
                 reply.send(err);
                 return;
             }
-            console.log("upload completed " + process.memoryUsage().rss);
+            console.log('upload completed ' + process.memoryUsage().rss);
         });
-        mp.on("field", function (key, value) {
+        mp.on('field', function (key, value) {
             if (form[key] === undefined) {
                 form[key] = value;
             }
@@ -88,13 +88,13 @@ const imageMiddleware = async (request, reply, done) => {
                 form[key].push(value);
             }
         });
-        mp.on("error", (error) => {
+        mp.on('error', (error) => {
             reject(error);
         });
-        mp.on("finish", async () => {
+        mp.on('finish', async () => {
             if (!listTask)
                 resolve(form);
-            waiter.on("end", () => {
+            waiter.on('end', () => {
                 if (!listTask)
                     resolve(form);
             });

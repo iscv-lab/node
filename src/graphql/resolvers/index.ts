@@ -1,7 +1,7 @@
-import { useEmployee } from "~contracts/index";
-import { Context } from "../context";
-import { employee } from "./employee";
-import { business } from "./business";
+import { useEmployee } from '~contracts/index';
+import { Context } from '../context';
+import { employee } from './employee';
+import { business } from './business';
 
 export const resolvers = {
   Query: {
@@ -10,12 +10,7 @@ export const resolvers = {
     },
     book: async (parent, { title }) => books[0],
 
-    employees: async (
-      parent: any,
-      args: string[],
-      contextValue: Context,
-      info: any
-    ) => {
+    employees: async (parent: any, args: string[], contextValue: Context, info: any) => {
       const provider = contextValue.provider;
       const employeeContract = useEmployee(provider);
       return employeeContract
@@ -46,7 +41,7 @@ export const resolvers = {
     employeeByUser: async (parent, args, contextValue: Context, info) => {
       const user: string = args.user;
       if (!user) return;
-      info.cacheControl.setCacheHint({ maxAge: 600, scope: "PRIVATE" });
+      info.cacheControl.setCacheHint({ maxAge: 600, scope: 'PRIVATE' });
       const provider = contextValue.provider;
       const employeeContract = useEmployee(provider);
       return await employeeContract
@@ -85,12 +80,12 @@ export const resolvers = {
 const books = [
   {
     id: 0,
-    title: "The Awakening",
-    author: "Kate Chopin",
+    title: 'The Awakening',
+    author: 'Kate Chopin',
   },
   {
     id: 1,
-    title: "City of Glass",
-    author: "Paul Auster",
+    title: 'City of Glass',
+    author: 'Paul Auster',
   },
 ];

@@ -1,3 +1,3 @@
 export function trim(value: string) {
-  return value.replace(/ +(?= )/g, "").trim();
+  return value.replace(/ +(?= )/g, '').trim();
 }

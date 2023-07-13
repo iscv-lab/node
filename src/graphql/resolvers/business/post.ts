@@ -29,7 +29,12 @@ export const post = {
           }),
       ),
     };
-    // console.log(result)
     return result;
+  },
+  posts: async (parent, args: { businessId: number }, contextValue: Context, info) => {
+    const businessId = args.businessId;
+    if (businessId === undefined || businessId === null || businessId === -1) return [];
+    const posts = await Post.find({ businessId: businessId }, { _id: 1 });
+    return posts;
   },
 };

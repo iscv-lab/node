@@ -23,8 +23,14 @@ const post = {
                     return t['postId'] === post._id.toString() && t['employeeId'].eq(employeeId);
                 })),
         };
-        // console.log(result)
         return result;
+    },
+    posts: async (parent, args, contextValue, info) => {
+        const businessId = args.businessId;
+        if (businessId === undefined || businessId === null || businessId === -1)
+            return [];
+        const posts = await Post.find({ businessId: businessId }, { _id: 1 });
+        return posts;
     },
 };
 

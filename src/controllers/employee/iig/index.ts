@@ -1,6 +1,6 @@
-import { FastifyReply, FastifyRequest } from "fastify";
-import { ERequestStatus, IIGRequest } from "~models/business/iig/IIGRequest";
-import { EIIGRequest } from "~types/business/iig";
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { ERequestStatus, IIGRequest } from '~models/business/iig/IIGRequest';
+import { EIIGRequest } from '~types/business/iig';
 
 export const postRequest = async (
   request: FastifyRequest<{
@@ -10,7 +10,7 @@ export const postRequest = async (
       certificateType: EIIGRequest;
     };
   }>,
-  reply: FastifyReply
+  reply: FastifyReply,
 ) => {
   const employeeId = request.body.employeeId;
   const examId = request.body.examId;
@@ -28,7 +28,7 @@ export const postRequest = async (
 
 export const putApproved = async (
   request: FastifyRequest<{ Querystring: { requestId: string } }>,
-  reply: FastifyReply
+  reply: FastifyReply,
 ) => {
   const requestId = request.query.requestId;
   const result = await IIGRequest.findByIdAndUpdate(requestId, {

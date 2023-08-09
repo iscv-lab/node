@@ -2,26 +2,23 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import type { Provider } from "@ethersproject/providers";
-import type {
-  ListEmployeeCursor,
-  ListEmployeeCursorInterface,
-} from "../../../cursor/employee/ListEmployeeCursor";
+import { Contract, Signer, utils } from 'ethers';
+import type { Provider } from '@ethersproject/providers';
+import type { ListEmployeeCursor, ListEmployeeCursorInterface } from '../../../cursor/employee/ListEmployeeCursor';
 
 const _abi = [
   {
     inputs: [],
-    name: "_checkExistEmployeeAccount",
+    name: '_checkExistEmployeeAccount',
     outputs: [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
 ] as const;
 
@@ -30,10 +27,7 @@ export class ListEmployeeCursor__factory {
   static createInterface(): ListEmployeeCursorInterface {
     return new utils.Interface(_abi) as ListEmployeeCursorInterface;
   }
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): ListEmployeeCursor {
+  static connect(address: string, signerOrProvider: Signer | Provider): ListEmployeeCursor {
     return new Contract(address, _abi, signerOrProvider) as ListEmployeeCursor;
   }
 }

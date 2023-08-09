@@ -2,85 +2,85 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer, utils } from "ethers";
-import type { Provider } from "@ethersproject/providers";
+import { Contract, Signer, utils } from 'ethers';
+import type { Provider } from '@ethersproject/providers';
 import type {
   ListBusinessApplyCursor,
   ListBusinessApplyCursorInterface,
-} from "../../../../cursor/business/apply/ListBusinessApplyCursor";
+} from '../../../../cursor/business/apply/ListBusinessApplyCursor';
 
 const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'id',
+        type: 'uint256',
       },
       {
-        internalType: "uint256",
-        name: "employeeId",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'employeeId',
+        type: 'uint256',
       },
     ],
-    name: "_checkApplyIdBelongsToEmployeeId",
+    name: '_checkApplyIdBelongsToEmployeeId',
     outputs: [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "employeeId",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'employeeId',
+        type: 'uint256',
       },
       {
-        internalType: "uint256",
-        name: "postId",
-        type: "uint256",
+        internalType: 'string',
+        name: 'postId',
+        type: 'string',
       },
     ],
-    name: "_checkExistApply",
+    name: '_checkExistApply',
     outputs: [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'id',
+        type: 'uint256',
       },
       {
-        internalType: "uint256",
-        name: "postId",
-        type: "uint256",
+        internalType: 'string',
+        name: 'postId',
+        type: 'string',
       },
     ],
-    name: "_checkIdBelongsToPostId",
+    name: '_checkIdBelongsToPostId',
     outputs: [
       {
-        internalType: "bool",
-        name: "",
-        type: "bool",
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function',
   },
 ] as const;
 
@@ -89,14 +89,7 @@ export class ListBusinessApplyCursor__factory {
   static createInterface(): ListBusinessApplyCursorInterface {
     return new utils.Interface(_abi) as ListBusinessApplyCursorInterface;
   }
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): ListBusinessApplyCursor {
-    return new Contract(
-      address,
-      _abi,
-      signerOrProvider
-    ) as ListBusinessApplyCursor;
+  static connect(address: string, signerOrProvider: Signer | Provider): ListBusinessApplyCursor {
+    return new Contract(address, _abi, signerOrProvider) as ListBusinessApplyCursor;
   }
 }

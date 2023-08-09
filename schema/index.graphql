@@ -1,0 +1,156 @@
+scalar Date
+
+type Book {
+  id: Int
+  title: String
+  author: String
+}
+
+type Employee {
+  id: Int
+  user: String
+  name: String
+  phone: String
+  professional: String
+  email: String
+  github: String
+  linkedin: String
+  sourceImage: String
+}
+
+type Business {
+  id: Int
+  user: String
+  name: String
+  phone: String
+  professional: String
+  email: String
+  github: String
+  linkedin: String
+  sourceImage: String
+  category: Int
+}
+
+type Skill {
+  id: Int
+  employeeId: Int
+  title: String
+  level: Int
+}
+
+type Certificate {
+  iig: IIG
+}
+
+type LR {
+  id: Int
+  employeeId: Int
+  testDate: Date
+  shiftTest: Int
+  expireDate: Date
+  listeningScore: Int
+  readingScore: Int
+  time: Date
+}
+type SW {
+  id: Int
+  employeeId: Int
+  testDate: Date
+  shiftTest: Int
+  expireDate: Date
+  speakingScore: Int
+  writingScore: Int
+  time: Date
+}
+
+type IIG {
+  lr: LR
+  sw: SW
+}
+
+type CV {
+  id: Int
+  employeeId: Int
+  time: Int
+  source: String
+}
+
+type BigFive {
+  id: Int
+  employeeId: Int
+  startTime: Int
+  endTime: Int
+  cid: String
+}
+
+type DefaultCV {
+  category: Int
+  id: Int
+  user: String
+  name: String
+  phone: String
+  professional: String
+  email: String
+  github: String
+  linkedin: String
+  sourceImage: String
+  skills: [Skill]
+  certificate: Certificate
+}
+
+type Customcv {
+  category: Int
+  id: Int
+  user: String
+  name: String
+  phone: String
+  professional: String
+  email: String
+  github: String
+  linkedin: String
+  sourceImage: String
+  skills: [Skill]
+  certificate: Certificate
+  source: String
+}
+
+type Post {
+  _id: String
+  businessId: Int
+  images: [String]
+  videos: [String]
+  content: String
+  hashtag: String
+  status: Int
+  job: String
+  applied: Boolean
+  businessImage: String
+  businessName: String
+  createdAt: Date
+  updatedAt: Date
+}
+
+type IIGStatus {
+  lr: Boolean
+  sw: Boolean
+}
+
+type Query {
+  books: [Book]
+  book(id: Int!): Book
+  employees: [Employee]
+  employee(id: Int!): Employee
+  employeeByUser(user: String): Employee
+  businessByUser(user: String): Business
+  business(id: Int!): Business
+  skillsByEmployee(employeeId: Int!): [Skill]
+  cvs: [CV]
+  cv: CV
+  defaultCV(employeeId: Int!): DefaultCV
+  customCV(employeeId: Int!): Customcv
+  prediction(id: Int!): [Post]
+  post(id: String!, employeeId: Int): Post
+  posts(businessId: Int!): [Post]
+  requestStatus(employeeId: Int!): IIGStatus
+  bigFiveEmployee(employeeId: Int!): BigFive
+}

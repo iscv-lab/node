@@ -12,24 +12,13 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "../../../common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from '../../../common';
 
 export type IIGLRResultStruct = {
   id: PromiseOrValue<BigNumberish>;
-  businessId: PromiseOrValue<BigNumberish>;
   employeeId: PromiseOrValue<BigNumberish>;
   testDate: PromiseOrValue<BigNumberish>;
   shiftTest: PromiseOrValue<BigNumberish>;
@@ -43,15 +32,13 @@ export type IIGLRResultStructOutput = [
   BigNumber,
   BigNumber,
   BigNumber,
-  BigNumber,
   number,
   BigNumber,
   BigNumber,
   BigNumber,
-  BigNumber
+  BigNumber,
 ] & {
   id: BigNumber;
-  businessId: BigNumber;
   employeeId: BigNumber;
   testDate: BigNumber;
   shiftTest: number;
@@ -63,91 +50,70 @@ export type IIGLRResultStructOutput = [
 
 export interface ListIIGLRResultInterface extends utils.Interface {
   functions: {
-    "add((uint256,uint256,uint256,uint256,uint8,uint256,uint256,uint256,uint256))": FunctionFragment;
-    "approve(address)": FunctionFragment;
-    "at(uint256)": FunctionFragment;
-    "destroy()": FunctionFragment;
-    "getAll()": FunctionFragment;
-    "list(uint256)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "retrive(address)": FunctionFragment;
-    "setBusinessId(uint256,uint256)": FunctionFragment;
-    "setEmployeeId(uint256,uint256)": FunctionFragment;
-    "setExprireDate(uint256,uint256)": FunctionFragment;
-    "setListeningScore(uint256,uint256)": FunctionFragment;
-    "setReadingScore(uint256,uint256)": FunctionFragment;
-    "setRequest(uint256,uint256,uint256,uint256,uint8,uint256,uint256,uint256)": FunctionFragment;
-    "setShiftTest(uint256,uint8)": FunctionFragment;
-    "setTestDate(uint256,uint256)": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
+    'add((uint256,uint256,uint256,uint8,uint256,uint256,uint256,uint256))': FunctionFragment;
+    'approve(address)': FunctionFragment;
+    'at(uint256)': FunctionFragment;
+    'destroy()': FunctionFragment;
+    'getAll()': FunctionFragment;
+    'list(uint256)': FunctionFragment;
+    'owner()': FunctionFragment;
+    'retrive(address)': FunctionFragment;
+    'setEmployeeId(uint256,uint256)': FunctionFragment;
+    'setExprireDate(uint256,uint256)': FunctionFragment;
+    'setListeningScore(uint256,uint256)': FunctionFragment;
+    'setReadingScore(uint256,uint256)': FunctionFragment;
+    'setRequest(uint256,uint256,uint256,uint8,uint256,uint256,uint256)': FunctionFragment;
+    'setShiftTest(uint256,uint8)': FunctionFragment;
+    'setTestDate(uint256,uint256)': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "add"
-      | "approve"
-      | "at"
-      | "destroy"
-      | "getAll"
-      | "list"
-      | "owner"
-      | "retrive"
-      | "setBusinessId"
-      | "setEmployeeId"
-      | "setExprireDate"
-      | "setListeningScore"
-      | "setReadingScore"
-      | "setRequest"
-      | "setShiftTest"
-      | "setTestDate"
-      | "transferOwnership"
+      | 'add'
+      | 'approve'
+      | 'at'
+      | 'destroy'
+      | 'getAll'
+      | 'list'
+      | 'owner'
+      | 'retrive'
+      | 'setEmployeeId'
+      | 'setExprireDate'
+      | 'setListeningScore'
+      | 'setReadingScore'
+      | 'setRequest'
+      | 'setShiftTest'
+      | 'setTestDate'
+      | 'transferOwnership',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'add', values: [IIGLRResultStruct]): string;
+  encodeFunctionData(functionFragment: 'approve', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'at', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'destroy', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getAll', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'list', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'retrive', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "add",
-    values: [IIGLRResultStruct]
+    functionFragment: 'setEmployeeId',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "approve",
-    values: [PromiseOrValue<string>]
+    functionFragment: 'setExprireDate',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "at",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(functionFragment: "destroy", values?: undefined): string;
-  encodeFunctionData(functionFragment: "getAll", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "list",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "retrive",
-    values: [PromiseOrValue<string>]
+    functionFragment: 'setListeningScore',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "setBusinessId",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: 'setReadingScore',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "setEmployeeId",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setExprireDate",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setListeningScore",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setReadingScore",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setRequest",
+    functionFragment: 'setRequest',
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
@@ -156,73 +122,44 @@ export interface ListIIGLRResultInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    ],
   ): string;
   encodeFunctionData(
-    functionFragment: "setShiftTest",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: 'setShiftTest',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "setTestDate",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: 'setTestDate',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
-  decodeFunctionResult(functionFragment: "add", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "at", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "destroy", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "getAll", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "list", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "retrive", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setBusinessId",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setEmployeeId",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setExprireDate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setListeningScore",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setReadingScore",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "setRequest", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setShiftTest",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setTestDate",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'at', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'destroy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'list', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'retrive', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setEmployeeId', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setExprireDate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setListeningScore', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setReadingScore', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setRequest', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setShiftTest', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setTestDate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
 
   events: {
-    "Add(tuple)": EventFragment;
-    "OwnershipTransferred(address,address)": EventFragment;
-    "Remove(tuple)": EventFragment;
+    'Add(tuple)': EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
+    'Remove(tuple)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Add"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Remove"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Add'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Remove'): EventFragment;
 }
 
 export interface AddEventObject {
@@ -236,21 +173,14 @@ export interface OwnershipTransferredEventObject {
   previousOwner: string;
   newOwner: string;
 }
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  OwnershipTransferredEventObject
->;
+export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
 
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
+export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface RemoveEventObject {
   item: IIGLRResultStructOutput;
 }
-export type RemoveEvent = TypedEvent<
-  [IIGLRResultStructOutput],
-  RemoveEventObject
->;
+export type RemoveEvent = TypedEvent<[IIGLRResultStructOutput], RemoveEventObject>;
 
 export type RemoveEventFilter = TypedEventFilter<RemoveEvent>;
 
@@ -264,16 +194,12 @@ export interface ListIIGLRResult extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -283,42 +209,26 @@ export interface ListIIGLRResult extends BaseContract {
   functions: {
     add(
       item: IIGLRResultStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     approve(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    at(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[IIGLRResultStructOutput]>;
+    at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[IIGLRResultStructOutput]>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     getAll(overrides?: CallOverrides): Promise<[IIGLRResultStructOutput[]]>;
 
     list(
       arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        number,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber
-      ] & {
+      [BigNumber, BigNumber, BigNumber, number, BigNumber, BigNumber, BigNumber, BigNumber] & {
         id: BigNumber;
-        businessId: BigNumber;
         employeeId: BigNumber;
         testDate: BigNumber;
         shiftTest: number;
@@ -333,107 +243,81 @@ export interface ListIIGLRResult extends BaseContract {
 
     retrive(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    setBusinessId(
-      index: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setEmployeeId(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setExprireDate(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setListeningScore(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setReadingScore(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRequest(
       index: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
       testDate: PromiseOrValue<BigNumberish>,
       shiftTest: PromiseOrValue<BigNumberish>,
       expireDate: PromiseOrValue<BigNumberish>,
       listeningScore: PromiseOrValue<BigNumberish>,
       readingScore: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setShiftTest(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTestDate(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  add(
-    item: IIGLRResultStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  add(item: IIGLRResultStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   approve(
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  at(
-    index: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<IIGLRResultStructOutput>;
+  at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<IIGLRResultStructOutput>;
 
-  destroy(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   getAll(overrides?: CallOverrides): Promise<IIGLRResultStructOutput[]>;
 
   list(
     arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<
-    [
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      number,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber
-    ] & {
+    [BigNumber, BigNumber, BigNumber, number, BigNumber, BigNumber, BigNumber, BigNumber] & {
       id: BigNumber;
-      businessId: BigNumber;
       employeeId: BigNumber;
       testDate: BigNumber;
       shiftTest: number;
@@ -448,80 +332,67 @@ export interface ListIIGLRResult extends BaseContract {
 
   retrive(
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  setBusinessId(
-    index: PromiseOrValue<BigNumberish>,
-    value: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setEmployeeId(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setExprireDate(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setListeningScore(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setReadingScore(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRequest(
     index: PromiseOrValue<BigNumberish>,
-    businessId: PromiseOrValue<BigNumberish>,
     employeeId: PromiseOrValue<BigNumberish>,
     testDate: PromiseOrValue<BigNumberish>,
     shiftTest: PromiseOrValue<BigNumberish>,
     expireDate: PromiseOrValue<BigNumberish>,
     listeningScore: PromiseOrValue<BigNumberish>,
     readingScore: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setShiftTest(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTestDate(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     add(item: IIGLRResultStruct, overrides?: CallOverrides): Promise<void>;
 
-    approve(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    approve(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    at(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<IIGLRResultStructOutput>;
+    at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<IIGLRResultStructOutput>;
 
     destroy(overrides?: CallOverrides): Promise<void>;
 
@@ -529,21 +400,10 @@ export interface ListIIGLRResult extends BaseContract {
 
     list(
       arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<
-      [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        number,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber
-      ] & {
+      [BigNumber, BigNumber, BigNumber, number, BigNumber, BigNumber, BigNumber, BigNumber] & {
         id: BigNumber;
-        businessId: BigNumber;
         employeeId: BigNumber;
         testDate: BigNumber;
         shiftTest: number;
@@ -556,273 +416,227 @@ export interface ListIIGLRResult extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    retrive(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    setBusinessId(
-      index: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    retrive(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setEmployeeId(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setExprireDate(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setListeningScore(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setReadingScore(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setRequest(
       index: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
       testDate: PromiseOrValue<BigNumberish>,
       shiftTest: PromiseOrValue<BigNumberish>,
       expireDate: PromiseOrValue<BigNumberish>,
       listeningScore: PromiseOrValue<BigNumberish>,
       readingScore: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setShiftTest(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setTestDate(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    "Add(tuple)"(item?: null): AddEventFilter;
+    'Add(tuple)'(item?: null): AddEventFilter;
     Add(item?: null): AddEventFilter;
 
-    "OwnershipTransferred(address,address)"(
+    'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
 
-    "Remove(tuple)"(item?: null): RemoveEventFilter;
+    'Remove(tuple)'(item?: null): RemoveEventFilter;
     Remove(item?: null): RemoveEventFilter;
   };
 
   estimateGas: {
-    add(
-      item: IIGLRResultStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    add(item: IIGLRResultStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     approve(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    at(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getAll(overrides?: CallOverrides): Promise<BigNumber>;
 
-    list(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     retrive(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    setBusinessId(
-      index: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setEmployeeId(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setExprireDate(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setListeningScore(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setReadingScore(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRequest(
       index: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
       testDate: PromiseOrValue<BigNumberish>,
       shiftTest: PromiseOrValue<BigNumberish>,
       expireDate: PromiseOrValue<BigNumberish>,
       listeningScore: PromiseOrValue<BigNumberish>,
       readingScore: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setShiftTest(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setTestDate(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     add(
       item: IIGLRResultStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     approve(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    at(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getAll(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    list(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     retrive(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    setBusinessId(
-      index: PromiseOrValue<BigNumberish>,
-      value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setEmployeeId(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setExprireDate(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setListeningScore(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setReadingScore(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRequest(
       index: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
       testDate: PromiseOrValue<BigNumberish>,
       shiftTest: PromiseOrValue<BigNumberish>,
       expireDate: PromiseOrValue<BigNumberish>,
       listeningScore: PromiseOrValue<BigNumberish>,
       readingScore: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setShiftTest(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTestDate(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

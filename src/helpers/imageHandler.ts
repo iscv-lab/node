@@ -1,10 +1,6 @@
-import sharp from "sharp";
+import sharp from 'sharp';
 
-export function resize(
-  buffer: Buffer,
-  width: number | null,
-  height: number | null
-) {
+export function resize(buffer: Buffer, width: number | null, height: number | null) {
   return sharp(buffer)
     .rotate()
     .resize(width, height, {

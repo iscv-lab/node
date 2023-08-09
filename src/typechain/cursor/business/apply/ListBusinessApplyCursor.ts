@@ -10,56 +10,38 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type { FunctionFragment, Result } from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "../../../common";
+} from 'ethers';
+import type { FunctionFragment, Result } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from '../../../common';
 
 export interface ListBusinessApplyCursorInterface extends utils.Interface {
   functions: {
-    "_checkApplyIdBelongsToEmployeeId(uint256,uint256)": FunctionFragment;
-    "_checkExistApply(uint256,uint256)": FunctionFragment;
-    "_checkIdBelongsToPostId(uint256,uint256)": FunctionFragment;
+    '_checkApplyIdBelongsToEmployeeId(uint256,uint256)': FunctionFragment;
+    '_checkExistApply(uint256,string)': FunctionFragment;
+    '_checkIdBelongsToPostId(uint256,string)': FunctionFragment;
   };
 
   getFunction(
-    nameOrSignatureOrTopic:
-      | "_checkApplyIdBelongsToEmployeeId"
-      | "_checkExistApply"
-      | "_checkIdBelongsToPostId"
+    nameOrSignatureOrTopic: '_checkApplyIdBelongsToEmployeeId' | '_checkExistApply' | '_checkIdBelongsToPostId',
   ): FunctionFragment;
 
   encodeFunctionData(
-    functionFragment: "_checkApplyIdBelongsToEmployeeId",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: '_checkApplyIdBelongsToEmployeeId',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "_checkExistApply",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: '_checkExistApply',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
-    functionFragment: "_checkIdBelongsToPostId",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: '_checkIdBelongsToPostId',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "_checkApplyIdBelongsToEmployeeId",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "_checkExistApply",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "_checkIdBelongsToPostId",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: '_checkApplyIdBelongsToEmployeeId', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: '_checkExistApply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: '_checkIdBelongsToPostId', data: BytesLike): Result;
 
   events: {};
 }
@@ -74,16 +56,12 @@ export interface ListBusinessApplyCursor extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -94,57 +72,57 @@ export interface ListBusinessApplyCursor extends BaseContract {
     _checkApplyIdBelongsToEmployeeId(
       id: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     _checkExistApply(
       employeeId: PromiseOrValue<BigNumberish>,
-      postId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      postId: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     _checkIdBelongsToPostId(
       id: PromiseOrValue<BigNumberish>,
-      postId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      postId: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
   };
 
   _checkApplyIdBelongsToEmployeeId(
     id: PromiseOrValue<BigNumberish>,
     employeeId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   _checkExistApply(
     employeeId: PromiseOrValue<BigNumberish>,
-    postId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
+    postId: PromiseOrValue<string>,
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   _checkIdBelongsToPostId(
     id: PromiseOrValue<BigNumberish>,
-    postId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
+    postId: PromiseOrValue<string>,
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   callStatic: {
     _checkApplyIdBelongsToEmployeeId(
       id: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     _checkExistApply(
       employeeId: PromiseOrValue<BigNumberish>,
-      postId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      postId: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     _checkIdBelongsToPostId(
       id: PromiseOrValue<BigNumberish>,
-      postId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      postId: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<boolean>;
   };
 
@@ -154,19 +132,19 @@ export interface ListBusinessApplyCursor extends BaseContract {
     _checkApplyIdBelongsToEmployeeId(
       id: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     _checkExistApply(
       employeeId: PromiseOrValue<BigNumberish>,
-      postId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      postId: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     _checkIdBelongsToPostId(
       id: PromiseOrValue<BigNumberish>,
-      postId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      postId: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
@@ -174,19 +152,19 @@ export interface ListBusinessApplyCursor extends BaseContract {
     _checkApplyIdBelongsToEmployeeId(
       id: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     _checkExistApply(
       employeeId: PromiseOrValue<BigNumberish>,
-      postId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      postId: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     _checkIdBelongsToPostId(
       id: PromiseOrValue<BigNumberish>,
-      postId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      postId: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -1,60 +1,39 @@
-import { ethers } from "ethers";
-import { Request, Response } from "express";
-import { Agent } from "http";
-import { create, urlSource } from "ipfs-http-client";
-import { useEmployee } from "~contracts/index";
-import { resize } from "~helpers/imageHandler";
+import { FastifyReply, FastifyRequest } from 'fastify';
+import { provider } from '~/app';
+import { useEmployee } from '~contracts/useEmployee';
+import { IEmployee } from '~types/employee';
 
-export const postAvatar = async (req: Request, res: Response) => {
-  try {
-    const buffer = req.file.buffer;
-    let sharp = resize(buffer, 1000, 1000);
-    const client = create({
-      host: process.env.IPFS_HOST,
-      port: Number(process.env.IPFS_PORT),
-      protocol: process.env.IPFS_PROTOCOL,
-    });
-    // const auth =
-    //   "Basic " +
-    //   Buffer.from(
-    //     "2Jxa8k8BoXm3qcU10oAYOuJkRQG" + ":" + "e2b46edcfcc46e20fd89c54b8f80d9f1"
-    //   ).toString("base64");
-
-    // const client = create({
-    //   host: "ipfs.infura.io",
-    //   port: 5001,
-    //   protocol: "https",
-    //   headers: {
-    //     authorization: auth,
-    //   },
-    // });
-    const { cid } = await client.add(sharp);
-    res.status(200).json(cid.toString());
-    console.log(cid);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json(error);
-  }
-  res.end();
+export const getEmployee = async (request: FastifyRequest<{ Params: { employeeid: number } }>, reply: FastifyReply) => {
+  const employeeId = request.params.employeeid;
+  const employeeContract = useEmployee(provider);
+  return await employeeContract.getProfile(employeeId).then((data) => ({
+    ...data,
+    id: data!.id.toNumber(),
+  }));
 };
 
-export const getAvatar = async (req: Request, res: Response) => {
-  try {
-    const cid = req.params.cid;
+export const searchEmployees = async (
+  request: FastifyRequest<{ Querystring: { search: string } }>,
+  reply: FastifyReply,
+) => {
+  const search = request.query.search;
 
-    const client = create({
-      host: process.env.IPFS_HOST,
-      port: Number(process.env.IPFS_PORT),
-      protocol: process.env.IPFS_PROTOCOL,
-    });
+  const employeeContract = useEmployee(provider);
 
-    const data = client.get(cid);
-    console.log(data);
-    res.status(200).json(data);
-    console.log(cid);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json(error);
-  }
-  res.end();
+  const employees = await employeeContract.getAllProfile();
+
+  const filtered = employees.filter((x) =>
+    x.name
+      .normalize('NFD')
+      .replace(/\p{Diacritic}/gu, '')
+      .includes(search.normalize('NFD').replace(/\p{Diacritic}/gu, '')),
+  );
+
+  const result = filtered.map((x) => ({
+    id: x.id.toNumber(),
+    user: x.user,
+    name: x.name,
+    sourceImage: x.sourceImage,
+  }));
+  await reply.code(200).send(result);
 };

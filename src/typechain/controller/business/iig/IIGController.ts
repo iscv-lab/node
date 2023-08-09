@@ -12,24 +12,13 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "../../../common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from '../../../common';
 
 export type IIGLRResultStruct = {
   id: PromiseOrValue<BigNumberish>;
-  businessId: PromiseOrValue<BigNumberish>;
   employeeId: PromiseOrValue<BigNumberish>;
   testDate: PromiseOrValue<BigNumberish>;
   shiftTest: PromiseOrValue<BigNumberish>;
@@ -43,15 +32,13 @@ export type IIGLRResultStructOutput = [
   BigNumber,
   BigNumber,
   BigNumber,
-  BigNumber,
   number,
   BigNumber,
   BigNumber,
   BigNumber,
-  BigNumber
+  BigNumber,
 ] & {
   id: BigNumber;
-  businessId: BigNumber;
   employeeId: BigNumber;
   testDate: BigNumber;
   shiftTest: number;
@@ -61,34 +48,8 @@ export type IIGLRResultStructOutput = [
   time: BigNumber;
 };
 
-export type IIGRequestStruct = {
-  id: PromiseOrValue<BigNumberish>;
-  businessId: PromiseOrValue<BigNumberish>;
-  employeeId: PromiseOrValue<BigNumberish>;
-  requestDate: PromiseOrValue<BigNumberish>;
-  requestType: PromiseOrValue<BigNumberish>;
-  statusRequest: PromiseOrValue<BigNumberish>;
-};
-
-export type IIGRequestStructOutput = [
-  BigNumber,
-  BigNumber,
-  BigNumber,
-  BigNumber,
-  number,
-  number
-] & {
-  id: BigNumber;
-  businessId: BigNumber;
-  employeeId: BigNumber;
-  requestDate: BigNumber;
-  requestType: number;
-  statusRequest: number;
-};
-
 export type IIGSWResultStruct = {
   id: PromiseOrValue<BigNumberish>;
-  businessId: PromiseOrValue<BigNumberish>;
   employeeId: PromiseOrValue<BigNumberish>;
   testDate: PromiseOrValue<BigNumberish>;
   shiftTest: PromiseOrValue<BigNumberish>;
@@ -102,15 +63,13 @@ export type IIGSWResultStructOutput = [
   BigNumber,
   BigNumber,
   BigNumber,
-  BigNumber,
   number,
   BigNumber,
   BigNumber,
   BigNumber,
-  BigNumber
+  BigNumber,
 ] & {
   id: BigNumber;
-  businessId: BigNumber;
   employeeId: BigNumber;
   testDate: BigNumber;
   shiftTest: number;
@@ -122,62 +81,34 @@ export type IIGSWResultStructOutput = [
 
 export interface IIGControllerInterface extends utils.Interface {
   functions: {
-    "_checkExistBusinessAccount()": FunctionFragment;
-    "_checkExistEmployeeAccount()": FunctionFragment;
-    "_checkExistIIGRequestLR(uint256,uint256)": FunctionFragment;
-    "_checkExistIIGRequestSW(uint256,uint256)": FunctionFragment;
-    "addLRRequest(uint256,uint256)": FunctionFragment;
-    "addLRResult(uint256,uint256,uint256,uint8,uint256,uint256,uint256,uint256)": FunctionFragment;
-    "addSWRequest(uint256,uint256)": FunctionFragment;
-    "addSWResult(uint256,uint256,uint256,uint8,uint256,uint256,uint256,uint256)": FunctionFragment;
-    "destroy()": FunctionFragment;
-    "getAllIIGLRResult()": FunctionFragment;
-    "getAllIIGRequest()": FunctionFragment;
-    "getAllIIGSWResult()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
+    '_checkExistBusinessAccount()': FunctionFragment;
+    '_checkExistEmployeeAccount()': FunctionFragment;
+    'addLRResult(uint256,uint256,uint8,uint256,uint256,uint256)': FunctionFragment;
+    'addSWResult(uint256,uint256,uint8,uint256,uint256,uint256)': FunctionFragment;
+    'destroy()': FunctionFragment;
+    'getAllIIGLRResult()': FunctionFragment;
+    'getAllIIGSWResult()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "_checkExistBusinessAccount"
-      | "_checkExistEmployeeAccount"
-      | "_checkExistIIGRequestLR"
-      | "_checkExistIIGRequestSW"
-      | "addLRRequest"
-      | "addLRResult"
-      | "addSWRequest"
-      | "addSWResult"
-      | "destroy"
-      | "getAllIIGLRResult"
-      | "getAllIIGRequest"
-      | "getAllIIGSWResult"
-      | "owner"
-      | "transferOwnership"
+      | '_checkExistBusinessAccount'
+      | '_checkExistEmployeeAccount'
+      | 'addLRResult'
+      | 'addSWResult'
+      | 'destroy'
+      | 'getAllIIGLRResult'
+      | 'getAllIIGSWResult'
+      | 'owner'
+      | 'transferOwnership',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: '_checkExistBusinessAccount', values?: undefined): string;
+  encodeFunctionData(functionFragment: '_checkExistEmployeeAccount', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "_checkExistBusinessAccount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "_checkExistEmployeeAccount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "_checkExistIIGRequestLR",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "_checkExistIIGRequestSW",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addLRRequest",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addLRResult",
+    functionFragment: 'addLRResult',
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
@@ -185,16 +116,10 @@ export interface IIGControllerInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    ],
   ): string;
   encodeFunctionData(
-    functionFragment: "addSWRequest",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "addSWResult",
+    functionFragment: 'addSWResult',
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
@@ -202,98 +127,38 @@ export interface IIGControllerInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+    ],
   ): string;
-  encodeFunctionData(functionFragment: "destroy", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "getAllIIGLRResult",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getAllIIGRequest",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getAllIIGSWResult",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: 'destroy', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getAllIIGLRResult', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getAllIIGSWResult', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
-  decodeFunctionResult(
-    functionFragment: "_checkExistBusinessAccount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "_checkExistEmployeeAccount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "_checkExistIIGRequestLR",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "_checkExistIIGRequestSW",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "addLRRequest",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "addLRResult",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "addSWRequest",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "addSWResult",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "destroy", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getAllIIGLRResult",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAllIIGRequest",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAllIIGSWResult",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: '_checkExistBusinessAccount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: '_checkExistEmployeeAccount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addLRResult', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addSWResult', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'destroy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAllIIGLRResult', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAllIIGSWResult', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
 
   events: {
-    "OwnershipTransferred(address,address)": EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
 }
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
   newOwner: string;
 }
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  OwnershipTransferredEventObject
->;
+export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
 
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
+export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface IIGController extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -305,16 +170,12 @@ export interface IIGController extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -326,75 +187,37 @@ export interface IIGController extends BaseContract {
 
     _checkExistEmployeeAccount(overrides?: CallOverrides): Promise<[boolean]>;
 
-    _checkExistIIGRequestLR(
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    _checkExistIIGRequestSW(
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
-
-    addLRRequest(
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     addLRResult(
-      businessId: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
       testDate: PromiseOrValue<BigNumberish>,
       shiftTest: PromiseOrValue<BigNumberish>,
       expireDate: PromiseOrValue<BigNumberish>,
       listeningScore: PromiseOrValue<BigNumberish>,
       readingScore: PromiseOrValue<BigNumberish>,
-      requestId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
-    addSWRequest(
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addSWResult(
-      businessId: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
       testDate: PromiseOrValue<BigNumberish>,
       shiftTest: PromiseOrValue<BigNumberish>,
       expireDate: PromiseOrValue<BigNumberish>,
       speakingScore: PromiseOrValue<BigNumberish>,
       writingScore: PromiseOrValue<BigNumberish>,
-      requestId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    getAllIIGLRResult(
-      overrides?: CallOverrides
-    ): Promise<[IIGLRResultStructOutput[]]>;
+    getAllIIGLRResult(overrides?: CallOverrides): Promise<[IIGLRResultStructOutput[]]>;
 
-    getAllIIGRequest(
-      overrides?: CallOverrides
-    ): Promise<[IIGRequestStructOutput[]]>;
-
-    getAllIIGSWResult(
-      overrides?: CallOverrides
-    ): Promise<[IIGSWResultStructOutput[]]>;
+    getAllIIGSWResult(overrides?: CallOverrides): Promise<[IIGSWResultStructOutput[]]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -402,75 +225,37 @@ export interface IIGController extends BaseContract {
 
   _checkExistEmployeeAccount(overrides?: CallOverrides): Promise<boolean>;
 
-  _checkExistIIGRequestLR(
-    employeeId: PromiseOrValue<BigNumberish>,
-    businessId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  _checkExistIIGRequestSW(
-    employeeId: PromiseOrValue<BigNumberish>,
-    businessId: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  addLRRequest(
-    employeeId: PromiseOrValue<BigNumberish>,
-    businessId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   addLRResult(
-    businessId: PromiseOrValue<BigNumberish>,
     employeeId: PromiseOrValue<BigNumberish>,
     testDate: PromiseOrValue<BigNumberish>,
     shiftTest: PromiseOrValue<BigNumberish>,
     expireDate: PromiseOrValue<BigNumberish>,
     listeningScore: PromiseOrValue<BigNumberish>,
     readingScore: PromiseOrValue<BigNumberish>,
-    requestId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
-  addSWRequest(
-    employeeId: PromiseOrValue<BigNumberish>,
-    businessId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addSWResult(
-    businessId: PromiseOrValue<BigNumberish>,
     employeeId: PromiseOrValue<BigNumberish>,
     testDate: PromiseOrValue<BigNumberish>,
     shiftTest: PromiseOrValue<BigNumberish>,
     expireDate: PromiseOrValue<BigNumberish>,
     speakingScore: PromiseOrValue<BigNumberish>,
     writingScore: PromiseOrValue<BigNumberish>,
-    requestId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  destroy(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  getAllIIGLRResult(
-    overrides?: CallOverrides
-  ): Promise<IIGLRResultStructOutput[]>;
+  getAllIIGLRResult(overrides?: CallOverrides): Promise<IIGLRResultStructOutput[]>;
 
-  getAllIIGRequest(
-    overrides?: CallOverrides
-  ): Promise<IIGRequestStructOutput[]>;
-
-  getAllIIGSWResult(
-    overrides?: CallOverrides
-  ): Promise<IIGSWResultStructOutput[]>;
+  getAllIIGSWResult(overrides?: CallOverrides): Promise<IIGSWResultStructOutput[]>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -478,84 +263,45 @@ export interface IIGController extends BaseContract {
 
     _checkExistEmployeeAccount(overrides?: CallOverrides): Promise<boolean>;
 
-    _checkExistIIGRequestLR(
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    _checkExistIIGRequestSW(
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
-    addLRRequest(
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     addLRResult(
-      businessId: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
       testDate: PromiseOrValue<BigNumberish>,
       shiftTest: PromiseOrValue<BigNumberish>,
       expireDate: PromiseOrValue<BigNumberish>,
       listeningScore: PromiseOrValue<BigNumberish>,
       readingScore: PromiseOrValue<BigNumberish>,
-      requestId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    addSWRequest(
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     addSWResult(
-      businessId: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
       testDate: PromiseOrValue<BigNumberish>,
       shiftTest: PromiseOrValue<BigNumberish>,
       expireDate: PromiseOrValue<BigNumberish>,
       speakingScore: PromiseOrValue<BigNumberish>,
       writingScore: PromiseOrValue<BigNumberish>,
-      requestId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     destroy(overrides?: CallOverrides): Promise<void>;
 
-    getAllIIGLRResult(
-      overrides?: CallOverrides
-    ): Promise<IIGLRResultStructOutput[]>;
+    getAllIIGLRResult(overrides?: CallOverrides): Promise<IIGLRResultStructOutput[]>;
 
-    getAllIIGRequest(
-      overrides?: CallOverrides
-    ): Promise<IIGRequestStructOutput[]>;
-
-    getAllIIGSWResult(
-      overrides?: CallOverrides
-    ): Promise<IIGSWResultStructOutput[]>;
+    getAllIIGSWResult(overrides?: CallOverrides): Promise<IIGSWResultStructOutput[]>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    "OwnershipTransferred(address,address)"(
+    'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
   };
 
@@ -564,61 +310,29 @@ export interface IIGController extends BaseContract {
 
     _checkExistEmployeeAccount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    _checkExistIIGRequestLR(
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    _checkExistIIGRequestSW(
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    addLRRequest(
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     addLRResult(
-      businessId: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
       testDate: PromiseOrValue<BigNumberish>,
       shiftTest: PromiseOrValue<BigNumberish>,
       expireDate: PromiseOrValue<BigNumberish>,
       listeningScore: PromiseOrValue<BigNumberish>,
       readingScore: PromiseOrValue<BigNumberish>,
-      requestId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
-    addSWRequest(
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addSWResult(
-      businessId: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
       testDate: PromiseOrValue<BigNumberish>,
       shiftTest: PromiseOrValue<BigNumberish>,
       expireDate: PromiseOrValue<BigNumberish>,
       speakingScore: PromiseOrValue<BigNumberish>,
       writingScore: PromiseOrValue<BigNumberish>,
-      requestId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getAllIIGLRResult(overrides?: CallOverrides): Promise<BigNumber>;
-
-    getAllIIGRequest(overrides?: CallOverrides): Promise<BigNumber>;
 
     getAllIIGSWResult(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -626,74 +340,38 @@ export interface IIGController extends BaseContract {
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    _checkExistBusinessAccount(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    _checkExistBusinessAccount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    _checkExistEmployeeAccount(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    _checkExistIIGRequestLR(
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    _checkExistIIGRequestSW(
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    addLRRequest(
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    _checkExistEmployeeAccount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addLRResult(
-      businessId: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
       testDate: PromiseOrValue<BigNumberish>,
       shiftTest: PromiseOrValue<BigNumberish>,
       expireDate: PromiseOrValue<BigNumberish>,
       listeningScore: PromiseOrValue<BigNumberish>,
       readingScore: PromiseOrValue<BigNumberish>,
-      requestId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
-    addSWRequest(
-      employeeId: PromiseOrValue<BigNumberish>,
-      businessId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addSWResult(
-      businessId: PromiseOrValue<BigNumberish>,
       employeeId: PromiseOrValue<BigNumberish>,
       testDate: PromiseOrValue<BigNumberish>,
       shiftTest: PromiseOrValue<BigNumberish>,
       expireDate: PromiseOrValue<BigNumberish>,
       speakingScore: PromiseOrValue<BigNumberish>,
       writingScore: PromiseOrValue<BigNumberish>,
-      requestId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getAllIIGLRResult(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    getAllIIGRequest(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAllIIGSWResult(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -701,7 +379,7 @@ export interface IIGController extends BaseContract {
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

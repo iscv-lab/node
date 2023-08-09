@@ -12,20 +12,10 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "../../common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from '../../common';
 
 export type EmployeeSkillStruct = {
   id: PromiseOrValue<BigNumberish>;
@@ -34,145 +24,115 @@ export type EmployeeSkillStruct = {
   level: PromiseOrValue<BigNumberish>;
 };
 
-export type EmployeeSkillStructOutput = [
-  BigNumber,
-  BigNumber,
-  string,
-  BigNumber
-] & { id: BigNumber; employeeId: BigNumber; title: string; level: BigNumber };
+export type EmployeeSkillStructOutput = [BigNumber, BigNumber, string, BigNumber] & {
+  id: BigNumber;
+  employeeId: BigNumber;
+  title: string;
+  level: BigNumber;
+};
 
 export interface ListEmployeeSkillInterface extends utils.Interface {
   functions: {
-    "add((uint256,uint256,string,uint256))": FunctionFragment;
-    "approve(address)": FunctionFragment;
-    "at(uint256)": FunctionFragment;
-    "destroy()": FunctionFragment;
-    "findIdByEmployeeIdAndTitle(uint256,string)": FunctionFragment;
-    "getAll()": FunctionFragment;
-    "list(uint256)": FunctionFragment;
-    "owner()": FunctionFragment;
-    "retrive(address)": FunctionFragment;
-    "setEmployeeId(uint256,uint256)": FunctionFragment;
-    "setEmployeeSkill(uint256,uint256,string,uint256)": FunctionFragment;
-    "setId(uint256,uint256)": FunctionFragment;
-    "setLevel(uint256,uint256)": FunctionFragment;
-    "setTitle(uint256,string)": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
+    'add((uint256,uint256,string,uint256))': FunctionFragment;
+    'approve(address)': FunctionFragment;
+    'at(uint256)': FunctionFragment;
+    'destroy()': FunctionFragment;
+    'findIdByEmployeeIdAndTitle(uint256,string)': FunctionFragment;
+    'getAll()': FunctionFragment;
+    'list(uint256)': FunctionFragment;
+    'owner()': FunctionFragment;
+    'retrive(address)': FunctionFragment;
+    'setEmployeeId(uint256,uint256)': FunctionFragment;
+    'setEmployeeSkill(uint256,uint256,string,uint256)': FunctionFragment;
+    'setId(uint256,uint256)': FunctionFragment;
+    'setLevel(uint256,uint256)': FunctionFragment;
+    'setTitle(uint256,string)': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "add"
-      | "approve"
-      | "at"
-      | "destroy"
-      | "findIdByEmployeeIdAndTitle"
-      | "getAll"
-      | "list"
-      | "owner"
-      | "retrive"
-      | "setEmployeeId"
-      | "setEmployeeSkill"
-      | "setId"
-      | "setLevel"
-      | "setTitle"
-      | "transferOwnership"
+      | 'add'
+      | 'approve'
+      | 'at'
+      | 'destroy'
+      | 'findIdByEmployeeIdAndTitle'
+      | 'getAll'
+      | 'list'
+      | 'owner'
+      | 'retrive'
+      | 'setEmployeeId'
+      | 'setEmployeeSkill'
+      | 'setId'
+      | 'setLevel'
+      | 'setTitle'
+      | 'transferOwnership',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'add', values: [EmployeeSkillStruct]): string;
+  encodeFunctionData(functionFragment: 'approve', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'at', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'destroy', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "add",
-    values: [EmployeeSkillStruct]
+    functionFragment: 'findIdByEmployeeIdAndTitle',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getAll', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'list', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'retrive', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setEmployeeId',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "approve",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "at",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(functionFragment: "destroy", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "findIdByEmployeeIdAndTitle",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "getAll", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "list",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "retrive",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setEmployeeId",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "setEmployeeSkill",
+    functionFragment: 'setEmployeeSkill',
     values: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>
-    ]
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
-    functionFragment: "setId",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: 'setId',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "setLevel",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    functionFragment: 'setLevel',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "setTitle",
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]
+    functionFragment: 'setTitle',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
-  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
-  decodeFunctionResult(functionFragment: "add", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "at", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "destroy", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "findIdByEmployeeIdAndTitle",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "getAll", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "list", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "retrive", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "setEmployeeId",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "setEmployeeSkill",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "setId", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setLevel", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setTitle", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'at', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'destroy', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'findIdByEmployeeIdAndTitle', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'list', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'retrive', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setEmployeeId', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setEmployeeSkill', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setId', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setLevel', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setTitle', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
 
   events: {
-    "Add(tuple)": EventFragment;
-    "OwnershipTransferred(address,address)": EventFragment;
-    "Remove(tuple)": EventFragment;
+    'Add(tuple)': EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
+    'Remove(tuple)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Add"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Remove"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Add'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Remove'): EventFragment;
 }
 
 export interface AddEventObject {
@@ -186,21 +146,14 @@ export interface OwnershipTransferredEventObject {
   previousOwner: string;
   newOwner: string;
 }
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  OwnershipTransferredEventObject
->;
+export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
 
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
+export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface RemoveEventObject {
   item: EmployeeSkillStructOutput;
 }
-export type RemoveEvent = TypedEvent<
-  [EmployeeSkillStructOutput],
-  RemoveEventObject
->;
+export type RemoveEvent = TypedEvent<[EmployeeSkillStructOutput], RemoveEventObject>;
 
 export type RemoveEventFilter = TypedEventFilter<RemoveEvent>;
 
@@ -214,16 +167,12 @@ export interface ListEmployeeSkill extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -233,34 +182,29 @@ export interface ListEmployeeSkill extends BaseContract {
   functions: {
     add(
       item: EmployeeSkillStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     approve(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    at(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<[EmployeeSkillStructOutput]>;
+    at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[EmployeeSkillStructOutput]>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     findIdByEmployeeIdAndTitle(
       employeeId: PromiseOrValue<BigNumberish>,
       title: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     getAll(overrides?: CallOverrides): Promise<[EmployeeSkillStructOutput[]]>;
 
     list(
       arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, string, BigNumber] & {
         id: BigNumber;
@@ -274,13 +218,13 @@ export interface ListEmployeeSkill extends BaseContract {
 
     retrive(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setEmployeeId(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setEmployeeSkill(
@@ -288,63 +232,58 @@ export interface ListEmployeeSkill extends BaseContract {
       id: PromiseOrValue<BigNumberish>,
       title: PromiseOrValue<string>,
       level: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setId(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLevel(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTitle(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   add(
     item: EmployeeSkillStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   approve(
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  at(
-    index: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
-  ): Promise<EmployeeSkillStructOutput>;
+  at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<EmployeeSkillStructOutput>;
 
-  destroy(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   findIdByEmployeeIdAndTitle(
     employeeId: PromiseOrValue<BigNumberish>,
     title: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   getAll(overrides?: CallOverrides): Promise<EmployeeSkillStructOutput[]>;
 
   list(
     arg0: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, string, BigNumber] & {
       id: BigNumber;
@@ -358,13 +297,13 @@ export interface ListEmployeeSkill extends BaseContract {
 
   retrive(
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setEmployeeId(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setEmployeeSkill(
@@ -372,58 +311,52 @@ export interface ListEmployeeSkill extends BaseContract {
     id: PromiseOrValue<BigNumberish>,
     title: PromiseOrValue<string>,
     level: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setId(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLevel(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTitle(
     index: PromiseOrValue<BigNumberish>,
     value: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     add(item: EmployeeSkillStruct, overrides?: CallOverrides): Promise<void>;
 
-    approve(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    approve(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    at(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<EmployeeSkillStructOutput>;
+    at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<EmployeeSkillStructOutput>;
 
     destroy(overrides?: CallOverrides): Promise<void>;
 
     findIdByEmployeeIdAndTitle(
       employeeId: PromiseOrValue<BigNumberish>,
       title: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getAll(overrides?: CallOverrides): Promise<EmployeeSkillStructOutput[]>;
 
     list(
       arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, string, BigNumber] & {
         id: BigNumber;
@@ -435,15 +368,12 @@ export interface ListEmployeeSkill extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    retrive(
-      value: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    retrive(value: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setEmployeeId(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setEmployeeSkill(
@@ -451,94 +381,80 @@ export interface ListEmployeeSkill extends BaseContract {
       id: PromiseOrValue<BigNumberish>,
       title: PromiseOrValue<string>,
       level: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setId(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setLevel(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     setTitle(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    "Add(tuple)"(item?: null): AddEventFilter;
+    'Add(tuple)'(item?: null): AddEventFilter;
     Add(item?: null): AddEventFilter;
 
-    "OwnershipTransferred(address,address)"(
+    'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
 
-    "Remove(tuple)"(item?: null): RemoveEventFilter;
+    'Remove(tuple)'(item?: null): RemoveEventFilter;
     Remove(item?: null): RemoveEventFilter;
   };
 
   estimateGas: {
-    add(
-      item: EmployeeSkillStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    add(item: EmployeeSkillStruct, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     approve(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    at(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     findIdByEmployeeIdAndTitle(
       employeeId: PromiseOrValue<BigNumberish>,
       title: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getAll(overrides?: CallOverrides): Promise<BigNumber>;
 
-    list(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     retrive(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setEmployeeId(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setEmployeeSkill(
@@ -546,77 +462,69 @@ export interface ListEmployeeSkill extends BaseContract {
       id: PromiseOrValue<BigNumberish>,
       title: PromiseOrValue<string>,
       level: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setId(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setLevel(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setTitle(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     add(
       item: EmployeeSkillStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     approve(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    at(
-      index: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    at(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    destroy(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    destroy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     findIdByEmployeeIdAndTitle(
       employeeId: PromiseOrValue<BigNumberish>,
       title: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getAll(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    list(
-      arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     retrive(
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setEmployeeId(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setEmployeeSkill(
@@ -624,30 +532,30 @@ export interface ListEmployeeSkill extends BaseContract {
       id: PromiseOrValue<BigNumberish>,
       title: PromiseOrValue<string>,
       level: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setId(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLevel(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTitle(
       index: PromiseOrValue<BigNumberish>,
       value: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

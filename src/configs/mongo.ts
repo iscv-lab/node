@@ -1,10 +1,16 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+import mongoose_delete from 'mongoose-delete';
 
-export function mongoServer() {
-  mongoose.set("strictQuery", true);
-  mongoose.connect(process.env.APT_ENDPOINT_MONGODB, () => {
-    console.log("connect to mongodb");
-  });
+export async function mongoServer() {
+  mongoose.set('strictQuery', true);
+  mongoose.plugin(mongoose_delete);
+  await mongoose
+    .connect(process.env.APT_ENDPOINT_MONGODB, {
+      dbName: process.env.DATABASE,
+    })
+    .then(() => {
+      console.log('connect to mongodb');
+    });
   //   applySpeedGooseCacheLayer(mongoose, {
   //     redisUri: process.env.REDIS_URI,
   //     defaultTtl: 18000,
